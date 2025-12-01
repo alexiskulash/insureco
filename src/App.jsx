@@ -5,6 +5,7 @@ import LandingPage from "./pages/LandingPage";
 import SignUpPage from "./pages/SignUpPage";
 import DashboardHome from "./pages/DashboardHome";
 import AboutPage from "./pages/AboutPage";
+import ThemePreviewPage from "./pages/ThemePreviewPage";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/dashboard" element={<DashboardHome />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/theme-preview" element={<ThemePreviewPage />} />
       </Routes>
     </Layout>
   );
