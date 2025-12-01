@@ -122,7 +122,7 @@ export default function LandingPage() {
       </section>
 
       {/* Car Insurance Section */}
-      <section className="product-section car-insurance-section">
+      <section id="car-insurance" className="product-section car-insurance-section">
         <Grid>
           <Column lg={8} md={4} sm={4}>
             <div className="product-content">
@@ -159,7 +159,7 @@ export default function LandingPage() {
       </section>
 
       {/* Home Insurance Section */}
-      <section className="product-section home-insurance-section">
+      <section id="home-insurance" className="product-section home-insurance-section">
         <Grid>
           <Column lg={8} md={4} sm={4}>
             <div className="product-image-placeholder">
@@ -256,9 +256,9 @@ export default function LandingPage() {
             <div className="footer-section">
               <h4 className="footer-heading">Products</h4>
               <ul className="footer-links">
-                <li><a href="#car">Car Insurance</a></li>
-                <li><a href="#home">Home Insurance</a></li>
-                <li><a href="#bundle">Bundle & Save</a></li>
+                <li><a href="#car-insurance">Car Insurance</a></li>
+                <li><a href="#home-insurance">Home Insurance</a></li>
+                <li><button onClick={() => navigate('/signup')} style={{ background: 'none', border: 'none', padding: 0, color: 'var(--text-secondary)', cursor: 'pointer', fontSize: 'var(--body-sm-size)' }}>Bundle & Save</button></li>
               </ul>
             </div>
           </Column>
