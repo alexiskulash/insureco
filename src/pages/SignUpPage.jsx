@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Grid,
   Column,
-  ProgressIndicator,
-  ProgressStep,
   Form,
   Stack,
   TextInput,
@@ -21,6 +19,7 @@ import {
   RadioTile,
 } from '@carbon/react';
 import { ArrowRight, ArrowLeft, Checkmark, Car, Home as HomeIcon } from '@carbon/icons-react';
+import StepBreadcrumb from '../components/StepBreadcrumb';
 import './SignUpPage.scss';
 
 export default function SignUpPage() {
@@ -587,16 +586,14 @@ export default function SignUpPage() {
           </div>
 
           <div className="signup-progress">
-            <ProgressIndicator currentIndex={currentStep} spaceEqually>
-              {steps.map((step, index) => (
-                <ProgressStep
-                  key={step.key}
-                  label={step.label}
-                  description={index === currentStep ? 'Current' : ''}
-                  complete={index < currentStep}
-                />
-              ))}
-            </ProgressIndicator>
+            <StepBreadcrumb
+              steps={steps.map((step, index) => ({
+                ...step,
+                description: index === currentStep ? 'Current' : ''
+              }))}
+              currentIndex={currentStep}
+              spaceEqually
+            />
           </div>
 
           <Form className="signup-form" onSubmit={handleSubmit}>
