@@ -1,0 +1,312 @@
+@use '../styles/tokens' as *;
+
+.landing-page {
+  min-height: 100vh;
+  background: var(--background-primary);
+}
+
+// Hero Section
+.hero-section {
+  padding: var(--spacing-13) var(--spacing-05);
+  background: linear-gradient(135deg, var(--interactive-primary) 0%, var(--color-brand-red-70) 100%);
+  color: var(--text-on-color);
+  text-align: center;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-heading {
+    font-size: var(--heading-h1-size);
+    font-weight: var(--heading-h1-weight);
+    line-height: var(--heading-h1-line-height);
+    margin-bottom: var(--spacing-05);
+    color: var(--text-on-color);
+  }
+
+  .hero-tagline {
+    font-size: var(--body-lg-size);
+    line-height: var(--line-height-normal);
+    margin-bottom: var(--spacing-07);
+    opacity: 0.95;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--spacing-05);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+// Section Common Styles
+.section-heading {
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  text-align: center;
+  margin-bottom: var(--spacing-09);
+  color: var(--text-primary);
+}
+
+// Features Section
+.features-section {
+  padding: var(--spacing-10) var(--spacing-05);
+  background: var(--background-secondary);
+
+  .feature-tile {
+    height: 100%;
+    text-align: center;
+    padding: var(--spacing-07);
+    transition: transform var(--motion-hover), box-shadow var(--motion-hover);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-shadow-hover);
+    }
+  }
+
+  .feature-icon {
+    color: var(--interactive-primary);
+    margin-bottom: var(--spacing-05);
+    display: flex;
+    justify-content: center;
+  }
+
+  .feature-title {
+    font-size: var(--heading-h4-size);
+    font-weight: var(--heading-h4-weight);
+    margin-bottom: var(--spacing-03);
+    color: var(--text-primary);
+  }
+
+  .feature-description {
+    font-size: var(--body-md-size);
+    color: var(--text-secondary);
+    line-height: var(--line-height-normal);
+  }
+}
+
+// Product Sections
+.product-section {
+  padding: var(--spacing-10) var(--spacing-05);
+
+  .product-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: var(--spacing-06);
+  }
+
+  .product-icon {
+    color: var(--interactive-primary);
+    margin-bottom: var(--spacing-05);
+  }
+
+  .product-heading {
+    font-size: var(--heading-h2-size);
+    font-weight: var(--heading-h2-weight);
+    margin-bottom: var(--spacing-05);
+    color: var(--text-primary);
+  }
+
+  .product-description {
+    font-size: var(--body-md-size);
+    line-height: var(--line-height-normal);
+    margin-bottom: var(--spacing-06);
+    color: var(--text-secondary);
+  }
+
+  .product-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-06) 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-03);
+      margin-bottom: var(--spacing-03);
+      font-size: var(--body-md-size);
+      color: var(--text-primary);
+
+      svg {
+        color: var(--color-success);
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .product-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-09);
+    background: var(--background-secondary);
+    border-radius: var(--radius-lg);
+    min-height: 400px;
+
+    svg {
+      color: var(--interactive-primary);
+      opacity: 0.3;
+    }
+  }
+}
+
+.car-insurance-section {
+  background: var(--background-primary);
+}
+
+.home-insurance-section {
+  background: var(--background-secondary);
+}
+
+// Testimonials Section
+.testimonials-section {
+  padding: var(--spacing-10) var(--spacing-05);
+  background: var(--background-primary);
+
+  .testimonial-tile {
+    height: 100%;
+    padding: var(--spacing-06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .testimonial-quote {
+    font-size: var(--body-lg-size);
+    line-height: var(--line-height-loose);
+    font-style: italic;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-06);
+    flex-grow: 1;
+  }
+
+  .testimonial-author {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: var(--spacing-04);
+  }
+
+  .author-name {
+    font-size: var(--body-md-size);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-02);
+  }
+
+  .author-role {
+    font-size: var(--body-sm-size);
+    color: var(--text-secondary);
+  }
+}
+
+// Call to Action Section
+.cta-section {
+  padding: var(--spacing-10) var(--spacing-05);
+  background: var(--interactive-primary);
+  color: var(--text-on-color);
+  text-align: center;
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-heading {
+    font-size: var(--heading-h2-size);
+    font-weight: var(--heading-h2-weight);
+    margin-bottom: var(--spacing-05);
+    color: var(--text-on-color);
+  }
+
+  .cta-text {
+    font-size: var(--body-lg-size);
+    margin-bottom: var(--spacing-07);
+    opacity: 0.95;
+  }
+}
+
+// Footer
+.landing-footer {
+  padding: var(--spacing-09) var(--spacing-05) var(--spacing-06);
+  background: var(--background-tertiary);
+  color: var(--text-secondary);
+
+  .footer-section {
+    margin-bottom: var(--spacing-06);
+  }
+
+  .footer-heading {
+    font-size: var(--body-lg-size);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-04);
+  }
+
+  .footer-description {
+    font-size: var(--body-sm-size);
+    line-height: var(--line-height-normal);
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: var(--spacing-03);
+    }
+
+    a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: var(--body-sm-size);
+      transition: color var(--motion-hover);
+
+      &:hover {
+        color: var(--interactive-primary);
+      }
+    }
+  }
+
+  .footer-bottom {
+    margin-top: var(--spacing-07);
+    padding-top: var(--spacing-06);
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+    font-size: var(--body-sm-size);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-md) {
+  .hero-section {
+    padding: var(--spacing-09) var(--spacing-05);
+    min-height: 500px;
+
+    .hero-heading {
+      font-size: var(--heading-h2-size);
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .product-section {
+    .product-image-placeholder {
+      min-height: 300px;
+      margin-bottom: var(--spacing-06);
+    }
+  }
+
+  .section-heading {
+    font-size: var(--heading-h3-size);
+  }
+}
