@@ -56,7 +56,8 @@ Carbon provides a comprehensive set of components. Refer to `design-system-docs/
 **Feedback & Status:**
 - `InlineNotification`, `ToastNotification`, `ActionableNotification`
 - `Loading`, `InlineLoading`, `SkeletonText`, `SkeletonPlaceholder`
-- `ProgressBar`, `ProgressIndicator`
+- `ProgressBar` ✅ (OK to use)
+- ❌ `ProgressIndicator` **BANNED** - Use `StepBreadcrumb` instead (see `.builder/rules/banned-components.mdc`)
 
 **Navigation & Controls:**
 - `Tabs`, `Tab`, `TabList`, `TabPanel`
@@ -91,7 +92,7 @@ Theme is managed via `ThemeContext.jsx` and applied to the root element:
 
 
 ### Using Theme Context
-```jsx
+
 import { useTheme } from './contexts/ThemeContext';
 
 function MyComponent() {
