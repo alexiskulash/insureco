@@ -71,6 +71,9 @@
   background: var(--background-secondary);
   padding: var(--spacing-05);
   border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  border-top: 3px solid var(--interactive-primary);
+  box-shadow: var(--card-shadow);
 
   @media (min-width: 672px) {
     padding: var(--spacing-06);
@@ -89,6 +92,28 @@
       .cds--progress-step-button {
         padding: 0;
         min-width: auto;
+      }
+    }
+
+    // Add red accent to current step
+    .cds--progress-step--current {
+      .cds--progress-step-button {
+        &::before {
+          background-color: var(--interactive-primary);
+          border-color: var(--interactive-primary);
+        }
+      }
+
+      .cds--progress-label {
+        color: var(--interactive-primary);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+
+    // Completed steps with red checkmark
+    .cds--progress-step--complete {
+      svg {
+        fill: var(--interactive-primary);
       }
     }
   }
