@@ -229,16 +229,68 @@
 }
 
 .cds--progress-indicator {
+  // All step labels must be readable in both themes
+  .cds--progress-label {
+    color: var(--text-primary) !important;
+  }
+
+  // Current step styling
   .cds--progress-step--current {
     .cds--progress-line {
       background-color: var(--interactive-primary);
     }
-  }
-  
-  .cds--progress-step--complete {
-    svg {
-      fill: var(--color-success);
+
+    .cds--progress-label {
+      color: var(--interactive-primary) !important;
+      font-weight: var(--font-weight-semibold);
     }
+
+    .cds--progress-step-button::before {
+      background-color: var(--interactive-primary);
+      border-color: var(--interactive-primary);
+    }
+  }
+
+  // Completed steps
+  .cds--progress-step--complete {
+    .cds--progress-label {
+      color: var(--text-primary) !important;
+    }
+
+    svg {
+      fill: var(--interactive-primary);
+    }
+  }
+
+  // Incomplete/upcoming steps
+  .cds--progress-step--incomplete {
+    .cds--progress-label {
+      color: var(--text-secondary) !important;
+    }
+
+    .cds--progress-step-button::before {
+      background-color: transparent;
+      border-color: var(--border-strong);
+    }
+  }
+
+  // Step button backgrounds
+  .cds--progress-step-button {
+    background-color: transparent;
+    color: var(--text-primary);
+
+    &:hover {
+      background-color: var(--background-hover);
+    }
+
+    &:focus {
+      outline-color: var(--interactive-primary);
+    }
+  }
+
+  // Progress lines
+  .cds--progress-line {
+    background-color: var(--border-subtle);
   }
 }
 
