@@ -1,0 +1,305 @@
+@use '../styles/tokens' as *;
+
+.signup-page {
+  min-height: 100vh;
+  padding: var(--spacing-05);
+  background: var(--background-primary);
+
+  // Mobile-first: More padding on larger screens
+  @media (min-width: 672px) {
+    padding: var(--spacing-07);
+  }
+
+  @media (min-width: 1056px) {
+    padding: var(--spacing-09);
+  }
+}
+
+.signup-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.signup-header {
+  text-align: center;
+  margin-bottom: var(--spacing-07);
+
+  @media (min-width: 672px) {
+    margin-bottom: var(--spacing-09);
+  }
+}
+
+.signup-title {
+  font-size: var(--heading-h3-size);
+  font-weight: var(--heading-h3-weight);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-03);
+
+  @media (min-width: 672px) {
+    font-size: var(--heading-h2-size);
+    font-weight: var(--heading-h2-weight);
+  }
+}
+
+.signup-subtitle {
+  font-size: var(--body-md-size);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+
+  @media (min-width: 672px) {
+    font-size: var(--body-lg-size);
+  }
+}
+
+.signup-progress {
+  margin-bottom: var(--spacing-08);
+  background: var(--background-secondary);
+  padding: var(--spacing-05);
+  border-radius: var(--radius-md);
+
+  @media (min-width: 672px) {
+    padding: var(--spacing-06);
+    margin-bottom: var(--spacing-09);
+  }
+
+  // Override Carbon ProgressIndicator for mobile
+  .cds--progress {
+    // Make labels smaller on mobile
+    @media (max-width: 671px) {
+      .cds--progress-label {
+        font-size: 12px;
+        max-width: 60px;
+      }
+
+      .cds--progress-step-button {
+        padding: 0;
+        min-width: auto;
+      }
+    }
+  }
+}
+
+.signup-form {
+  background: var(--background-secondary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-06);
+  box-shadow: var(--card-shadow);
+
+  @media (min-width: 672px) {
+    padding: var(--spacing-08);
+  }
+
+  @media (min-width: 1056px) {
+    padding: var(--spacing-09);
+  }
+}
+
+.signup-step-content {
+  min-height: 400px;
+  margin-bottom: var(--spacing-07);
+
+  @media (min-width: 672px) {
+    min-height: 450px;
+    margin-bottom: var(--spacing-08);
+  }
+}
+
+.signup-step-heading {
+  font-size: var(--heading-h4-size);
+  font-weight: var(--heading-h4-weight);
+  color: var(--text-primary);
+  margin: 0;
+
+  @media (min-width: 672px) {
+    font-size: var(--heading-h3-size);
+    font-weight: var(--heading-h3-weight);
+  }
+}
+
+.signup-step-description {
+  font-size: var(--body-sm-size);
+  color: var(--text-secondary);
+  margin: 0;
+
+  @media (min-width: 672px) {
+    font-size: var(--body-md-size);
+  }
+}
+
+.signup-checkbox-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  legend {
+    margin-bottom: var(--spacing-04);
+  }
+}
+
+.signup-actions {
+  display: flex;
+  gap: var(--spacing-04);
+  flex-direction: column;
+  padding-top: var(--spacing-06);
+  border-top: 1px solid var(--border-subtle);
+
+  @media (min-width: 672px) {
+    flex-direction: row;
+    gap: var(--spacing-05);
+  }
+
+  // Make buttons full-width on mobile
+  button {
+    @media (max-width: 671px) {
+      width: 100%;
+      max-width: none;
+    }
+  }
+}
+
+.signup-actions-spacer {
+  flex: 1;
+  display: none;
+
+  @media (min-width: 672px) {
+    display: block;
+  }
+}
+
+.signup-review-section {
+  padding: var(--spacing-05);
+
+  @media (min-width: 672px) {
+    padding: var(--spacing-06);
+  }
+}
+
+.signup-review-title {
+  font-size: var(--body-lg-size);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-04) 0;
+  padding-bottom: var(--spacing-03);
+  border-bottom: 1px solid var(--border-subtle);
+
+  @media (min-width: 672px) {
+    font-size: var(--heading-h5-size);
+  }
+}
+
+.signup-review-grid {
+  display: grid;
+  gap: var(--spacing-04);
+  
+  @media (min-width: 672px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-05);
+  }
+
+  div {
+    font-size: var(--body-sm-size);
+    color: var(--text-primary);
+
+    @media (min-width: 672px) {
+      font-size: var(--body-md-size);
+    }
+
+    strong {
+      color: var(--text-secondary);
+      font-weight: var(--font-weight-semibold);
+      display: block;
+      margin-bottom: var(--spacing-02);
+
+      @media (min-width: 672px) {
+        display: inline;
+        margin-bottom: 0;
+        margin-right: var(--spacing-02);
+      }
+    }
+  }
+}
+
+// Carbon component overrides for better mobile experience
+.signup-form {
+  // Make form inputs easier to tap on mobile
+  .cds--text-input,
+  .cds--select-input,
+  .cds--number input {
+    @media (max-width: 671px) {
+      min-height: 48px;
+      font-size: 16px; // Prevent iOS zoom on focus
+    }
+  }
+
+  // Better spacing for radio buttons on mobile
+  .cds--radio-button-group {
+    @media (max-width: 671px) {
+      .cds--radio-button-wrapper {
+        margin-bottom: var(--spacing-04);
+      }
+    }
+  }
+
+  // Stack labels and inputs better on mobile
+  .cds--form-item {
+    @media (max-width: 671px) {
+      margin-bottom: var(--spacing-05);
+    }
+  }
+
+  .cds--label {
+    font-size: var(--body-sm-size);
+    font-weight: var(--font-weight-semibold);
+    
+    @media (min-width: 672px) {
+      font-size: var(--body-md-size);
+    }
+  }
+
+  // Checkbox spacing on mobile
+  .cds--checkbox-wrapper {
+    @media (max-width: 671px) {
+      margin-bottom: var(--spacing-04);
+    }
+  }
+
+  .cds--checkbox-label {
+    font-size: var(--body-sm-size);
+
+    @media (min-width: 672px) {
+      font-size: var(--body-md-size);
+    }
+  }
+}
+
+// Progress indicator mobile optimizations
+.cds--progress {
+  @media (max-width: 671px) {
+    .cds--progress-step {
+      min-width: auto;
+    }
+
+    .cds--progress-line {
+      min-width: 20px;
+    }
+  }
+}
+
+// Ensure proper touch targets on mobile
+@media (max-width: 671px) {
+  .cds--btn {
+    min-height: 48px;
+    padding: var(--spacing-04) var(--spacing-05);
+  }
+
+  .cds--radio-button__appearance {
+    width: 24px;
+    height: 24px;
+  }
+
+  .cds--checkbox-label::before {
+    width: 24px;
+    height: 24px;
+  }
+}
