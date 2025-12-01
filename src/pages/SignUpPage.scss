@@ -225,6 +225,20 @@
       max-width: none;
     }
 
+    // Next/Submit button appears first on mobile
+    &.cds--btn--primary {
+      @media (max-width: 671px) {
+        order: 1;
+      }
+    }
+
+    // Back button appears second on mobile
+    &.cds--btn--secondary {
+      @media (max-width: 671px) {
+        order: 2;
+      }
+    }
+
     // Enhanced primary button with gradient
     &.cds--btn--primary {
       background: linear-gradient(
