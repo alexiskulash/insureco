@@ -5,6 +5,11 @@
 .cds--header {
   background-color: var(--background-primary) !important;
   border-bottom: 1px solid var(--border-subtle) !important;
+
+  // Remove any white backgrounds from all header children
+  * {
+    background-color: transparent;
+  }
   
   // Header name/brand
   .cds--header__name {
@@ -31,16 +36,25 @@
   
   // Navigation links
   .cds--header__menu-item {
-    color: var(--text-primary);
-    
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+
     &:hover {
-      background-color: var(--background-hover);
-      color: var(--interactive-primary);
+      background-color: var(--background-hover) !important;
+      color: var(--interactive-primary) !important;
     }
-    
+
     button {
-      color: var(--text-primary);
+      color: var(--text-primary) !important;
+      background-color: transparent !important;
     }
+  }
+
+  // Navigation bar itself
+  .cds--header__nav,
+  .cds--header-panel,
+  .cds--header__menu-bar {
+    background-color: transparent !important;
   }
   
   // Global action buttons (search, notifications, theme toggle, etc.)
