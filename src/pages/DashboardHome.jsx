@@ -4,6 +4,12 @@ import {
   Column,
   Tile,
   DataTable,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableCell,
   Tag,
   ProgressBar,
   InlineLoading,
@@ -59,29 +65,30 @@ export default function DashboardHome() {
             rows={rows}
             headers={headers}
             isSortable
-            render={({ rows, headers, getHeaderProps, getRowProps }) => (
-              <table className="cds--data-table">
-                <thead>
-                  <tr>
+          >
+            {({ rows, headers, getHeaderProps, getRowProps, getTableProps }) => (
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
                     {headers.map((header) => (
-                      <th key={header.key} {...getHeaderProps({ header })}>
+                      <TableHeader key={header.key} {...getHeaderProps({ header })}>
                         {header.header}
-                      </th>
+                      </TableHeader>
                     ))}
-                  </tr>
-                </thead>
-                <tbody>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
                   {rows.map((row) => (
-                    <tr key={row.id} {...getRowProps({ row })}>
+                    <TableRow key={row.id} {...getRowProps({ row })}>
                       {row.cells.map((cell) => (
-                        <td key={cell.id}>{cell.value}</td>
+                        <TableCell key={cell.id}>{cell.value}</TableCell>
                       ))}
-                    </tr>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
             )}
-          />
+          </DataTable>
         </Tile>
       </Column>
       <Column lg={4} md={8} sm={4}>
