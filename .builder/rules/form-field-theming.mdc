@@ -1,0 +1,265 @@
+---
+description: Form field theming - inputs, textareas, and select fields theme support
+globs:
+  - "src/styles/components.scss"
+  - "src/styles/tokens/colors.scss"
+alwaysApply: false
+---
+
+# Form Field Theming
+
+## Overview
+
+All form input fields (text inputs, textareas, number inputs, select dropdowns) in the InsureCo application are fully themed to support both light and dark modes. This ensures proper contrast and readability in all theme contexts.
+
+## Problem Solved
+
+In dark mode, Carbon Design System's default behavior or browser autofill can cause form fields to display with white backgrounds and dark text, making them unreadable. This implementation ensures that:
+
+1. **Dark Mode**: Fields have dark backgrounds with light text
+2. **Light Mode**: Fields have light backgrounds with dark text
+3. **Autofill**: Browser autofill doesn't override the theme colors
+4. **All States**: Focus, hover, disabled, and placeholder states respect the theme
+
+## Design Tokens
+
+### Field-Specific Color Tokens
+
+Located in `src/styles/tokens/colors.scss`:
+
+#### Light Theme
+
+$light-field-background: #ffffff;
+$light-field-text: $color-grey-100;  // Dark text
+$light-field-placeholder: $color-grey-60;  // Medium grey
+```
+
+#### Dark Theme
+```scss
+$dark-field-background: $color-grey-90;  // Dark grey (#262626)
+$dark-field-text: $color-grey-10;  // Light text (#f4f4f4)
+$dark-field-placeholder: $color-grey-50;  // Medium grey
+```
+
+### CSS Custom Properties
+
+These tokens are exported as CSS custom properties:
+
+```css
+:root {
+  --field-background: #ffffff;
+  --field-text: #161616;
+  --field-placeholder: #6f6f6f;
+}
+
+:root[data-carbon-theme="g90"],
+:root[data-carbon-theme="g100"] {
+  --field-background: #262626;
+  --field-text: #f4f4f4;
+  --field-placeholder: #8d8d8d;
+}
+```
+
+## Implementation
+
+### Global Styles (`src/styles/components.scss`)
+
+All Carbon form components are styled globally:
+
+```scss
+.cds--text-input,
+.cds--text-area,
+.cds--select-input,
+.cds--number__input-wrapper input {
+  background-color: var(--field-background) !important;
+  color: var(--field-text) !important;
+  border-bottom-color: var(--border-strong);
+  
+  &:focus {
+    outline-color: var(--interactive-primary);
+    border-bottom-color: var(--interactive-primary);
+    background-color: var(--field-background) !important;
+  }
+
+  // Handle autofill states
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--field-background) inset !important;
+    -webkit-text-fill-color: var(--field-text) !important;
+  }
+}
+```
+
+### Why `!important` is Used
+
+The `!important` declarations are necessary to:
+
+1. **Override Carbon's default styles** that may set white backgrounds
+2. **Override browser autofill styles** (especially Chrome's yellow background)
+3. **Ensure consistency** across all form states and interactions
+4. **Guarantee theme compatibility** in both light and dark modes
+
+## Components Affected
+
+All Carbon form input components automatically receive theme support:
+
+- `TextInput` - Single-line text input
+- `TextArea` - Multi-line text input
+- `NumberInput` - Numeric input with increment/decrement
+- `Select` / `Dropdown` - Dropdown selection
+- `DatePicker` - Date selection input
+- `PasswordInput` - Password input field
+- `Search` - Search input field
+
+## Browser Compatibility
+
+### Autofill Handling
+
+Different browsers handle autofill differently:
+
+**Chrome/Edge (Webkit)**
+```scss
+&:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--field-background) inset !important;
+  -webkit-text-fill-color: var(--field-text) !important;
+}
+```
+- Uses box-shadow trick to override yellow autofill background
+- Uses `-webkit-text-fill-color` to override text color
+
+**Firefox**
+```scss
+&:-moz-autofill {
+  background-color: var(--field-background) !important;
+  color: var(--field-text) !important;
+}
+```
+- Standard background-color and color overrides work
+
+## Placeholder Styling
+
+Placeholders are styled to be visible but subtle:
+
+```scss
+.cds--text-input::placeholder {
+  color: var(--field-placeholder);
+  opacity: 0.6;
+}
+```
+
+- **Light Mode**: Medium grey (#6f6f6f at 60% opacity)
+- **Dark Mode**: Lighter grey (#8d8d8d at 60% opacity)
+- Ensures readability while being visually secondary to actual content
+
+## Disabled State
+
+Disabled fields use secondary background with tertiary text:
+
+```scss
+&:disabled {
+  background-color: var(--background-secondary) !important;
+  color: var(--text-tertiary) !important;
+}
+```
+
+This provides clear visual indication that the field cannot be edited.
+
+## Testing Checklist
+
+When testing form field theming:
+
+### Light Mode
+- [ ] Empty field has white background
+- [ ] Typing shows dark text on white background
+- [ ] Placeholder text is visible but subtle
+- [ ] Focus state shows red border
+- [ ] Autofill doesn't change background color
+
+### Dark Mode
+- [ ] Empty field has dark grey background (#262626)
+- [ ] Typing shows light text (#f4f4f4) on dark background
+- [ ] Placeholder text is visible but subtle
+- [ ] Focus state shows red border
+- [ ] Autofill doesn't change background to white
+
+### Browser Testing
+- [ ] Chrome - Autofill test (login forms, addresses)
+- [ ] Firefox - Autofill test
+- [ ] Safari - Autofill test
+- [ ] Edge - Autofill test
+
+### All States
+- [ ] Default (empty)
+- [ ] Focused (active input)
+- [ ] Filled (with user input)
+- [ ] Autofilled (browser autocomplete)
+- [ ] Disabled
+- [ ] Error state (invalid input)
+
+## Usage in Components
+
+No special implementation is needed in components. Simply use Carbon form components as normal:
+
+```jsx
+import { TextInput } from '@carbon/react';
+
+<TextInput
+  id="firstName"
+  labelText="First Name"
+  placeholder="Enter your first name"
+  value={value}
+  onChange={handleChange}
+/>
+```
+
+The global styles automatically apply theme-aware colors.
+
+## Troubleshooting
+
+### Issue: White background in dark mode after typing
+
+**Cause**: Browser or Carbon styles overriding theme styles  
+**Solution**: Ensure `src/styles/components.scss` is imported globally in `src/index.scss`
+
+### Issue: Autofill shows yellow background
+
+**Cause**: Browser default autofill styling  
+**Solution**: The webkit-autofill pseudo-class styles should handle this. If not, check browser version.
+
+### Issue: Placeholder not visible
+
+**Cause**: Placeholder color too similar to background  
+**Solution**: Adjust `--field-placeholder` token opacity or color value
+
+### Issue: Text color wrong in one theme
+
+**Cause**: Token not properly mapped  
+**Solution**: Check that field tokens are defined for both light and dark themes in `colors.scss`
+
+## Best Practices
+
+1. **Always use semantic tokens**: Use `--field-background` instead of `--background-primary` for inputs
+2. **Test in both themes**: Every form should be tested in light and dark mode
+3. **Test autofill**: Test with browser autofill enabled (especially Chrome)
+4. **Check contrast**: Ensure text meets WCAG AA standards (4.5:1 for normal text)
+5. **Consider disabled state**: Disabled fields should be clearly distinguishable
+6. **Mobile testing**: Test on actual mobile devices, not just desktop browsers
+
+## Related Documentation
+
+- **Design Tokens**: `.builder/rules/design-tokens.mdc` - Full token system documentation
+- **Theming System**: `.builder/rules/theming-system.mdc` - Overall theme implementation
+- **Carbon Design System**: `.builder/rules/carbon-design-system.mdc` - Carbon component usage
+- **Component Structure**: `.builder/rules/component-structure.mdc` - Component patterns
+
+## Future Enhancements
+
+Potential improvements to consider:
+
+1. **Field validation theming**: Error state backgrounds and borders
+2. **Focus ring customization**: More prominent focus indicators
+3. **Field size variants**: Different padding/heights for compact/comfortable modes
+4. **Readonly state**: Visual distinction for readonly vs disabled fields
+5. **Input group theming**: Consistent theming for input groups with buttons/icons
