@@ -1,0 +1,567 @@
+---
+description: Complete theming system documentation - Carbon themes, context, persistence, and implementation
+globs:
+  - "src/contexts/ThemeContext.jsx"
+  - "src/components/ThemeToggle.jsx"
+  - "**/*.jsx"
+  - "**/*.scss"
+alwaysApply: true
+---
+
+# Theming System
+
+This application uses a comprehensive theming system that combines Carbon Design System's built-in themes with custom InsureCo design tokens to support both light and dark modes.
+
+## Architecture Overview
+
+The theming system consists of:
+
+1. **Carbon Design System Themes** - Base theme foundation
+2. **Custom Theme Context** - React context for theme state management
+3. **Theme Provider** - Wrapper component that provides theme state
+4. **Theme Persistence** - localStorage integration
+5. **Custom Design Tokens** - Theme-aware CSS custom properties
+6. **Theme Toggle Component** - UI control for switching themes
+
+## Carbon Design System Themes
+
+Carbon provides four built-in themes:
+
+| Theme | Description | Use Case | Background |
+|-------|-------------|----------|------------|
+| `white` | Pure light theme | Default light mode | White (#ffffff) |
+| `g10` | Light grey theme | Alternative light | Light grey (#f4f4f4) |
+| `g90` | Dark grey theme | Alternative dark | Dark grey (#262626) |
+| `g100` | Black theme | Default dark mode | Near-black (#161616) |
+
+**InsureCo Implementation:**
+- Light mode: `white` theme
+- Dark mode: `g100` theme
+
+## Theme Context Implementation
+
+### Location
+`src/contexts/ThemeContext.jsx`
+
+### Core Functionality
+
+
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+
+// The context provides:
+const {
+  theme,           // Current theme: 'white', 'g10', 'g90', or 'g100'
+  isDark,          // Boolean: true if g90/g100, false if white/g10
+  toggleTheme,     // Function: Toggle between white and g100
+  setTheme,        // Function: Set specific theme
+  setLightTheme,   // Function: Set to 'white'
+  setDarkTheme,    // Function: Set to 'g100'
+} = useTheme();
+```
+
+### Implementation Details
+
+**State Management:**
+```jsx
+const [theme, setTheme] = useState(() => {
+  const saved = localStorage.getItem('insureco-theme');
+  return saved || 'white'; // Default to light mode
+});
+```
+
+**Effects:**
+1. **Persistence**: Theme is saved to `localStorage` with key `insureco-theme`
+2. **DOM Attribute**: Updates `data-carbon-theme` attribute on `<html>` element
+3. **GlobalTheme Wrapper**: Wraps children with Carbon's `<GlobalTheme>` component
+
+**Code:**
+```jsx
+useEffect(() => {
+  localStorage.setItem('insureco-theme', theme);
+  document.documentElement.setAttribute('data-carbon-theme', theme);
+}, [theme]);
+
+return (
+  <ThemeContext.Provider value={value}>
+    <GlobalTheme theme={theme}>
+      {children}
+    </GlobalTheme>
+  </ThemeContext.Provider>
+);
+```
+
+## Application Setup
+
+### Provider Hierarchy
+Located in `src/main.jsx`:
+
+```jsx
+<React.StrictMode>
+  <BrowserRouter>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
+</React.StrictMode>
+```
+
+**Order matters:** ThemeProvider wraps the entire app so all components have access to theme state.
+
+## Theme Toggle Component
+
+### Location
+`src/components/ThemeToggle.jsx`
+
+### Implementation
+```jsx
+import { HeaderGlobalAction } from '@carbon/react';
+import { Asleep, Light } from '@carbon/icons-react';
+import { useTheme } from '../contexts/ThemeContext';
+
+export default function ThemeToggle() {
+  const { isDark, toggleTheme } = useTheme();
+
+  return (
+    <HeaderGlobalAction
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      onClick={toggleTheme}
+      tooltipAlignment="end"
+    >
+      {isDark ? <Light size={20} /> : <Asleep size={20} />}
+    </HeaderGlobalAction>
+  );
+}
+```
+
+**Features:**
+- Uses Carbon's `HeaderGlobalAction` for consistent header styling
+- Shows moon icon (`Asleep`) in light mode
+- Shows sun icon (`Light`) in dark mode
+- Accessible label that describes the action
+- Integrated tooltip (built into `HeaderGlobalAction`)
+
+### Usage Location
+The theme toggle is placed in the header's global actions area in `src/components/Layout.jsx`:
+
+```jsx
+<HeaderGlobalBar>
+  <HeaderGlobalAction aria-label="Search" tooltipAlignment="end">
+    <Search size={20} />
+  </HeaderGlobalAction>
+  <HeaderGlobalAction aria-label="Notifications" tooltipAlignment="end">
+    <Notification size={20} />
+  </HeaderGlobalAction>
+  <ThemeToggle />  {/* Theme toggle in global actions */}
+  <HeaderGlobalAction aria-label="App Switcher" tooltipAlignment="end">
+    <Switcher size={20} />
+  </HeaderGlobalAction>
+</HeaderGlobalBar>
+```
+
+## How Themes Apply to Components
+
+### 1. Carbon Components (Automatic)
+Carbon components automatically respond to the `data-carbon-theme` attribute:
+
+```jsx
+// No special code needed - just use Carbon components
+<Button kind="primary">Submit</Button>
+<Tile>Content</Tile>
+<DataTable {...props} />
+```
+
+The components will automatically use appropriate colors, backgrounds, and styles for the active theme.
+
+### 2. Custom Components (CSS Custom Properties)
+Custom components use theme-aware CSS custom properties defined in design tokens:
+
+**SCSS/CSS:**
+```scss
+.my-component {
+  background: var(--background-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.my-button {
+  background: var(--interactive-primary);
+  color: var(--text-on-color);
+  
+  &:hover {
+    background: var(--interactive-hover);
+  }
+}
+```
+
+**How it works:**
+The design tokens in `src/styles/tokens/colors.scss` define different values for each theme:
+
+```scss
+// Light theme
+:root,
+:root[data-carbon-theme="white"],
+:root[data-carbon-theme="g10"] {
+  --background-primary: #ffffff;
+  --text-primary: #161616;
+  --interactive-primary: #da1e28;  // Brand red 60
+}
+
+// Dark theme
+:root[data-carbon-theme="g90"],
+:root[data-carbon-theme="g100"] {
+  --background-primary: #161616;
+  --text-primary: #f4f4f4;
+  --interactive-primary: #fa4d56;  // Brand red 50
+}
+```
+
+When the `data-carbon-theme` attribute changes, the CSS custom properties automatically update.
+
+## Using Themes in Components
+
+### Method 1: Use Theme Context (React)
+Access theme state in JavaScript/React:
+
+```jsx
+import { useTheme } from '../contexts/ThemeContext';
+
+function MyComponent() {
+  const { theme, isDark } = useTheme();
+  
+  return (
+    <div>
+      <p>Current theme: {theme}</p>
+      {isDark ? <DarkModeContent /> : <LightModeContent />}
+    </div>
+  );
+}
+```
+
+### Method 2: Use CSS Custom Properties (Styles)
+Most common approach - use theme-aware CSS variables:
+
+```jsx
+// Component.jsx
+function Card({ children }) {
+  return <div className="custom-card">{children}</div>;
+}
+```
+
+```scss
+// Component.scss
+@use '../../styles/tokens' as *;
+
+.custom-card {
+  background: var(--background-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-05);
+  box-shadow: var(--card-shadow);
+  
+  &:hover {
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+```
+
+### Method 3: Theme-Specific Styling (Advanced)
+When you need completely different styles per theme:
+
+```scss
+.my-component {
+  // Default/light theme styles
+  background: var(--background-primary);
+}
+
+:root[data-carbon-theme="g90"],
+:root[data-carbon-theme="g100"] {
+  .my-component {
+    // Dark theme specific overrides
+    background-image: url('/dark-pattern.svg');
+  }
+}
+```
+
+## Theme-Aware Design Tokens
+
+### Available Token Categories
+
+All tokens have theme-aware variants:
+
+**Colors:**
+- `--background-primary`, `--background-secondary`, `--background-tertiary`
+- `--text-primary`, `--text-secondary`, `--text-tertiary`, `--text-on-color`
+- `--border-subtle`, `--border-strong`, `--border-interactive`
+- `--interactive-primary`, `--interactive-secondary`, `--interactive-hover`, `--interactive-active`
+
+**Shadows (Elevation):**
+- `--shadow-01` through `--shadow-06`
+- `--card-shadow`, `--card-shadow-hover`
+- `--modal-shadow`, `--dropdown-shadow`
+
+**Static Tokens (No Theme Variants):**
+These remain the same regardless of theme:
+- Spacing: `--spacing-01` through `--spacing-13`
+- Typography: `--font-family-sans`, `--heading-h1-size`, etc.
+- Sizing: `--height-sm`, `--button-height-md`, `--icon-size-lg`, etc.
+- Radius: `--radius-sm`, `--button-radius`, etc.
+- Motion: `--duration-fast-01`, `--easing-standard`, etc.
+
+### Best Practices
+
+**✅ DO:**
+```scss
+.component {
+  // Use semantic theme tokens
+  background: var(--background-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+```
+
+**❌ DON'T:**
+```scss
+.component {
+  // Hard-coded colors don't adapt to theme
+  background: #ffffff;
+  color: #161616;
+  border: 1px solid #e0e0e0;
+}
+```
+
+**⚠️ USE CAREFULLY:**
+```scss
+.component {
+  // Brand colors are static (same in light/dark)
+  // Only use when you want consistent brand color regardless of theme
+  background: var(--color-brand-red-60);
+}
+```
+
+## Theme Persistence
+
+### localStorage Integration
+
+**Key:** `insureco-theme`  
+**Values:** `'white'`, `'g10'`, `'g90'`, or `'g100'`
+
+**Behavior:**
+1. On initial load, check localStorage for saved theme
+2. If no saved theme, default to `'white'` (light mode)
+3. When theme changes, save to localStorage
+4. Theme persists across page reloads and browser sessions
+
+**Manual Access (if needed):**
+```javascript
+// Get saved theme
+const savedTheme = localStorage.getItem('insureco-theme');
+
+// Set theme manually (not recommended - use setTheme instead)
+localStorage.setItem('insureco-theme', 'g100');
+```
+
+## Testing Themes
+
+### Manual Testing Checklist
+
+1. **Toggle Functionality:**
+   - Click theme toggle in header
+   - Verify icon changes (moon ↔ sun)
+   - Verify theme changes instantly
+   - Verify theme persists on page reload
+
+2. **Component Appearance:**
+   - Check all pages in both themes
+   - Verify text is readable (sufficient contrast)
+   - Check that colors make sense semantically
+   - Verify shadows are visible but not overwhelming
+
+3. **Carbon Components:**
+   - Buttons, inputs, tiles should auto-adapt
+   - DataTables should have appropriate backgrounds
+   - Modals and tooltips should be visible
+   - Icons should have appropriate colors
+
+4. **Custom Components:**
+   - Verify custom styled components use theme tokens
+   - Check that hover states work in both themes
+   - Ensure borders and dividers are visible
+
+### Programmatic Theme Testing
+
+```jsx
+import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from './contexts/ThemeContext';
+
+test('component renders in light theme', () => {
+  render(
+    <ThemeProvider>
+      <MyComponent />
+    </ThemeProvider>
+  );
+  // Test assertions
+});
+
+test('component renders in dark theme', () => {
+  // Set initial theme
+  localStorage.setItem('insureco-theme', 'g100');
+  
+  render(
+    <ThemeProvider>
+      <MyComponent />
+    </ThemeProvider>
+  );
+  // Test assertions
+});
+```
+
+## Common Patterns
+
+### Pattern 1: Theme-Aware Icon Color
+```jsx
+function StatusIcon({ status }) {
+  const { isDark } = useTheme();
+  
+  // Adjust icon color based on theme if needed
+  const iconColor = isDark ? '#f4f4f4' : '#161616';
+  
+  return <CheckmarkFilled color={iconColor} />;
+}
+```
+
+### Pattern 2: Conditional Rendering Based on Theme
+```jsx
+function Logo() {
+  const { isDark } = useTheme();
+  
+  return (
+    <img 
+      src={isDark ? '/logo-dark.svg' : '/logo-light.svg'} 
+      alt="InsureCo Logo"
+    />
+  );
+}
+```
+
+### Pattern 3: Dynamic Class Names
+```jsx
+function Card({ children }) {
+  const { theme } = useTheme();
+  
+  return (
+    <div className={`card card--${theme}`}>
+      {children}
+    </div>
+  );
+}
+```
+
+## Extending the Theme System
+
+### Adding a New Theme
+To add support for `g10` (light grey) theme:
+
+1. **Update ThemeContext.jsx:**
+```jsx
+const toggleTheme = () => {
+  setTheme(current => {
+    if (current === 'white') return 'g10';
+    if (current === 'g10') return 'g100';
+    return 'white';
+  });
+};
+```
+
+2. **Update isDark logic:**
+```jsx
+const isDark = theme === 'g90' || theme === 'g100';
+const isLight = theme === 'white' || theme === 'g10';
+```
+
+3. **Update ThemeToggle if needed** to show different icons/labels
+
+4. **Ensure design tokens cover the theme** (they already do via Carbon's data attributes)
+
+### Adding Custom Theme Variables
+To add new theme-aware tokens:
+
+1. **Add to `src/styles/tokens/colors.scss`:**
+```scss
+// Light theme
+:root[data-carbon-theme="white"],
+:root[data-carbon-theme="g10"] {
+  --custom-highlight: #ffe6e6;
+  --custom-accent: #da1e28;
+}
+
+// Dark theme
+:root[data-carbon-theme="g90"],
+:root[data-carbon-theme="g100"] {
+  --custom-highlight: #520408;
+  --custom-accent: #fa4d56;
+}
+```
+
+2. **Use in components:**
+```scss
+.highlighted-section {
+  background: var(--custom-highlight);
+  border-left: 4px solid var(--custom-accent);
+}
+```
+
+## Accessibility Considerations
+
+### Contrast Requirements
+Both light and dark themes must meet WCAG AA standards:
+- Normal text: 4.5:1 contrast ratio minimum
+- Large text (18px+): 3:1 contrast ratio minimum
+- UI components: 3:1 contrast ratio minimum
+
+### Testing Tools
+- Chrome DevTools: Lighthouse audit
+- Browser extensions: WAVE, axe DevTools
+- Manual verification with theme toggle
+
+### Best Practices
+1. **Never hard-code colors** - always use semantic tokens
+2. **Test all interactive states** (hover, focus, active) in both themes
+3. **Ensure focus indicators** are visible in both themes
+4. **Provide sufficient contrast** for all text and UI elements
+5. **Use descriptive labels** for theme toggle (not just icons)
+
+## Troubleshooting
+
+### Issue: Theme doesn't persist
+**Solution:** Check localStorage is enabled and not blocked by browser settings
+
+### Issue: Custom component doesn't adapt to theme
+**Solution:** Ensure you're using CSS custom properties (`var(--token-name)`) instead of static colors
+
+### Issue: Carbon component looks wrong in dark theme
+**Solution:** Verify `data-carbon-theme` attribute is set correctly on `<html>` element
+
+### Issue: Flicker on page load
+**Solution:** Theme is loaded from localStorage in useState initializer to avoid flash
+
+### Issue: Design tokens not updating
+**Solution:** Make sure tokens are defined within theme-specific selectors in SCSS
+
+## Summary
+
+The theming system provides:
+- ✅ Automatic theme support for Carbon components
+- ✅ Theme-aware design tokens for custom components
+- ✅ Persistent theme preferences via localStorage
+- ✅ Simple theme toggle in header
+- ✅ React context for theme access
+- ✅ Support for both light (`white`) and dark (`g100`) modes
+- ✅ Extensible for additional themes
+
+**Key Files:**
+- `src/contexts/ThemeContext.jsx` - Theme state management
+- `src/components/ThemeToggle.jsx` - UI control
+- `src/styles/tokens/colors.scss` - Theme-aware color tokens
+- `src/styles/tokens/elevation.scss` - Theme-aware shadows
+- `src/main.jsx` - ThemeProvider setup
