@@ -1,0 +1,246 @@
+---
+description: Landing page structure and marketing sections
+globs:
+  - "src/pages/LandingPage.jsx"
+  - "src/pages/LandingPage.scss"
+alwaysApply: false
+---
+
+# Landing Page Architecture
+
+## Overview
+
+The landing page (`src/pages/LandingPage.jsx`) is the marketing home page for InsureCo, designed to convert visitors and guide them to sign up for insurance services.
+
+## Route
+
+- **Path**: `/` (root route)
+- **Component**: `LandingPage.jsx`
+
+## Page Sections
+
+### 1. Hero Section
+- **Purpose**: Primary conversion area with main call-to-action
+- **Content**:
+  - Heading: "Protect Your Future with Confidence"
+  - Tagline describing car and home insurance
+  - Two CTA buttons:
+    - "Sign Up Now" → navigates to `/signup`
+    - "Get a Demo" → opens demo request modal
+- **Styling**: 
+  - Full-width section with brand gradient background (red tones)
+  - White text for high contrast
+  - Minimum height: 600px (500px on mobile)
+
+### 2. Features Section
+- **Purpose**: Highlight key benefits of InsureCo
+- **Content**: 4 feature tiles
+  - Comprehensive Coverage
+  - Fast Claims Processing
+  - 24/7 Support
+  - Flexible Plans
+- **Components**: Carbon `Tile` components in a grid
+- **Styling**: 
+  - Background: secondary background color
+  - Tiles have hover effects (lift and shadow)
+  - Icons use brand primary color
+
+### 3. Car Insurance Section
+- **Purpose**: Detail car insurance offerings
+- **Content**:
+  - Car icon (64px)
+  - Heading and description
+  - Feature list with checkmarks:
+    - Collision coverage
+    - Liability protection
+    - Roadside assistance
+    - Rental car coverage
+  - "Learn More" button → navigates to `/signup`
+  - Image placeholder with large car icon
+- **Layout**: Two-column grid (content left, image right)
+- **ID**: `car-insurance` (for anchor navigation)
+
+### 4. Home Insurance Section
+- **Purpose**: Detail home insurance offerings
+- **Content**:
+  - Home icon (64px)
+  - Heading and description
+  - Feature list with checkmarks:
+    - Property damage coverage
+    - Personal liability protection
+    - Natural disaster coverage
+    - Personal property protection
+  - "Learn More" button → navigates to `/signup`
+  - Image placeholder with large home icon
+- **Layout**: Two-column grid (image left, content right)
+- **ID**: `home-insurance` (for anchor navigation)
+- **Styling**: Alternate background color for visual separation
+
+### 5. Testimonials Section
+- **Purpose**: Build trust through customer reviews
+- **Content**: 3 testimonial cards
+  - Quote text
+  - Customer name
+  - Customer role/date
+- **Components**: Carbon `Tile` components
+- **Data**: Static testimonial data (mock)
+
+### 6. Call-to-Action Section
+- **Purpose**: Final conversion opportunity
+- **Content**:
+  - Heading: "Ready to Get Started?"
+  - Supporting text
+  - "Get Your Free Quote" button → navigates to `/signup`
+- **Styling**: 
+  - Full-width with brand primary background
+  - White text
+  - Centered content
+
+### 7. Footer
+- **Purpose**: Navigation and legal links
+- **Content**: 5 columns
+  1. **InsureCo**: Brand description
+  2. **Products**: Car insurance, home insurance, bundle links
+  3. **Company**: About, careers, contact
+  4. **Support**: Help center, claims, FAQ
+  5. **Legal**: Privacy, terms, cookies
+- **Functionality**:
+  - Links to anchor sections (car-insurance, home-insurance)
+  - Navigation to other pages (about, dashboard, signup)
+  - Placeholder links for future pages
+- **Copyright**: "© 2024 InsureCo. All rights reserved."
+
+## Modal Component
+
+### Demo Request Modal
+- **Trigger**: "Get a Demo" button in hero section
+- **Component**: Carbon `Modal`
+- **Fields**:
+  - Full Name (TextInput)
+  - Email Address (TextInput, type="email")
+  - Phone Number (TextInput, type="tel")
+  - Message (TextArea, optional)
+- **Actions**:
+  - "Submit Request" → shows alert and closes modal
+  - "Cancel" → closes modal
+- **State**: Managed with `useState` hook
+
+## Design Tokens Usage
+
+The landing page extensively uses InsureCo design tokens:
+
+### Colors
+- `--interactive-primary`: Brand red for buttons and accents
+- `--background-primary`: Main background
+- `--background-secondary`: Alternate section backgrounds
+- `--text-primary`: Main text color
+- `--text-secondary`: Supporting text color
+- `--text-on-color`: White text on colored backgrounds
+- `--color-success`: Checkmark icons
+
+### Spacing
+- `--spacing-03` through `--spacing-13`: Component spacing
+- `--section-spacing`: Between major sections
+
+### Typography
+- `--heading-h1-size` through `--heading-h4-size`: Heading scales
+- `--body-lg-size`, `--body-md-size`, `--body-sm-size`: Body text
+
+### Layout
+- Carbon Grid system (16 columns)
+- Responsive breakpoints (sm, md, lg)
+
+### Motion
+- `--motion-hover`: Button and tile hover transitions
+- Smooth scroll behavior for anchor links
+
+## Responsive Design
+
+### Mobile (< 672px)
+- Hero heading size reduced
+- CTA buttons stack vertically
+- Product sections reflow to single column
+- Reduced padding and minimum heights
+
+### Tablet (672px - 1056px)
+- Two-column layouts for some sections
+- Adjusted image placeholder sizes
+
+### Desktop (> 1056px)
+- Full multi-column layouts
+- Maximum width containers
+- Larger hero section
+
+## Layout Integration
+
+### Content Padding
+The landing page requires full-width sections without typical content padding:
+
+
+// In Layout.jsx
+const isLandingPage = location.pathname === '/';
+
+<Content
+  style={{ 
+    padding: isLandingPage ? 0 : undefined 
+  }}
+>
+```
+
+### Header Behavior
+- Header remains visible on landing page
+- Theme toggle available
+- Navigation includes:
+  - Home (landing page)
+  - Dashboard
+  - Sign Up
+  - About
+
+## Navigation Flow
+
+```
+Landing Page (/)
+  ├─> Sign Up (/signup) - Primary CTA
+  ├─> Dashboard (/dashboard) - For existing users
+  ├─> About (/about) - Company info
+  └─> Demo Modal - Lead capture
+```
+
+## Carbon Components Used
+
+- `Grid`, `Column` - Layout structure
+- `Button` - CTAs and actions
+- `Tile` - Feature and testimonial cards
+- `Modal` - Demo request form
+- `TextInput`, `TextArea` - Form fields
+- `Heading` - Section headings
+- `Stack` - Modal form layout
+
+## Icons Used
+
+From `@carbon/icons-react`:
+- `ShieldCheck` - Comprehensive coverage
+- `Car` - Car insurance and auto-related
+- `Home` (as `HomeIcon`) - Home insurance
+- `CheckmarkFilled` - Feature checkmarks
+- `ArrowRight` - Button icons
+
+## Best Practices
+
+1. **Theme Awareness**: All colors use CSS custom properties for automatic light/dark mode support
+2. **Accessibility**: Semantic HTML, proper heading hierarchy, ARIA labels
+3. **Performance**: Lightweight, no heavy images (using icon placeholders)
+4. **Responsive**: Mobile-first approach with Carbon grid
+5. **Consistency**: Uses Carbon components and InsureCo tokens exclusively
+6. **Navigation**: Clear paths to conversion (signup) from multiple points
+7. **Smooth Scrolling**: Enabled globally for anchor links
+
+## Future Enhancements
+
+As per PRD, these sections may be enhanced with:
+- Real customer testimonials
+- Actual product imagery
+- Integration with CRM for demo requests
+- A/B testing for conversion optimization
+- Analytics tracking
+- SEO optimization
