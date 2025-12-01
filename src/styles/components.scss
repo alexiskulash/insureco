@@ -46,14 +46,14 @@
 .cds--text-area,
 .cds--select-input,
 .cds--number__input-wrapper input {
-  background-color: var(--background-primary) !important;
-  color: var(--text-primary) !important;
+  background-color: var(--field-background) !important;
+  color: var(--field-text) !important;
   border-bottom-color: var(--border-strong);
 
   &:focus {
     outline-color: var(--interactive-primary);
     border-bottom-color: var(--interactive-primary);
-    background-color: var(--background-primary) !important;
+    background-color: var(--field-background) !important;
   }
 
   // Ensure text remains visible in all states
@@ -63,20 +63,21 @@
   }
 
   // Handle autofill states (browser autofill)
+  // This prevents Chrome from applying white background on autofill in dark mode
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px var(--background-primary) inset !important;
-    -webkit-text-fill-color: var(--text-primary) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--field-background) inset !important;
+    -webkit-text-fill-color: var(--field-text) !important;
     border-bottom-color: var(--border-strong);
   }
 
   // Firefox autofill
   &:-moz-autofill,
   &:-moz-autofill-preview {
-    background-color: var(--background-primary) !important;
-    color: var(--text-primary) !important;
+    background-color: var(--field-background) !important;
+    color: var(--field-text) !important;
   }
 }
 
@@ -84,7 +85,7 @@
 .cds--text-input::placeholder,
 .cds--text-area::placeholder,
 .cds--select-input::placeholder {
-  color: var(--text-tertiary);
+  color: var(--field-placeholder);
   opacity: 0.6;
 }
 
