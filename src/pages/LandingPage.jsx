@@ -11,7 +11,7 @@ import {
   Stack,
 } from '@carbon/react';
 import {
-  ShieldCheck,
+  Security,
   Car,
   Home as HomeIcon,
   CheckmarkFilled,
@@ -26,7 +26,7 @@ export default function LandingPage() {
 
   const features = [
     {
-      icon: <ShieldCheck size={48} />,
+      icon: <Security size={48} />,
       title: 'Comprehensive Coverage',
       description: 'Protect what matters most with our comprehensive insurance plans tailored to your needs.',
     },
