@@ -220,83 +220,11 @@
 }
 
 // ============================================
-// Progress Indicators
+// Progress Bar (not ProgressIndicator)
 // ============================================
 .cds--progress-bar {
   .cds--progress-bar__bar {
     background-color: var(--interactive-primary);
-  }
-}
-
-// IMPORTANT: High specificity selectors to override Carbon's default styles
-// Carbon's default styles don't adapt to custom theme tokens, so we need
-// to use more specific selectors to ensure our theme-aware colors are applied.
-// Without this specificity, Carbon's defaults win and cause dark-on-dark text in dark mode.
-.cds--progress-indicator {
-  // All step labels must be readable in both themes
-  // Use multiple class selectors to increase specificity above Carbon's defaults
-  .cds--progress-step .cds--progress-label {
-    color: var(--text-primary) !important;
-  }
-
-  // Current step styling - highest specificity for active state
-  .cds--progress-step--current {
-    .cds--progress-line {
-      background-color: var(--interactive-primary);
-    }
-
-    // Multi-class selector ensures we override Carbon's default color
-    .cds--progress-step-button .cds--progress-label {
-      color: var(--interactive-primary) !important;
-      font-weight: var(--font-weight-semibold);
-    }
-
-    .cds--progress-step-button::before {
-      background-color: var(--interactive-primary);
-      border-color: var(--interactive-primary);
-    }
-  }
-
-  // Completed steps - ensure checkmark and label are visible
-  .cds--progress-step--complete {
-    .cds--progress-step-button .cds--progress-label {
-      color: var(--text-primary) !important;
-    }
-
-    svg {
-      fill: var(--interactive-primary);
-    }
-  }
-
-  // Incomplete/upcoming steps - subtle but still readable
-  .cds--progress-step--incomplete {
-    .cds--progress-step-button .cds--progress-label {
-      color: var(--text-secondary) !important;
-    }
-
-    .cds--progress-step-button::before {
-      background-color: transparent;
-      border-color: var(--border-strong);
-    }
-  }
-
-  // Step button backgrounds
-  .cds--progress-step-button {
-    background-color: transparent;
-    color: var(--text-primary);
-
-    &:hover {
-      background-color: var(--background-hover);
-    }
-
-    &:focus {
-      outline-color: var(--interactive-primary);
-    }
-  }
-
-  // Progress lines
-  .cds--progress-line {
-    background-color: var(--border-subtle);
   }
 }
 
