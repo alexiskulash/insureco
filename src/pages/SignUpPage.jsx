@@ -575,69 +575,67 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="signup-page">
-      <Grid className="signup-container">
-        <Column sm={4} md={8} lg={{ span: 12, offset: 2 }} xlg={{ span: 10, offset: 3 }}>
-          <div className="signup-header">
-            <Heading className="signup-title">Sign Up for InsureCo</Heading>
-            <p className="signup-subtitle">
-              Get started with your insurance coverage in just a few steps
-            </p>
-          </div>
+    <Grid className="signup-page signup-container">
+      <Column sm={4} md={8} lg={{ span: 12, offset: 2 }} xlg={{ span: 10, offset: 3 }}>
+        <header className="signup-header">
+          <Heading className="signup-title">Sign Up for InsureCo</Heading>
+          <p className="signup-subtitle">
+            Get started with your insurance coverage in just a few steps
+          </p>
+        </header>
 
-          <div className="signup-progress">
-            <StepBreadcrumb
-              steps={steps.map((step, index) => ({
-                ...step,
-                description: index === currentStep ? 'Current' : ''
-              }))}
-              currentIndex={currentStep}
-              spaceEqually
-            />
-          </div>
+        <Tile className="signup-progress">
+          <StepBreadcrumb
+            steps={steps.map((step, index) => ({
+              ...step,
+              description: index === currentStep ? 'Current' : ''
+            }))}
+            currentIndex={currentStep}
+            spaceEqually
+          />
+        </Tile>
 
-          <Form className="signup-form" onSubmit={handleSubmit}>
-            <div className="signup-step-content">
-              {renderStepContent()}
-            </div>
+        <Form className="signup-form" onSubmit={handleSubmit}>
+          <Stack gap={7} className="signup-step-content">
+            {renderStepContent()}
+          </Stack>
 
-            <div className="signup-actions">
-              {currentStep > 0 && (
-                <Button
-                  kind="secondary"
-                  onClick={handleBack}
-                  renderIcon={ArrowLeft}
-                  iconDescription="Go back"
-                >
-                  Back
-                </Button>
-              )}
+          <Stack gap={5} orientation="horizontal" className="signup-actions">
+            {currentStep > 0 && (
+              <Button
+                kind="secondary"
+                onClick={handleBack}
+                renderIcon={ArrowLeft}
+                iconDescription="Go back"
+              >
+                Back
+              </Button>
+            )}
 
-              <div className="signup-actions-spacer" />
+            <span className="signup-actions-spacer" />
 
-              {currentStep < steps.length - 1 ? (
-                <Button
-                  onClick={handleNext}
-                  disabled={!isStepValid()}
-                  renderIcon={ArrowRight}
-                  iconDescription="Continue"
-                >
-                  Next
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  disabled={!isStepValid()}
-                  renderIcon={Checkmark}
-                  iconDescription="Submit"
-                >
-                  Complete Sign Up
-                </Button>
-              )}
-            </div>
-          </Form>
-        </Column>
-      </Grid>
-    </div>
+            {currentStep < steps.length - 1 ? (
+              <Button
+                onClick={handleNext}
+                disabled={!isStepValid()}
+                renderIcon={ArrowRight}
+                iconDescription="Continue"
+              >
+                Next
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                disabled={!isStepValid()}
+                renderIcon={Checkmark}
+                iconDescription="Submit"
+              >
+                Complete Sign Up
+              </Button>
+            )}
+          </Stack>
+        </Form>
+      </Column>
+    </Grid>
   );
 }

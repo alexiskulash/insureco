@@ -301,31 +301,48 @@
 .signup-review-grid {
   display: grid;
   gap: var(--spacing-04);
-  
+  margin: 0;
+  font-style: normal;
+
   @media (min-width: 672px) {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-05);
   }
 
-  div {
+  // Support for div, dl, and p elements
+  div,
+  p {
     font-size: var(--body-sm-size);
     color: var(--text-primary);
+    margin: 0;
 
     @media (min-width: 672px) {
       font-size: var(--body-md-size);
     }
+  }
 
-    strong {
-      color: var(--text-secondary);
-      font-weight: var(--font-weight-semibold);
-      display: block;
-      margin-bottom: var(--spacing-02);
+  // Definition list styling (dl/dt/dd)
+  dt {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-semibold);
+    display: block;
+    margin-bottom: var(--spacing-02);
 
-      @media (min-width: 672px) {
-        display: inline;
-        margin-bottom: 0;
-        margin-right: var(--spacing-02);
-      }
+    @media (min-width: 672px) {
+      display: inline;
+      margin-bottom: 0;
+      margin-right: var(--spacing-02);
+    }
+  }
+
+  dd {
+    font-size: var(--body-sm-size);
+    color: var(--text-primary);
+    margin: 0;
+
+    @media (min-width: 672px) {
+      font-size: var(--body-md-size);
+      display: inline;
     }
   }
 }
