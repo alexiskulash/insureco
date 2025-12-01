@@ -175,6 +175,37 @@
       opacity: 0.3;
     }
   }
+
+  .product-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-secondary);
+    border-radius: var(--radius-lg);
+    min-height: 400px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow var(--motion-hover), transform var(--motion-hover);
+
+    &:hover {
+      box-shadow: var(--card-shadow-hover);
+      transform: translateY(-4px);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+
+      // Dark theme filter for better integration
+      :root[data-carbon-theme="g90"] &,
+      :root[data-carbon-theme="g100"] & {
+        filter: brightness(0.9) contrast(1.05);
+      }
+    }
+  }
 }
 
 .car-insurance-section {
@@ -328,9 +359,16 @@
   }
 
   .product-section {
-    .product-image-placeholder {
+    .product-image-placeholder,
+    .product-image {
       min-height: 300px;
       margin-bottom: var(--spacing-06);
+    }
+
+    .product-image {
+      img {
+        object-position: center center;
+      }
     }
   }
 

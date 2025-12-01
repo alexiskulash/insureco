@@ -151,8 +151,12 @@ export default function LandingPage() {
             </div>
           </Column>
           <Column lg={8} md={4} sm={4}>
-            <div className="product-image-placeholder">
-              <Car size={200} />
+            <div className="product-image">
+              <img
+                src="https://images.pexels.com/photos/7925480/pexels-photo-7925480.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Luxury red sports car showcasing quality auto insurance coverage"
+                loading="lazy"
+              />
             </div>
           </Column>
         </Grid>
@@ -162,8 +166,12 @@ export default function LandingPage() {
       <section id="home-insurance" className="product-section home-insurance-section">
         <Grid>
           <Column lg={8} md={4} sm={4}>
-            <div className="product-image-placeholder">
-              <HomeIcon size={200} />
+            <div className="product-image">
+              <img
+                src="https://images.pexels.com/photos/7587856/pexels-photo-7587856.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Modern suburban home representing comprehensive home insurance protection"
+                loading="lazy"
+              />
             </div>
           </Column>
           <Column lg={8} md={4} sm={4}>
