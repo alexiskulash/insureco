@@ -1,0 +1,334 @@
+---
+description: Carbon Design System integration and usage guidelines
+globs:
+  - "**/*.jsx"
+  - "**/*.scss"
+alwaysApply: true
+---
+
+# Carbon Design System Integration
+
+## Overview
+
+This project uses IBM's **Carbon Design System** as the primary UI component library. Carbon is imported from `@carbon/react` v1.83.0-rc.0.
+
+## Installation and Setup
+
+Carbon is already installed and configured:
+
+{
+  "dependencies": {
+    "@carbon/react": "^1.83.0-rc.0"
+  }
+}
+```
+
+Global Carbon styles are imported in `src/index.scss`.
+
+## Available Components
+
+Carbon provides a comprehensive set of components. Refer to `design-system-docs/AGENTS.md` for a complete list and `design-system-docs/*.mdx` files for detailed component documentation.
+
+### Commonly Used Components
+
+**Layout & Structure:**
+- `Grid`, `Column`, `Row` - Responsive grid system
+- `Stack` - Vertical/horizontal layout with spacing
+- `Theme` - Theme context provider
+
+**UI Shell (Navigation):**
+- `Header`, `HeaderName`, `HeaderNavigation`
+- `HeaderMenuItem`, `HeaderGlobalBar`, `HeaderGlobalAction`
+- `SideNav`, `SideNavItems`, `SideNavLink`, `SideNavMenu`
+
+**Forms & Inputs:**
+- `TextInput`, `TextArea`, `PasswordInput`
+- `Dropdown`, `Select`, `ComboBox`, `MultiSelect`
+- `Checkbox`, `RadioButton`, `Toggle`
+- `NumberInput`, `DatePicker`, `TimePicker`
+- `Button`, `IconButton`
+
+**Data Display:**
+- `DataTable` (with Table*, TableRow, TableCell components)
+- `StructuredList`
+- `Tile`, `ClickableTile`, `ExpandableTile`
+
+**Feedback & Status:**
+- `InlineNotification`, `ToastNotification`, `ActionableNotification`
+- `Loading`, `InlineLoading`, `SkeletonText`, `SkeletonPlaceholder`
+- `ProgressBar`, `ProgressIndicator`
+
+**Navigation & Controls:**
+- `Tabs`, `Tab`, `TabList`, `TabPanel`
+- `Accordion`, `AccordionItem`
+- `Breadcrumb`, `BreadcrumbItem`
+- `Link`
+
+**Overlays:**
+- `Modal`, `ComposedModal` (with ModalHeader, ModalBody, ModalFooter)
+- `Popover`
+- `Tooltip`, `DefinitionTooltip`, `Toggletip`
+
+**Content:**
+- `Tag`, `Heading`, `Text`
+- `CodeSnippet`
+- `FileUploader`
+
+## Theme System
+
+### Theme Switching
+Carbon supports multiple themes via the `data-carbon-theme` attribute:
+- **white** - Light theme (default)
+- **g10** - Light grey theme
+- **g90** - Dark grey theme
+- **g100** - Black theme
+
+Theme is managed via `ThemeContext.jsx` and applied to the root element:
+```jsx
+<html data-carbon-theme={theme}>
+```
+
+### Using Theme Context
+```jsx
+import { useTheme } from './contexts/ThemeContext';
+
+function MyComponent() {
+  const { theme, setTheme } = useTheme();
+  
+  return (
+    <button onClick={() => setTheme('g100')}>
+      Switch to Dark
+    </button>
+  );
+}
+```
+
+## Component Usage Examples
+
+### Basic Button
+```jsx
+import { Button } from '@carbon/react';
+
+<Button>Click me</Button>
+<Button kind="secondary">Secondary</Button>
+<Button kind="danger">Delete</Button>
+<Button size="sm">Small</Button>
+```
+
+### Form Input
+```jsx
+import { TextInput } from '@carbon/react';
+
+<TextInput
+  id="name"
+  labelText="Name"
+  placeholder="Enter your name"
+  helperText="Full name required"
+/>
+```
+
+### Data Table
+```jsx
+import {
+  DataTable,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableCell,
+} from '@carbon/react';
+
+const rows = [
+  { id: '1', name: 'John', status: 'Active' },
+  { id: '2', name: 'Jane', status: 'Inactive' },
+];
+
+const headers = [
+  { key: 'name', header: 'Name' },
+  { key: 'status', header: 'Status' },
+];
+
+<DataTable rows={rows} headers={headers}>
+  {({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (
+    <Table {...getTableProps()}>
+      <TableHead>
+        <TableRow>
+          {headers.map(header => (
+            <TableHeader {...getHeaderProps({ header })}>
+              {header.header}
+            </TableHeader>
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {rows.map(row => (
+          <TableRow {...getRowProps({ row })}>
+            {row.cells.map(cell => (
+              <TableCell key={cell.id}>{cell.value}</TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )}
+</DataTable>
+```
+
+### Modal
+```jsx
+import { ComposedModal, ModalHeader, ModalBody, ModalFooter, Button } from '@carbon/react';
+
+const [open, setOpen] = useState(false);
+
+<ComposedModal open={open} onClose={() => setOpen(false)}>
+  <ModalHeader title="Confirm Action" />
+  <ModalBody>
+    <p>Are you sure you want to proceed?</p>
+  </ModalBody>
+  <ModalFooter>
+    <Button kind="secondary" onClick={() => setOpen(false)}>
+      Cancel
+    </Button>
+    <Button onClick={handleConfirm}>
+      Confirm
+    </Button>
+  </ModalFooter>
+</ComposedModal>
+```
+
+## Styling Carbon Components
+
+### Custom Styles
+Carbon components can be styled using:
+1. **Props** - Most components accept `className` prop
+2. **SCSS Overrides** - Override Carbon's CSS classes
+3. **CSS Custom Properties** - Use design tokens
+
+Example:
+```jsx
+<Button className="my-custom-button">Click</Button>
+```
+
+```scss
+.my-custom-button {
+  // Override Carbon styles or add custom styles
+  margin-top: var(--spacing-05);
+}
+```
+
+### Accessing Carbon Tokens
+Carbon has its own token system. InsureCo tokens complement these:
+```scss
+// Carbon tokens (if needed)
+@use '@carbon/react/scss/spacing' as carbon-spacing;
+
+// InsureCo tokens
+@use '../../styles/tokens' as *;
+
+.component {
+  // Use InsureCo brand color
+  background: var(--interactive-primary);
+  
+  // Use InsureCo spacing
+  padding: var(--spacing-05);
+}
+```
+
+## Grid System
+
+Carbon's 16-column responsive grid:
+```jsx
+import { Grid, Column } from '@carbon/react';
+
+<Grid>
+  <Column sm={4} md={8} lg={16}>
+    Full width on large, half on medium, etc.
+  </Column>
+  <Column sm={4} md={4} lg={8}>
+    Half width on large
+  </Column>
+  <Column sm={4} md={4} lg={8}>
+    Half width on large
+  </Column>
+</Grid>
+```
+
+Breakpoints:
+- **sm**: 320px (4 columns)
+- **md**: 672px (8 columns)
+- **lg**: 1056px (16 columns)
+- **xlg**: 1312px (16 columns)
+- **max**: 1584px (16 columns)
+
+## Icons
+
+Carbon provides a comprehensive icon library:
+```jsx
+import { Add, Search, Settings } from '@carbon/icons-react';
+
+<Button renderIcon={Add}>Add Item</Button>
+<IconButton label="Search" kind="ghost">
+  <Search />
+</IconButton>
+```
+
+Note: Icons are imported from `@carbon/icons-react` (separate package, may need installation).
+
+## Best Practices
+
+1. **Always Check Carbon First**: Before creating custom components, check if Carbon has an equivalent
+2. **Use Semantic Props**: Carbon components have props like `kind`, `size` - use them for consistency
+3. **Theme Awareness**: Test components in all themes (white, g10, g90, g100)
+4. **Accessibility**: Carbon components are accessible by default - don't override ARIA attributes unless necessary
+5. **Form Validation**: Use Carbon's built-in validation states (`invalid`, `warn`, `invalidText`)
+6. **Consistent Sizing**: Use Carbon's size props (`sm`, `md`, `lg`, `xl`) for consistency
+7. **Layer Context**: Use `<Layer>` component when nesting components that need background context
+
+## Documentation Resources
+
+- **Project Docs**: See `design-system-docs/*.mdx` for detailed component documentation
+- **Carbon Website**: https://carbondesignsystem.com/
+- **Carbon React**: https://react.carbondesignsystem.com/
+- **Storybook Examples**: Check `src/component-examples/` for usage patterns
+
+## Common Patterns in This Project
+
+### Layout Pattern (from Layout.jsx)
+```jsx
+import { Header, HeaderName, SideNav, SideNavItems, SideNavLink } from '@carbon/react';
+
+<Header aria-label="InsureCo">
+  <HeaderName prefix="InsureCo">Dashboard</HeaderName>
+  {/* ... navigation items ... */}
+</Header>
+
+<SideNav aria-label="Side navigation">
+  <SideNavItems>
+    <SideNavLink href="/">Dashboard</SideNavLink>
+    <SideNavLink href="/about">About</SideNavLink>
+  </SideNavItems>
+</SideNav>
+```
+
+### Dashboard Pattern (from DashboardHome.jsx)
+```jsx
+import { Grid, Column, Tile, DataTable, Tabs, Accordion } from '@carbon/react';
+
+<Grid>
+  <Column lg={16}>
+    <Tile>
+      {/* Stat content */}
+    </Tile>
+  </Column>
+  
+  <Column lg={8}>
+    <DataTable {...dataTableProps} />
+  </Column>
+  
+  <Column lg={8}>
+    <Tabs>
+      {/* Tab content */}
+    </Tabs>
+  </Column>
+</Grid>

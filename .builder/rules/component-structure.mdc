@@ -1,0 +1,103 @@
+---
+description: Component structure and organization guidelines
+globs:
+  - "src/components/**/*.jsx"
+  - "src/pages/**/*.jsx"
+alwaysApply: true
+---
+
+# Component Structure Guidelines
+
+## Project Organization
+
+The application uses a clear separation of concerns:
+
+
+src/
+├── components/          # Reusable UI components
+│   ├── Layout.jsx      # Main app layout with header/sidebar
+│   └── ThemeToggle.jsx # Theme switching component
+├── pages/              # Page-level components
+│   ├── DashboardHome.jsx  # Dashboard main page
+│   └── AboutPage.jsx      # About page
+├── contexts/           # React contexts
+│   └── ThemeContext.jsx   # Theme state management
+└── styles/             # Global styles and tokens
+    ├── tokens/         # Design tokens (SCSS)
+    ├── components.scss # Component-specific styles
+    └── index.scss      # Global styles entry point
+```
+
+## Technology Stack
+
+- **React 19** with React Router DOM v7
+- **Carbon Design System** (`@carbon/react`) - Primary UI component library
+- **SCSS** for styling with design tokens
+- **Vite** for build and development
+
+## Component Patterns
+
+### Layout Components
+- `Layout.jsx` provides the main application structure using Carbon's UI Shell components
+- Includes header with navigation and sidebar with menu items
+- Wraps page content with proper spacing and structure
+
+### Page Components
+- Located in `src/pages/`
+- Should be wrapped by `Layout` component via React Router
+- Use Carbon Design System components for UI elements
+- Import and use design tokens from `src/styles/tokens`
+
+### Theme Management
+- Theme state is managed via `ThemeContext.jsx`
+- Theme switching handled by `ThemeToggle.jsx`
+- Supports Carbon themes: white (light), g10, g90, g100 (dark)
+- Theme applied via `data-carbon-theme` attribute on root element
+
+## Styling Approach
+
+### Use Carbon Components First
+Always prefer Carbon Design System components over building custom UI:
+- Buttons → `<Button>` from `@carbon/react`
+- Form inputs → `<TextInput>`, `<Dropdown>`, etc.
+- Data tables → `<DataTable>` and related components
+- Layout → `<Grid>`, `<Column>`, etc.
+
+### When to Use Custom Tokens
+Use InsureCo design tokens for:
+- Custom spacing/padding beyond Carbon's defaults
+- Brand-specific colors (red palette)
+- Custom component styling
+- Overriding Carbon component styles when necessary
+
+### SCSS Import Pattern
+```jsx
+import './MyComponent.scss';
+```
+
+In SCSS:
+```scss
+@use '../../styles/tokens' as *;
+
+.my-component {
+  padding: var(--spacing-05);
+  background: var(--background-primary);
+}
+```
+
+## Routing Structure
+
+React Router v7 is used for navigation:
+- Routes defined in `App.jsx`
+- Layout wraps all routes
+- Use `<Link>` from `react-router-dom` for internal navigation
+
+## Best Practices
+
+1. **Component Reusability**: Create reusable components in `src/components/`
+2. **Page Organization**: Keep page-level logic in `src/pages/`
+3. **Use Carbon**: Leverage Carbon components for consistency
+4. **Theme Awareness**: Ensure components work in both light and dark themes
+5. **Token Usage**: Use CSS custom properties for theme-aware styling
+6. **Accessibility**: Carbon components are accessible by default - maintain this
+7. **Code Splitting**: Keep components focused and single-responsibility

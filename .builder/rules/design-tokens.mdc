@@ -1,0 +1,363 @@
+---
+description: InsureCo Design Tokens - Colors, Typography, Spacing, Sizing, and more
+globs:
+  - "src/styles/tokens/**/*.scss"
+  - "**/*.jsx"
+  - "**/*.scss"
+alwaysApply: true
+---
+
+# InsureCo Design Tokens
+
+This project uses a comprehensive design token system located in `src/styles/tokens/`. All tokens are defined as SCSS variables and CSS custom properties for maximum flexibility and theme support.
+
+## Token Organization
+
+The design tokens are organized into the following categories:
+
+- **Colors** (`colors.scss`) - Brand colors, neutrals, semantic colors, and theme mappings
+- **Typography** (`typography.scss`) - Font families, sizes, weights, and text styles
+- **Spacing** (`spacing.scss`) - 4px grid-based spacing scale
+- **Sizing** (`sizing.scss`) - Component sizes, heights, widths
+- **Radius** (`radius.scss`) - Border radius values
+- **Elevation** (`elevation.scss`) - Shadow and depth tokens
+- **Motion** (`motion.scss`) - Animation durations and easing curves
+- **Layout** (`layout.scss`) - Breakpoints, grid system, and container widths
+
+All tokens are imported through `src/styles/tokens/index.scss` using `@forward`.
+
+## Design System
+
+This project uses **Carbon Design System** (from `@carbon/react`) as the UI component library. The custom design tokens complement and extend Carbon's existing token system while maintaining compatibility.
+
+## Color Tokens
+
+### Brand Identity
+The primary brand color is **red**, reflecting the InsureCo insurance brand:
+- Brand red scale: `$color-brand-red-10` through `$color-brand-red-100`
+- Primary brand color: `$color-brand-red-60` (#da1e28)
+
+### Neutral Palette
+Grey scale from light to dark:
+- `$color-grey-10` (#f4f4f4) to `$color-grey-100` (#161616)
+
+### Semantic Colors
+- **Success**: Green (`$color-success-60`)
+- **Warning**: Yellow/Orange (`$color-warning-60`)
+- **Error**: Red (`$color-error-60`)
+- **Info**: Blue (`$color-info-60`)
+
+### Theme Support
+The color system supports both light and dark themes using CSS custom properties:
+
+**Light Theme** (default, white, g10):
+- Background: white to light grey
+- Text: dark grey to black
+- Interactive: brand red 60
+
+**Dark Theme** (g90, g100):
+- Background: dark grey to near-black
+- Text: light grey to white
+- Interactive: brand red 50
+
+### Usage
+
+// SCSS variables (compile-time)
+.my-component {
+  background-color: $color-brand-red-60;
+  color: $light-text-primary;
+}
+
+// CSS custom properties (runtime, theme-aware)
+.my-component {
+  background-color: var(--interactive-primary);
+  color: var(--text-primary);
+}
+```
+
+**Best Practice**: Use theme-aware CSS custom properties (e.g., `--text-primary`, `--background-primary`) instead of static colors to ensure proper dark/light theme support.
+
+## Typography Tokens
+
+### Font Families
+Based on IBM Plex font family (aligns with Carbon Design System):
+- **Sans**: `$font-family-sans` - IBM Plex Sans (body text, UI)
+- **Serif**: `$font-family-serif` - IBM Plex Serif (editorial content)
+- **Mono**: `$font-family-mono` - IBM Plex Mono (code)
+
+### Font Weights
+- Light: 300
+- Regular: 400
+- Medium: 500
+- Semibold: 600
+- Bold: 700
+
+### Type Scale
+Font sizes range from 12px (`$font-size-12`) to 76px (`$font-size-76`).
+
+### Heading Scale
+Pre-configured heading styles (H1-H6):
+- H1: 48px, light weight
+- H2: 36px, regular weight
+- H3: 28px, regular weight
+- H4: 24px, regular weight
+- H5: 20px, medium weight
+- H6: 18px, semibold weight
+
+### Body Text
+- Large: 18px
+- Medium: 16px (default)
+- Small: 14px
+- Extra Small: 12px
+
+### Usage
+```scss
+.headline {
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  line-height: var(--heading-h2-line-height);
+}
+```
+
+## Spacing Tokens
+
+Based on a **4px grid system** for consistent spacing throughout the application.
+
+### Base Scale
+- `$spacing-01`: 2px
+- `$spacing-02`: 4px
+- `$spacing-03`: 8px
+- `$spacing-04`: 12px
+- `$spacing-05`: 16px (base unit)
+- `$spacing-06`: 24px
+- `$spacing-07`: 32px
+- `$spacing-08`: 40px
+- `$spacing-09`: 48px
+- `$spacing-10`: 64px
+- `$spacing-11`: 80px
+- `$spacing-12`: 96px
+- `$spacing-13`: 160px
+
+### Semantic Tokens
+Pre-defined spacing for common use cases:
+- **Gaps**: `$gap-xs` (4px) to `$gap-2xl` (48px)
+- **Padding**: `$padding-xs` (4px) to `$padding-2xl` (48px)
+- **Margin**: `$margin-xs` (4px) to `$margin-2xl` (48px)
+
+### Component-Specific
+- Button padding: 16px horizontal, 8px vertical
+- Input padding: 16px horizontal, 8px vertical
+- Card padding: 16px (standard), 24px (large)
+- Section spacing: 48px (standard), 64px (large)
+
+### Usage
+```scss
+.card {
+  padding: var(--card-padding); // 16px
+  gap: var(--gap-md); // 16px
+}
+```
+
+## Sizing Tokens
+
+### Component Heights
+- Small: 32px (`$height-sm`)
+- Medium: 40px (`$height-md`)
+- Large: 48px (`$height-lg`)
+- Extra Large: 64px (`$height-xl`)
+
+### Button Sizes
+Match component height scale (32px to 64px)
+
+### Icon Sizes
+- Small: 16px
+- Medium: 20px
+- Large: 24px
+- Extra Large: 32px
+- 2XL: 48px
+
+### Container Widths
+Responsive container max-widths:
+- Small: 640px
+- Medium: 768px
+- Large: 1024px
+- Extra Large: 1280px
+- 2XL: 1536px
+
+### Modal Widths
+- Small: 384px
+- Medium: 512px
+- Large: 768px
+- Extra Large: 1024px
+
+## Radius Tokens
+
+### Scale
+- None: 0
+- Small: 2px
+- Medium: 4px (default for buttons/inputs)
+- Large: 8px (default for cards/modals)
+- Extra Large: 16px
+- 2XL: 24px
+- Full: 9999px (pill shape)
+- Circle: 50% (perfect circle)
+
+### Component Defaults
+- Buttons: 4px
+- Inputs: 4px
+- Cards: 8px
+- Modals: 8px
+- Badges: pill (9999px)
+- Avatars: circle (50%)
+
+## Elevation Tokens
+
+Shadow tokens for creating depth and hierarchy, with separate values for light and dark themes.
+
+### Shadow Levels (1-6)
+Progressive elevation from subtle to dramatic:
+- `$shadow-light-01` / `$shadow-dark-01` - Minimal elevation
+- `$shadow-light-02` / `$shadow-dark-02` - Subtle elevation
+- `$shadow-light-03` / `$shadow-dark-03` - Medium elevation
+- `$shadow-light-04` / `$shadow-dark-04` - High elevation
+- `$shadow-light-05` / `$shadow-dark-05` - Very high elevation
+- `$shadow-light-06` / `$shadow-dark-06` - Maximum elevation
+
+### Component-Specific
+- Cards: Level 2 (default), Level 3 (hover)
+- Modals: Level 5
+- Dropdowns: Level 3
+- Tooltips: Level 2
+
+### Usage
+CSS custom properties automatically adapt to the active theme:
+```scss
+.card {
+  box-shadow: var(--card-shadow); // Adapts to light/dark theme
+  
+  &:hover {
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+```
+
+## Motion Tokens
+
+Animation durations and easing curves for smooth, consistent motion.
+
+### Duration Scale
+- Instant: 0ms
+- Fast: 70ms, 110ms
+- Moderate: 150ms, 240ms
+- Slow: 400ms, 700ms
+
+### Easing Curves
+- **Standard**: `cubic-bezier(0.4, 0.0, 0.2, 1)` - Default transitions
+- **Entrance**: `cubic-bezier(0.0, 0.0, 0.2, 1)` - Elements entering
+- **Exit**: `cubic-bezier(0.4, 0.0, 1, 1)` - Elements leaving
+- **Expressive**: `cubic-bezier(0.4, 0.14, 0.3, 1)` - Dramatic effects
+- **Linear**: `linear` - Constant speed
+
+### Pre-configured Patterns
+- Fade: 150ms standard easing
+- Slide: 240ms entrance easing
+- Scale: 110ms standard easing
+- Hover: 70ms standard easing
+
+### Usage
+```scss
+.button {
+  transition: background-color var(--motion-hover);
+  // Equivalent to: background-color 70ms cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+```
+
+## Layout Tokens
+
+### Breakpoints
+Aligned with Carbon Design System's responsive grid:
+- **Small**: 320px (mobile)
+- **Medium**: 672px (tablet)
+- **Large**: 1056px (desktop)
+- **Extra Large**: 1312px
+- **Max**: 1584px
+
+### Grid System
+- **Columns**: 16 (Carbon standard)
+- **Gutter**: 16px
+
+### Layout Spacing
+Larger spacing units for page-level layouts:
+- `$layout-01`: 16px
+- `$layout-02`: 24px
+- `$layout-03`: 32px
+- `$layout-04`: 48px
+- `$layout-05`: 64px
+- `$layout-06`: 96px
+- `$layout-07`: 160px
+
+### Responsive Design
+```scss
+// Use Carbon Design System's Grid components
+// Or reference breakpoints in media queries
+@media (min-width: $breakpoint-md) {
+  .container {
+    max-width: var(--container-max-width-md);
+  }
+}
+```
+
+## Import and Usage
+
+### In SCSS Files
+```scss
+// Import all tokens
+@use '../styles/tokens' as *;
+
+// Or import specific token files
+@use '../styles/tokens/colors' as *;
+@use '../styles/tokens/spacing' as *;
+```
+
+### In React/JSX
+Tokens are available as CSS custom properties after including the tokens in your global styles:
+```jsx
+// Use via inline styles
+<div style={{ color: 'var(--text-primary)', padding: 'var(--spacing-05)' }} />
+
+// Or reference in component-specific SCSS/CSS
+.my-component {
+  background: var(--background-primary);
+  color: var(--text-primary);
+}
+```
+
+### Global Import
+The tokens are imported globally via `src/index.scss`:
+```scss
+@use './styles/tokens';
+```
+
+## Best Practices
+
+1. **Always use CSS custom properties** for theme-aware values (colors, shadows)
+2. **Use SCSS variables** when you need compile-time calculations or fixed values
+3. **Follow the spacing scale** - stick to the 4px grid system
+4. **Use semantic tokens** (e.g., `--text-primary`) instead of direct color values
+5. **Prefer component-specific tokens** (e.g., `--button-radius`) over base scale when available
+6. **Test in both themes** - ensure your components work in light and dark modes
+7. **Use motion tokens** for consistent animation timing across the application
+
+## Carbon Design System Integration
+
+This token system is designed to work harmoniously with Carbon Design System:
+- Breakpoints match Carbon's responsive grid
+- Typography uses IBM Plex font family (Carbon's default)
+- 16-column grid system aligns with Carbon
+- Theme switching uses Carbon's `data-carbon-theme` attribute
+
+When using Carbon components, they will automatically use Carbon's built-in tokens. Use InsureCo custom tokens for:
+- Custom components not in Carbon
+- Brand-specific styling (red color palette)
+- Additional spacing/sizing needs
+- Overriding Carbon defaults when necessary
