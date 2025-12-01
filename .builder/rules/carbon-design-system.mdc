@@ -3,7 +3,7 @@ description: Carbon Design System integration and usage guidelines
 globs:
   - "**/*.jsx"
   - "**/*.scss"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Carbon Design System Integration
@@ -86,7 +86,7 @@ Carbon supports multiple themes via the `data-carbon-theme` attribute:
 - **g100** - Black theme
 
 Theme is managed via `ThemeContext.jsx` and applied to the root element:
-```jsx
+
 <html data-carbon-theme={theme}>
 ```
 

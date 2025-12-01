@@ -4,7 +4,7 @@ globs:
   - "src/styles/tokens/**/*.scss"
   - "**/*.jsx"
   - "**/*.scss"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # InsureCo Design Tokens
@@ -113,7 +113,7 @@ Pre-configured heading styles (H1-H6):
 - Extra Small: 12px
 
 ### Usage
-```scss
+
 .headline {
   font-size: var(--heading-h2-size);
   font-weight: var(--heading-h2-weight);

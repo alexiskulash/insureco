@@ -5,7 +5,7 @@ globs:
   - "src/components/ThemeToggle.jsx"
   - "**/*.jsx"
   - "**/*.scss"
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Theming System
@@ -57,7 +57,7 @@ const {
   setLightTheme,   // Function: Set to 'white'
   setDarkTheme,    // Function: Set to 'g100'
 } = useTheme();
-```
+
 
 ### Implementation Details
 
