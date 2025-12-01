@@ -1,0 +1,152 @@
+// InsureCo Typography Tokens
+// Based on IBM Plex font family
+
+// ============================================
+// Font Families
+// ============================================
+$font-family-sans: "'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif";
+$font-family-serif: "'IBM Plex Serif', 'Georgia', serif";
+$font-family-mono: "'IBM Plex Mono', 'Menlo', 'Monaco', monospace";
+
+// ============================================
+// Font Weights
+// ============================================
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// ============================================
+// Font Sizes (Type Scale)
+// ============================================
+$font-size-12: 0.75rem;   // 12px
+$font-size-14: 0.875rem;  // 14px
+$font-size-16: 1rem;      // 16px
+$font-size-18: 1.125rem;  // 18px
+$font-size-20: 1.25rem;   // 20px
+$font-size-24: 1.5rem;    // 24px
+$font-size-28: 1.75rem;   // 28px
+$font-size-32: 2rem;      // 32px
+$font-size-36: 2.25rem;   // 36px
+$font-size-42: 2.625rem;  // 42px
+$font-size-48: 3rem;      // 48px
+$font-size-54: 3.375rem;  // 54px
+$font-size-60: 3.75rem;   // 60px
+$font-size-68: 4.25rem;   // 68px
+$font-size-76: 4.75rem;   // 76px
+
+// ============================================
+// Line Heights
+// ============================================
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-loose: 1.75;
+
+// ============================================
+// Letter Spacing
+// ============================================
+$letter-spacing-tight: -0.02em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.02em;
+$letter-spacing-wider: 0.04em;
+
+// ============================================
+// Heading Scale (H1-H6)
+// ============================================
+$heading-h1-size: $font-size-48;
+$heading-h1-weight: $font-weight-light;
+$heading-h1-line-height: $line-height-tight;
+$heading-h1-letter-spacing: $letter-spacing-tight;
+
+$heading-h2-size: $font-size-36;
+$heading-h2-weight: $font-weight-regular;
+$heading-h2-line-height: $line-height-tight;
+$heading-h2-letter-spacing: $letter-spacing-tight;
+
+$heading-h3-size: $font-size-28;
+$heading-h3-weight: $font-weight-regular;
+$heading-h3-line-height: $line-height-normal;
+$heading-h3-letter-spacing: $letter-spacing-normal;
+
+$heading-h4-size: $font-size-24;
+$heading-h4-weight: $font-weight-regular;
+$heading-h4-line-height: $line-height-normal;
+$heading-h4-letter-spacing: $letter-spacing-normal;
+
+$heading-h5-size: $font-size-20;
+$heading-h5-weight: $font-weight-medium;
+$heading-h5-line-height: $line-height-normal;
+$heading-h5-letter-spacing: $letter-spacing-normal;
+
+$heading-h6-size: $font-size-18;
+$heading-h6-weight: $font-weight-semibold;
+$heading-h6-line-height: $line-height-normal;
+$heading-h6-letter-spacing: $letter-spacing-normal;
+
+// ============================================
+// Body Text
+// ============================================
+$body-lg-size: $font-size-18;
+$body-lg-weight: $font-weight-regular;
+$body-lg-line-height: $line-height-normal;
+
+$body-md-size: $font-size-16;
+$body-md-weight: $font-weight-regular;
+$body-md-line-height: $line-height-normal;
+
+$body-sm-size: $font-size-14;
+$body-sm-weight: $font-weight-regular;
+$body-sm-line-height: $line-height-normal;
+
+$body-xs-size: $font-size-12;
+$body-xs-weight: $font-weight-regular;
+$body-xs-line-height: $line-height-normal;
+
+// ============================================
+// CSS Custom Properties
+// ============================================
+:root {
+  // Font families
+  --font-family-sans: #{$font-family-sans};
+  --font-family-serif: #{$font-family-serif};
+  --font-family-mono: #{$font-family-mono};
+
+  // Font weights
+  --font-weight-light: #{$font-weight-light};
+  --font-weight-regular: #{$font-weight-regular};
+  --font-weight-medium: #{$font-weight-medium};
+  --font-weight-semibold: #{$font-weight-semibold};
+  --font-weight-bold: #{$font-weight-bold};
+
+  // Headings
+  --heading-h1-size: #{$heading-h1-size};
+  --heading-h1-weight: #{$heading-h1-weight};
+  --heading-h1-line-height: #{$heading-h1-line-height};
+
+  --heading-h2-size: #{$heading-h2-size};
+  --heading-h2-weight: #{$heading-h2-weight};
+  --heading-h2-line-height: #{$heading-h2-line-height};
+
+  --heading-h3-size: #{$heading-h3-size};
+  --heading-h3-weight: #{$heading-h3-weight};
+  --heading-h3-line-height: #{$heading-h3-line-height};
+
+  --heading-h4-size: #{$heading-h4-size};
+  --heading-h4-weight: #{$heading-h4-weight};
+  --heading-h4-line-height: #{$heading-h4-line-height};
+
+  --heading-h5-size: #{$heading-h5-size};
+  --heading-h5-weight: #{$heading-h5-weight};
+  --heading-h5-line-height: #{$heading-h5-line-height};
+
+  --heading-h6-size: #{$heading-h6-size};
+  --heading-h6-weight: #{$heading-h6-weight};
+  --heading-h6-line-height: #{$heading-h6-line-height};
+
+  // Body text
+  --body-lg-size: #{$body-lg-size};
+  --body-md-size: #{$body-md-size};
+  --body-sm-size: #{$body-sm-size};
+  --body-xs-size: #{$body-xs-size};
+}

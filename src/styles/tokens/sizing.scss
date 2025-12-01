@@ -1,0 +1,107 @@
+// InsureCo Sizing Tokens
+// Component size variants and fixed sizes
+
+// ============================================
+// Component Height Variants
+// ============================================
+$height-sm: 2rem;      // 32px
+$height-md: 2.5rem;    // 40px
+$height-lg: 3rem;      // 48px
+$height-xl: 4rem;      // 64px
+
+// ============================================
+// Button Sizes
+// ============================================
+$button-height-sm: $height-sm;    // 32px
+$button-height-md: $height-md;    // 40px
+$button-height-lg: $height-lg;    // 48px
+$button-height-xl: $height-xl;    // 64px
+
+$button-min-width: 4rem;          // 64px
+
+// ============================================
+// Input Field Heights
+// ============================================
+$input-height-sm: $height-sm;     // 32px
+$input-height-md: $height-md;     // 40px
+$input-height-lg: $height-lg;     // 48px
+
+// ============================================
+// Icon Sizes
+// ============================================
+$icon-size-sm: 1rem;      // 16px
+$icon-size-md: 1.25rem;   // 20px
+$icon-size-lg: 1.5rem;    // 24px
+$icon-size-xl: 2rem;      // 32px
+$icon-size-2xl: 3rem;     // 48px
+
+// ============================================
+// Container Widths
+// ============================================
+$container-sm: 640px;
+$container-md: 768px;
+$container-lg: 1024px;
+$container-xl: 1280px;
+$container-2xl: 1536px;
+
+// ============================================
+// Avatar Sizes
+// ============================================
+$avatar-sm: 1.5rem;   // 24px
+$avatar-md: 2rem;     // 32px
+$avatar-lg: 2.5rem;   // 40px
+$avatar-xl: 3rem;     // 48px
+
+// ============================================
+// Card/Tile Sizes
+// ============================================
+$card-min-height: 8rem;       // 128px
+$card-max-width: 100%;
+
+$tile-min-height-sm: 6rem;    // 96px
+$tile-min-height-md: 8rem;    // 128px
+$tile-min-height-lg: 12rem;   // 192px
+
+// ============================================
+// Modal Widths
+// ============================================
+$modal-width-sm: 24rem;   // 384px
+$modal-width-md: 32rem;   // 512px
+$modal-width-lg: 48rem;   // 768px
+$modal-width-xl: 64rem;   // 1024px
+
+// ============================================
+// CSS Custom Properties
+// ============================================
+:root {
+  // Heights
+  --height-sm: #{$height-sm};
+  --height-md: #{$height-md};
+  --height-lg: #{$height-lg};
+  --height-xl: #{$height-xl};
+
+  // Buttons
+  --button-height-sm: #{$button-height-sm};
+  --button-height-md: #{$button-height-md};
+  --button-height-lg: #{$button-height-lg};
+  --button-height-xl: #{$button-height-xl};
+  --button-min-width: #{$button-min-width};
+
+  // Inputs
+  --input-height-sm: #{$input-height-sm};
+  --input-height-md: #{$input-height-md};
+  --input-height-lg: #{$input-height-lg};
+
+  // Icons
+  --icon-size-sm: #{$icon-size-sm};
+  --icon-size-md: #{$icon-size-md};
+  --icon-size-lg: #{$icon-size-lg};
+  --icon-size-xl: #{$icon-size-xl};
+
+  // Containers
+  --container-sm: #{$container-sm};
+  --container-md: #{$container-md};
+  --container-lg: #{$container-lg};
+  --container-xl: #{$container-xl};
+  --container-2xl: #{$container-2xl};
+}

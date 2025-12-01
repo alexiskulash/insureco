@@ -1,0 +1,183 @@
+// InsureCo Color Tokens
+// Red and grey palette inspired by modern insurance branding
+
+// ============================================
+// Brand Primary Colors (Reds)
+// ============================================
+$color-brand-red-10: #fff1f1;
+$color-brand-red-20: #ffd7d9;
+$color-brand-red-30: #ffb3b8;
+$color-brand-red-40: #ff8389;
+$color-brand-red-50: #fa4d56;
+$color-brand-red-60: #da1e28;
+$color-brand-red-70: #a2191f;
+$color-brand-red-80: #750e13;
+$color-brand-red-90: #520408;
+$color-brand-red-100: #2d0709;
+
+// ============================================
+// Neutral Greys
+// ============================================
+$color-grey-10: #f4f4f4;
+$color-grey-20: #e0e0e0;
+$color-grey-30: #c6c6c6;
+$color-grey-40: #a8a8a8;
+$color-grey-50: #8d8d8d;
+$color-grey-60: #6f6f6f;
+$color-grey-70: #525252;
+$color-grey-80: #393939;
+$color-grey-90: #262626;
+$color-grey-100: #161616;
+
+// ============================================
+// Semantic Colors
+// ============================================
+// Success (Green)
+$color-success-10: #defbe6;
+$color-success-50: #24a148;
+$color-success-60: #198038;
+$color-success-70: #0e6027;
+
+// Warning (Yellow/Orange)
+$color-warning-10: #fcf4d6;
+$color-warning-50: #f1c21b;
+$color-warning-60: #d6a000;
+$color-warning-70: #8e6a00;
+
+// Error (Different red from brand)
+$color-error-10: #fff1f1;
+$color-error-50: #fa4d56;
+$color-error-60: #da1e28;
+$color-error-70: #a2191f;
+
+// Info (Blue)
+$color-info-10: #edf5ff;
+$color-info-50: #4589ff;
+$color-info-60: #0f62fe;
+$color-info-70: #0043ce;
+
+// ============================================
+// Light Theme Mappings
+// ============================================
+$light-background-primary: #ffffff;
+$light-background-secondary: $color-grey-10;
+$light-background-tertiary: $color-grey-20;
+$light-background-hover: rgba(141, 141, 141, 0.12);
+$light-background-active: rgba(141, 141, 141, 0.5);
+$light-background-selected: rgba(218, 30, 40, 0.1);
+
+$light-text-primary: $color-grey-100;
+$light-text-secondary: $color-grey-70;
+$light-text-tertiary: $color-grey-60;
+$light-text-on-color: #ffffff;
+$light-text-error: $color-error-60;
+
+$light-border-subtle: $color-grey-20;
+$light-border-strong: $color-grey-50;
+$light-border-interactive: $color-brand-red-60;
+
+$light-interactive-primary: $color-brand-red-60;
+$light-interactive-secondary: $color-grey-70;
+$light-interactive-hover: $color-brand-red-70;
+$light-interactive-active: $color-brand-red-80;
+
+// ============================================
+// Dark Theme Mappings
+// ============================================
+$dark-background-primary: $color-grey-100;
+$dark-background-secondary: $color-grey-90;
+$dark-background-tertiary: $color-grey-80;
+$dark-background-hover: rgba(141, 141, 141, 0.16);
+$dark-background-active: rgba(141, 141, 141, 0.4);
+$dark-background-selected: rgba(250, 77, 86, 0.2);
+
+$dark-text-primary: $color-grey-10;
+$dark-text-secondary: $color-grey-30;
+$dark-text-tertiary: $color-grey-40;
+$dark-text-on-color: #ffffff;
+$dark-text-error: $color-error-50;
+
+$dark-border-subtle: $color-grey-80;
+$dark-border-strong: $color-grey-60;
+$dark-border-interactive: $color-brand-red-50;
+
+$dark-interactive-primary: $color-brand-red-50;
+$dark-interactive-secondary: $color-grey-50;
+$dark-interactive-hover: $color-brand-red-40;
+$dark-interactive-active: $color-brand-red-30;
+
+// ============================================
+// CSS Custom Properties
+// ============================================
+:root {
+  // Brand colors (static)
+  --color-brand-red-10: #{$color-brand-red-10};
+  --color-brand-red-20: #{$color-brand-red-20};
+  --color-brand-red-30: #{$color-brand-red-30};
+  --color-brand-red-40: #{$color-brand-red-40};
+  --color-brand-red-50: #{$color-brand-red-50};
+  --color-brand-red-60: #{$color-brand-red-60};
+  --color-brand-red-70: #{$color-brand-red-70};
+  --color-brand-red-80: #{$color-brand-red-80};
+  --color-brand-red-90: #{$color-brand-red-90};
+  --color-brand-red-100: #{$color-brand-red-100};
+
+  // Semantic colors (static)
+  --color-success: #{$color-success-60};
+  --color-warning: #{$color-warning-60};
+  --color-error: #{$color-error-60};
+  --color-info: #{$color-info-60};
+}
+
+// Light theme (default)
+:root,
+:root[data-carbon-theme="white"],
+:root[data-carbon-theme="g10"] {
+  --background-primary: #{$light-background-primary};
+  --background-secondary: #{$light-background-secondary};
+  --background-tertiary: #{$light-background-tertiary};
+  --background-hover: #{$light-background-hover};
+  --background-active: #{$light-background-active};
+  --background-selected: #{$light-background-selected};
+
+  --text-primary: #{$light-text-primary};
+  --text-secondary: #{$light-text-secondary};
+  --text-tertiary: #{$light-text-tertiary};
+  --text-on-color: #{$light-text-on-color};
+  --text-error: #{$light-text-error};
+
+  --border-subtle: #{$light-border-subtle};
+  --border-strong: #{$light-border-strong};
+  --border-interactive: #{$light-border-interactive};
+
+  --interactive-primary: #{$light-interactive-primary};
+  --interactive-secondary: #{$light-interactive-secondary};
+  --interactive-hover: #{$light-interactive-hover};
+  --interactive-active: #{$light-interactive-active};
+}
+
+// Dark theme
+:root[data-carbon-theme="g90"],
+:root[data-carbon-theme="g100"] {
+  --background-primary: #{$dark-background-primary};
+  --background-secondary: #{$dark-background-secondary};
+  --background-tertiary: #{$dark-background-tertiary};
+  --background-hover: #{$dark-background-hover};
+  --background-active: #{$dark-background-active};
+  --background-selected: #{$dark-background-selected};
+
+  --text-primary: #{$dark-text-primary};
+  --text-secondary: #{$dark-text-secondary};
+  --text-tertiary: #{$dark-text-tertiary};
+  --text-on-color: #{$dark-text-on-color};
+  --text-error: #{$dark-text-error};
+
+  --border-subtle: #{$dark-border-subtle};
+  --border-strong: #{$dark-border-strong};
+  --border-interactive: #{$dark-border-interactive};
+
+  --interactive-primary: #{$dark-interactive-primary};
+  --interactive-secondary: #{$dark-interactive-secondary};
+  --interactive-hover: #{$dark-interactive-hover};
+  --interactive-active: #{$dark-interactive-active};
+}

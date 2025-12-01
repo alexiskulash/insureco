@@ -24,6 +24,7 @@ import {
   Notification,
   Search,
 } from "@carbon/icons-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Layout({ children }) {
   const navigate = useNavigate();
@@ -39,8 +40,8 @@ export default function Layout({ children }) {
               isActive={isSideNavExpanded}
               aria-expanded={isSideNavExpanded}
             />
-            <HeaderName href="#" prefix="Carbon">
-              Dashboard
+            <HeaderName href="#" prefix="InsureCo">
+
             </HeaderName>
             <HeaderNavigation aria-label="Carbon Dashboard">
               <HeaderMenuItem onClick={() => navigate("/")}>
@@ -71,6 +72,7 @@ export default function Layout({ children }) {
               <HeaderGlobalAction aria-label="Notifications">
                 <Notification size={20} />
               </HeaderGlobalAction>
+              <ThemeToggle />
               <HeaderGlobalAction
                 aria-label="App Switcher"
                 tooltipAlignment="end"
@@ -110,7 +112,7 @@ export default function Layout({ children }) {
           <Content
             id="main-content"
             className="cds--content"
-            style={{ minHeight: "100vh", background: "#f4f4f4" }}
+            style={{ minHeight: "100vh" }}
           >
             {children}
           </Content>

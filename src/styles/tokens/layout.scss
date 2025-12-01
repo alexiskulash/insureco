@@ -1,0 +1,69 @@
+// InsureCo Layout Tokens
+// Grid breakpoints and container widths (aligned with Carbon)
+
+// ============================================
+// Breakpoints (matching Carbon Design System)
+// ============================================
+$breakpoint-sm: 320px;    // Small (mobile)
+$breakpoint-md: 672px;    // Medium (tablet)
+$breakpoint-lg: 1056px;   // Large (desktop)
+$breakpoint-xlg: 1312px;  // Extra large
+$breakpoint-max: 1584px;  // Maximum
+
+// ============================================
+// Container Max Widths
+// ============================================
+$container-max-width-sm: 640px;
+$container-max-width-md: 768px;
+$container-max-width-lg: 1024px;
+$container-max-width-xlg: 1280px;
+$container-max-width-max: 1536px;
+
+// ============================================
+// Grid Columns
+// ============================================
+$grid-columns: 16;        // Carbon uses 16-column grid
+$grid-gutter: 1rem;       // 16px
+
+// ============================================
+// Layout Spacing
+// ============================================
+$layout-01: 1rem;         // 16px
+$layout-02: 1.5rem;       // 24px
+$layout-03: 2rem;         // 32px
+$layout-04: 3rem;         // 48px
+$layout-05: 4rem;         // 64px
+$layout-06: 6rem;         // 96px
+$layout-07: 10rem;        // 160px
+
+// ============================================
+// CSS Custom Properties
+// ============================================
+:root {
+  // Breakpoints
+  --breakpoint-sm: #{$breakpoint-sm};
+  --breakpoint-md: #{$breakpoint-md};
+  --breakpoint-lg: #{$breakpoint-lg};
+  --breakpoint-xlg: #{$breakpoint-xlg};
+  --breakpoint-max: #{$breakpoint-max};
+
+  // Container max widths
+  --container-max-width-sm: #{$container-max-width-sm};
+  --container-max-width-md: #{$container-max-width-md};
+  --container-max-width-lg: #{$container-max-width-lg};
+  --container-max-width-xlg: #{$container-max-width-xlg};
+  --container-max-width-max: #{$container-max-width-max};
+
+  // Grid
+  --grid-columns: #{$grid-columns};
+  --grid-gutter: #{$grid-gutter};
+
+  // Layout spacing
+  --layout-01: #{$layout-01};
+  --layout-02: #{$layout-02};
+  --layout-03: #{$layout-03};
+  --layout-04: #{$layout-04};
+  --layout-05: #{$layout-05};
+  --layout-06: #{$layout-06};
+  --layout-07: #{$layout-07};
+}

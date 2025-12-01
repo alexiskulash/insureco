@@ -1,0 +1,95 @@
+// InsureCo Spacing Tokens
+// 4px grid-based scale
+
+// ============================================
+// Spacing Scale (4px base)
+// ============================================
+$spacing-01: 0.125rem;  // 2px
+$spacing-02: 0.25rem;   // 4px
+$spacing-03: 0.5rem;    // 8px
+$spacing-04: 0.75rem;   // 12px
+$spacing-05: 1rem;      // 16px
+$spacing-06: 1.5rem;    // 24px
+$spacing-07: 2rem;      // 32px
+$spacing-08: 2.5rem;    // 40px
+$spacing-09: 3rem;      // 48px
+$spacing-10: 4rem;      // 64px
+$spacing-11: 5rem;      // 80px
+$spacing-12: 6rem;      // 96px
+$spacing-13: 10rem;     // 160px
+
+// ============================================
+// Layout Gaps
+// ============================================
+$gap-xs: $spacing-02;   // 4px
+$gap-sm: $spacing-03;   // 8px
+$gap-md: $spacing-05;   // 16px
+$gap-lg: $spacing-06;   // 24px
+$gap-xl: $spacing-07;   // 32px
+$gap-2xl: $spacing-09;  // 48px
+
+// ============================================
+// Padding/Margin Standards
+// ============================================
+$padding-xs: $spacing-02;   // 4px
+$padding-sm: $spacing-03;   // 8px
+$padding-md: $spacing-05;   // 16px
+$padding-lg: $spacing-06;   // 24px
+$padding-xl: $spacing-07;   // 32px
+$padding-2xl: $spacing-09;  // 48px
+
+$margin-xs: $spacing-02;    // 4px
+$margin-sm: $spacing-03;    // 8px
+$margin-md: $spacing-05;    // 16px
+$margin-lg: $spacing-06;    // 24px
+$margin-xl: $spacing-07;    // 32px
+$margin-2xl: $spacing-09;   // 48px
+
+// ============================================
+// Component-specific spacing
+// ============================================
+$button-padding-horizontal: $spacing-05;  // 16px
+$button-padding-vertical: $spacing-03;    // 8px
+
+$input-padding-horizontal: $spacing-05;   // 16px
+$input-padding-vertical: $spacing-03;     // 8px
+
+$card-padding: $spacing-05;               // 16px
+$card-padding-lg: $spacing-06;            // 24px
+
+$section-spacing: $spacing-09;            // 48px
+$section-spacing-lg: $spacing-10;         // 64px
+
+// ============================================
+// CSS Custom Properties
+// ============================================
+:root {
+  // Base spacing scale
+  --spacing-01: #{$spacing-01};
+  --spacing-02: #{$spacing-02};
+  --spacing-03: #{$spacing-03};
+  --spacing-04: #{$spacing-04};
+  --spacing-05: #{$spacing-05};
+  --spacing-06: #{$spacing-06};
+  --spacing-07: #{$spacing-07};
+  --spacing-08: #{$spacing-08};
+  --spacing-09: #{$spacing-09};
+  --spacing-10: #{$spacing-10};
+  --spacing-11: #{$spacing-11};
+  --spacing-12: #{$spacing-12};
+  --spacing-13: #{$spacing-13};
+
+  // Gaps
+  --gap-xs: #{$gap-xs};
+  --gap-sm: #{$gap-sm};
+  --gap-md: #{$gap-md};
+  --gap-lg: #{$gap-lg};
+  --gap-xl: #{$gap-xl};
+  --gap-2xl: #{$gap-2xl};
+
+  // Component spacing
+  --button-padding-horizontal: #{$button-padding-horizontal};
+  --button-padding-vertical: #{$button-padding-vertical};
+  --card-padding: #{$card-padding};
+  --section-spacing: #{$section-spacing};
+}

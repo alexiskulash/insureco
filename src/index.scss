@@ -1,10 +1,66 @@
+// Import Carbon with custom font path
 @use "@carbon/react" with (
   $font-path: "@ibm/plex"
 );
+
+// Import InsureCo design tokens
+@use "./styles/tokens";
+
+// Import component customizations
+@use "./styles/components";
 
 /* Hide SideNav on desktop (wider than 1056px, Carbon 'lg' breakpoint) */
 @media (min-width: 1056px) {
   .cds--side-nav {
     display: none !important;
   }
+}
+
+/* Global Typography Settings */
+body {
+  font-family: var(--font-family-sans);
+  color: var(--text-primary);
+  background-color: var(--background-secondary);
+}
+
+h1 {
+  font-size: var(--heading-h1-size);
+  font-weight: var(--heading-h1-weight);
+  line-height: var(--heading-h1-line-height);
+  color: var(--text-primary);
+}
+
+h2 {
+  font-size: var(--heading-h2-size);
+  font-weight: var(--heading-h2-weight);
+  line-height: var(--heading-h2-line-height);
+  color: var(--text-primary);
+}
+
+h3 {
+  font-size: var(--heading-h3-size);
+  font-weight: var(--heading-h3-weight);
+  line-height: var(--heading-h3-line-height);
+  color: var(--text-primary);
+}
+
+h4 {
+  font-size: var(--heading-h4-size);
+  font-weight: var(--heading-h4-weight);
+  line-height: var(--heading-h4-line-height);
+  color: var(--text-primary);
+}
+
+h5 {
+  font-size: var(--heading-h5-size);
+  font-weight: var(--heading-h5-weight);
+  line-height: var(--heading-h5-line-height);
+  color: var(--text-primary);
+}
+
+h6 {
+  font-size: var(--heading-h6-size);
+  font-weight: var(--heading-h6-weight);
+  line-height: var(--heading-h6-line-height);
+  color: var(--text-primary);
 }

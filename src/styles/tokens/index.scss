@@ -1,0 +1,11 @@
+// InsureCo Design Tokens
+// Main token aggregator - imports all token categories
+
+@forward './colors';
+@forward './typography';
+@forward './spacing';
+@forward './sizing';
+@forward './radius';
+@forward './elevation';
+@forward './motion';
+@forward './layout';

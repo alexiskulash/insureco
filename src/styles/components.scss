@@ -1,0 +1,244 @@
+// InsureCo Component Customizations
+// Global component styling overrides for Carbon components
+
+// ============================================
+// Buttons
+// ============================================
+.cds--btn--primary {
+  background-color: var(--interactive-primary);
+  border-color: var(--interactive-primary);
+  
+  &:hover {
+    background-color: var(--interactive-hover);
+    border-color: var(--interactive-hover);
+  }
+  
+  &:active {
+    background-color: var(--interactive-active);
+    border-color: var(--interactive-active);
+  }
+}
+
+// ============================================
+// Cards/Tiles
+// ============================================
+.cds--tile {
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--motion-hover), transform var(--motion-hover);
+  
+  &:hover {
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+.cds--tile--clickable {
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// ============================================
+// Forms
+// ============================================
+.cds--text-input,
+.cds--text-area,
+.cds--select-input,
+.cds--number__input-wrapper input {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  border-bottom-color: var(--border-strong);
+  
+  &:focus {
+    outline-color: var(--interactive-primary);
+    border-bottom-color: var(--interactive-primary);
+  }
+}
+
+.cds--label {
+  color: var(--text-secondary);
+}
+
+.cds--form__helper-text {
+  color: var(--text-tertiary);
+}
+
+// ============================================
+// Navigation/Header
+// ============================================
+.cds--header {
+  background-color: var(--background-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.cds--header__name {
+  color: var(--text-primary);
+  
+  &:hover {
+    color: var(--interactive-primary);
+  }
+}
+
+.cds--header__menu-item {
+  &:hover {
+    background-color: var(--background-hover);
+    color: var(--interactive-primary);
+  }
+}
+
+.cds--side-nav {
+  background-color: var(--background-secondary);
+}
+
+// ============================================
+// Tables
+// ============================================
+.cds--data-table {
+  background-color: var(--background-primary);
+  
+  thead {
+    background-color: var(--background-secondary);
+  }
+  
+  th {
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  
+  td {
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  tbody tr:hover {
+    background-color: var(--background-hover);
+  }
+}
+
+// ============================================
+// Modals
+// ============================================
+.cds--modal {
+  .cds--modal-container {
+    background-color: var(--background-primary);
+    box-shadow: var(--modal-shadow);
+  }
+  
+  .cds--modal-header {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .cds--modal-footer {
+    border-top: 1px solid var(--border-subtle);
+  }
+}
+
+// ============================================
+// Progress Indicators
+// ============================================
+.cds--progress-bar {
+  .cds--progress-bar__bar {
+    background-color: var(--interactive-primary);
+  }
+}
+
+.cds--progress-indicator {
+  .cds--progress-step--current {
+    .cds--progress-line {
+      background-color: var(--interactive-primary);
+    }
+  }
+  
+  .cds--progress-step--complete {
+    svg {
+      fill: var(--color-success);
+    }
+  }
+}
+
+// ============================================
+// Tags
+// ============================================
+.cds--tag {
+  &.cds--tag--red {
+    background-color: var(--color-brand-red-20);
+    color: var(--color-brand-red-80);
+  }
+  
+  &.cds--tag--green {
+    background-color: var(--color-success-10);
+    color: var(--color-success-70);
+  }
+}
+
+// ============================================
+// Notifications
+// ============================================
+.cds--inline-notification,
+.cds--toast-notification {
+  &.cds--inline-notification--error,
+  &.cds--toast-notification--error {
+    border-left-color: var(--color-error);
+  }
+  
+  &.cds--inline-notification--success,
+  &.cds--toast-notification--success {
+    border-left-color: var(--color-success);
+  }
+  
+  &.cds--inline-notification--warning,
+  &.cds--toast-notification--warning {
+    border-left-color: var(--color-warning);
+  }
+  
+  &.cds--inline-notification--info,
+  &.cds--toast-notification--info {
+    border-left-color: var(--color-info);
+  }
+}
+
+// ============================================
+// Tabs
+// ============================================
+.cds--tabs {
+  .cds--tabs__nav-link {
+    color: var(--text-secondary);
+    border-bottom-color: var(--border-subtle);
+    
+    &:hover {
+      color: var(--text-primary);
+      border-bottom-color: var(--border-strong);
+    }
+    
+    &[aria-selected="true"] {
+      color: var(--text-primary);
+      border-bottom-color: var(--interactive-primary);
+    }
+  }
+}
+
+// ============================================
+// Accordion
+// ============================================
+.cds--accordion__item {
+  border-top: 1px solid var(--border-subtle);
+  
+  &:last-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+}
+
+.cds--accordion__heading {
+  &:hover {
+    background-color: var(--background-hover);
+  }
+}
+
+// ============================================
+// Content Area
+// ============================================
+.cds--content {
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+}
