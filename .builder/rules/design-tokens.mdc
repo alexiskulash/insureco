@@ -56,11 +56,21 @@ The color system supports both light and dark themes using CSS custom properties
 - Background: white to light grey
 - Text: dark grey to black
 - Interactive: brand red 60
+- Form fields: white background, dark text
 
 **Dark Theme** (g90, g100):
 - Background: dark grey to near-black
 - Text: light grey to white
 - Interactive: brand red 50
+- Form fields: dark grey background (#262626), light text
+
+### Form Field Colors
+Dedicated tokens ensure form inputs remain readable in both themes:
+- `--field-background`: Input field background color
+- `--field-text`: Input field text color
+- `--field-placeholder`: Placeholder text color
+
+These tokens handle all input states including autofill, preventing white backgrounds in dark mode. See `.builder/rules/form-field-theming.mdc` for complete documentation.
 
 ### Usage
 
@@ -119,7 +129,7 @@ Pre-configured heading styles (H1-H6):
   font-weight: var(--heading-h2-weight);
   line-height: var(--heading-h2-line-height);
 }
-```
+
 
 ## Spacing Tokens
 
