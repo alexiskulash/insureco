@@ -1,0 +1,177 @@
+---
+description: Header dark theme styling fix documentation
+globs:
+  - "src/components/Layout.jsx"
+  - "src/components/Layout.scss"
+  - "src/styles/components.scss"
+alwaysApply: false
+---
+
+# Header Dark Theme Styling Fix
+
+## Problem
+
+The Carbon Design System header components had default white/light backgrounds that were not being properly overridden for dark theme support. This caused white background boxes to appear behind header text (particularly "InsureCo Insurance") when in dark mode.
+
+## Root Cause
+
+Carbon's `<HeaderName>` and related header components have built-in background colors that don't automatically adapt to custom theme tokens. The issue existed because:
+
+1. The header was implemented before the theming system was fully integrated
+2. Carbon's default styles use their own theme tokens, not our custom InsureCo tokens
+3. Some Carbon components apply backgrounds at multiple DOM levels (prefix, wrapper, etc.)
+
+## Solution
+
+Applied aggressive CSS overrides using `!important` to force all header elements to respect InsureCo theme tokens.
+
+### Files Modified
+
+#### 1. `src/components/Layout.scss` (New file)
+Created dedicated header styling with comprehensive overrides:
+
+
+.cds--header {
+  background-color: var(--background-primary) !important;
+  
+  // Remove default white backgrounds from Carbon header elements
+  a, button,
+  .cds--header__name--prefix,
+  .cds--header__menu-title,
+  .cds--header__menu-arrow {
+    background-color: transparent !important;
+  }
+  
+  .cds--header__name {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+    
+    span,
+    .cds--header__name--prefix {
+      color: var(--text-primary) !important;
+      background-color: transparent !important;
+    }
+  }
+  
+  .cds--header__menu-item {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+    
+    button {
+      background-color: transparent !important;
+    }
+  }
+  
+  .cds--header__nav,
+  .cds--header-panel,
+  .cds--header__menu-bar {
+    background-color: transparent !important;
+  }
+}
+```
+
+#### 2. `src/styles/components.scss`
+Added similar overrides in the global components stylesheet for consistency.
+
+#### 3. `src/components/Layout.jsx`
+Added import for `Layout.scss` to ensure styles are loaded.
+
+## Key Techniques
+
+### 1. Use of !important
+Necessary to override Carbon's built-in styles which have high specificity:
+```scss
+background-color: transparent !important;
+color: var(--text-primary) !important;
+```
+
+### 2. Targeting Multiple Levels
+Carbon components create nested structures, so we override at all levels:
+- Parent container (`.cds--header__name`)
+- Child elements (`span`, `.cds--header__name--prefix`)
+- Interactive elements (`button`, `a`)
+
+### 3. Transparent Backgrounds
+All header elements get `background-color: transparent` to allow the parent header background to show through:
+```scss
+a, button, .cds--header__name--prefix {
+  background-color: transparent !important;
+}
+```
+
+### 4. Theme Token Usage
+All colors reference CSS custom properties that adapt to the active theme:
+```scss
+color: var(--text-primary) !important;  // Adapts to light/dark theme
+background-color: var(--background-primary) !important;
+```
+
+## Testing
+
+To verify the fix works in both themes:
+
+1. **Light Theme (default)**:
+   - Header background: White (`--background-primary` = `#ffffff`)
+   - Header text: Dark grey (`--text-primary` = `#161616`)
+   - Navigation links: Visible and readable
+   - Icons: Dark colored
+
+2. **Dark Theme (g100)**:
+   - Header background: Near-black (`--background-primary` = `#161616`)
+   - Header text: Light grey (`--text-primary` = `#f4f4f4`)
+   - Navigation links: Visible and readable
+   - Icons: Light colored
+   - **No white backgrounds on text** ✅
+
+## Elements Fixed
+
+- ✅ HeaderName (brand text "InsureCo Insurance")
+- ✅ HeaderName prefix
+- ✅ Navigation menu items (Home, Dashboard, Sign Up, About)
+- ✅ Header action buttons (Search, Notifications, Theme Toggle, App Switcher)
+- ✅ Hamburger menu button
+- ✅ Side navigation panel
+- ✅ Hover states
+- ✅ Focus states
+- ✅ Tooltips
+
+## Why !important Was Necessary
+
+Carbon Design System uses:
+1. **High specificity selectors** in their SCSS
+2. **Multiple layers of nesting** in component structure
+3. **Built-in theme tokens** that don't align with custom tokens
+4. **Inline styles** in some cases
+
+To override these without modifying Carbon's source code, `!important` ensures our custom theme tokens take precedence.
+
+## Best Practices Going Forward
+
+When adding new header elements:
+
+1. **Always use theme tokens** for colors:
+   ```scss
+   color: var(--text-primary);
+   background-color: var(--background-primary);
+   ```
+
+2. **Test in both themes** before considering it complete
+
+3. **Add to Layout.scss** for header-specific overrides
+
+4. **Use transparent backgrounds** for nested elements to allow parent theme to show through
+
+5. **Include hover/focus states** with theme-aware colors:
+   ```scss
+   &:hover {
+     background-color: var(--background-hover);
+     color: var(--interactive-primary);
+   }
+   ```
+
+## Related Documentation
+
+- `.builder/rules/theming-system.mdc` - Complete theming system documentation
+- `.builder/rules/design-tokens.mdc` - Design token reference
+- `src/components/Layout.scss` - Header-specific styles
+- `src/styles/components.scss` - Global component overrides
