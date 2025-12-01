@@ -262,11 +262,18 @@
       margin-bottom: var(--spacing-03);
     }
 
-    a {
+    a,
+    .footer-link-button {
       color: var(--text-secondary);
       text-decoration: none;
       font-size: var(--body-sm-size);
       transition: color var(--motion-hover);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
 
       &:hover {
         color: var(--interactive-primary);

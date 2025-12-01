@@ -266,7 +266,7 @@ export default function LandingPage() {
             <div className="footer-section">
               <h4 className="footer-heading">Company</h4>
               <ul className="footer-links">
-                <li><a href="#about">About Us</a></li>
+                <li><button onClick={() => navigate('/about')} className="footer-link-button">About Us</button></li>
                 <li><a href="#careers">Careers</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
@@ -277,7 +277,7 @@ export default function LandingPage() {
               <h4 className="footer-heading">Support</h4>
               <ul className="footer-links">
                 <li><a href="#help">Help Center</a></li>
-                <li><a href="#claims">File a Claim</a></li>
+                <li><button onClick={() => navigate('/dashboard')} className="footer-link-button">File a Claim</button></li>
                 <li><a href="#faq">FAQ</a></li>
               </ul>
             </div>
