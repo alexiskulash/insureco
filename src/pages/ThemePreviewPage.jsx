@@ -11,8 +11,6 @@ import {
   RadioButtonGroup,
   Toggle,
   Tile,
-  ProgressIndicator,
-  ProgressStep,
   Heading,
   Stack,
   Tag,
@@ -23,6 +21,7 @@ import {
   RadioTile,
 } from '@carbon/react';
 import { ArrowRight, Home as HomeIcon, Car } from '@carbon/icons-react';
+import StepBreadcrumb from '../components/StepBreadcrumb';
 import './ThemePreviewPage.scss';
 
 export default function ThemePreviewPage() {
@@ -388,17 +387,21 @@ export default function ThemePreviewPage() {
             </Stack>
           </section>
 
-          {/* Progress Indicator Section */}
+          {/* Step Breadcrumb Section */}
           <section className="preview-section">
-            <Heading className="section-heading">Progress Indicator</Heading>
+            <Heading className="section-heading">Step Breadcrumb</Heading>
             <div style={{ background: 'var(--background-secondary)', padding: 'var(--spacing-06)', borderRadius: 'var(--radius-md)' }}>
-              <ProgressIndicator currentIndex={2} spaceEqually>
-                <ProgressStep label="Step 1" description="Complete" />
-                <ProgressStep label="Step 2" description="Complete" />
-                <ProgressStep label="Step 3" description="Current" />
-                <ProgressStep label="Step 4" description="" />
-                <ProgressStep label="Step 5" description="" />
-              </ProgressIndicator>
+              <StepBreadcrumb
+                steps={[
+                  { key: 'step1', label: 'Step 1', description: 'Complete' },
+                  { key: 'step2', label: 'Step 2', description: 'Complete' },
+                  { key: 'step3', label: 'Step 3', description: 'Current' },
+                  { key: 'step4', label: 'Step 4', description: '' },
+                  { key: 'step5', label: 'Step 5', description: '' },
+                ]}
+                currentIndex={2}
+                spaceEqually
+              />
             </div>
           </section>
 
