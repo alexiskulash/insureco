@@ -18,7 +18,7 @@ import {
   SideNavMenu,
   SideNavMenuItem,
 } from "@carbon/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Switcher as SwitcherIcon,
   Notification,
@@ -28,6 +28,10 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Layout({ children }) {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Remove padding for landing page
+  const isLandingPage = location.pathname === '/';
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
@@ -99,7 +103,10 @@ export default function Layout({ children }) {
           <Content
             id="main-content"
             className="cds--content"
-            style={{ minHeight: "100vh" }}
+            style={{
+              minHeight: "100vh",
+              padding: isLandingPage ? 0 : undefined
+            }}
           >
             {children}
           </Content>

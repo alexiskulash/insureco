@@ -23,6 +23,13 @@ body {
   background-color: var(--background-secondary);
 }
 
+/* Remove default Content padding for landing page */
+.landing-page {
+  .cds--content {
+    padding: 0 !important;
+  }
+}
+
 h1 {
   font-size: var(--heading-h1-size);
   font-weight: var(--heading-h1-weight);
