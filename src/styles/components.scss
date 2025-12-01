@@ -73,14 +73,18 @@
 }
 
 .cds--header__name {
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
 
   &:hover {
-    color: var(--interactive-primary);
+    color: var(--interactive-primary) !important;
+    background-color: var(--background-hover) !important;
   }
 
-  span {
-    color: var(--text-primary);
+  span,
+  .cds--header__name--prefix {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
   }
 }
 

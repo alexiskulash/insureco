@@ -8,16 +8,24 @@
   
   // Header name/brand
   .cds--header__name {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
     transition: color var(--motion-hover);
-    
+
     &:hover {
-      color: var(--interactive-primary);
+      color: var(--interactive-primary) !important;
+      background-color: var(--background-hover) !important;
     }
-    
-    // Prefix and main text
-    span {
-      color: var(--text-primary);
+
+    &:focus {
+      color: var(--text-primary) !important;
+    }
+
+    // Prefix and main text - force remove any background
+    span,
+    .cds--header__name--prefix {
+      color: var(--text-primary) !important;
+      background-color: transparent !important;
     }
   }
   
