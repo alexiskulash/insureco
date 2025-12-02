@@ -17,9 +17,12 @@ import {
   NumberInput,
   TileGroup,
   RadioTile,
+  ProgressIndicator,
+  ProgressStep,
+  DatePicker,
+  DatePickerInput,
 } from '@carbon/react';
 import { ArrowRight, ArrowLeft, Checkmark, Car, Home as HomeIcon } from '@carbon/icons-react';
-import StepBreadcrumb from '../components/StepBreadcrumb';
 import './SignUpPage.scss';
 
 export default function SignUpPage() {
@@ -187,13 +190,17 @@ export default function SignUpPage() {
               onChange={(e) => updateFormData('phone', e.target.value)}
               required
             />
-            <TextInput
-              id="dateOfBirth"
-              labelText="Date of Birth"
-              type="date"
-              value={formData.dateOfBirth}
-              onChange={(e) => updateFormData('dateOfBirth', e.target.value)}
-            />
+            <DatePicker
+              datePickerType="single"
+              onChange={(dates) => updateFormData('dateOfBirth', dates[0])}
+            >
+              <DatePickerInput
+                id="dateOfBirth"
+                labelText="Date of Birth"
+                placeholder="mm/dd/yyyy"
+                value={formData.dateOfBirth}
+              />
+            </DatePicker>
           </Stack>
         );
 
@@ -585,14 +592,24 @@ export default function SignUpPage() {
         </header>
 
         <Tile className="signup-progress">
-          <StepBreadcrumb
-            steps={steps.map((step, index) => ({
-              ...step,
-              description: index === currentStep ? 'Current' : ''
-            }))}
-            currentIndex={currentStep}
-            spaceEqually
-          />
+          <ProgressIndicator currentIndex={0} spaceEqually>
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+          </ProgressIndicator>
         </Tile>
 
         <Form className="signup-form" onSubmit={handleSubmit}>

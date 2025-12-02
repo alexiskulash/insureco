@@ -69,12 +69,88 @@
 .signup-progress {
   margin-bottom: var(--spacing-08);
   padding: var(--spacing-05);
-  border: 2px solid transparent;
-  border-top: 3px solid var(--interactive-primary);
+  border-radius: var(--radius-sm);
+  border-top: 1px solid #da1e28;
+  background: #f4f4f4;
+  box-shadow:
+    0 1px 2px 0 rgba(0, 0, 0, 0.1),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1);
 
   @media (min-width: 672px) {
-    padding: var(--spacing-06);
+    padding: var(--spacing-05) var(--spacing-06);
     margin-bottom: var(--spacing-09);
+  }
+
+  // Carbon ProgressIndicator overrides for exact Figma match
+  .cds--progress-indicator {
+    gap: 0;
+  }
+
+  // Current step styling (first step - blue border)
+  .cds--progress-step--current {
+    border-top: 2px solid #0f62fe !important;
+
+    .cds--progress-label {
+      color: #161616 !important;
+      font-family: var(--font-family-sans);
+      font-size: var(--body-sm-size);
+      font-weight: var(--font-weight-regular);
+      line-height: 1.29;
+      letter-spacing: 0.16px;
+    }
+
+    svg {
+      fill: #0f62fe;
+    }
+  }
+
+  // Incomplete step styling (grey border)
+  .cds--progress-step--incomplete {
+    border-top: 2px solid #e0e0e0 !important;
+
+    .cds--progress-label {
+      color: #161616 !important;
+      font-family: var(--font-family-sans);
+      font-size: var(--body-sm-size);
+      font-weight: var(--font-weight-regular);
+      line-height: 1.29;
+      letter-spacing: 0.16px;
+    }
+
+    svg {
+      fill: #161616;
+    }
+  }
+
+  // Complete step styling
+  .cds--progress-step--complete {
+    border-top: 2px solid #0f62fe !important;
+
+    .cds--progress-label {
+      color: #161616 !important;
+    }
+
+    svg {
+      fill: #0f62fe;
+    }
+  }
+
+  // Optional label (description) styling
+  .cds--progress-optional {
+    color: #525252 !important;
+    font-family: var(--font-family-sans);
+    font-size: 12px;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.33;
+    letter-spacing: 0.32px;
+    padding-left: 24px;
+  }
+
+  // Ensure consistent spacing between steps
+  .cds--progress-step {
+    flex: 1 0 0;
+    min-width: 128px;
+    padding: 10px 16px 0 0;
   }
 }
 
