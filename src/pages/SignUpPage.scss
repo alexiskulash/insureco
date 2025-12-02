@@ -151,10 +151,10 @@
 .signup-form {
   background: var(--background-secondary);
   border-radius: var(--radius-lg);
-  border-top: 5px solid #fb0c0c;
+  border-top: 5px solid var(--color-brand-red-60);
   padding: var(--spacing-06);
   box-shadow:
-    0 0 0 0 #e0e0e0,
+    0 0 0 0 var(--border-subtle),
     0 1px 2px 0 rgba(0, 0, 0, 0.1),
     0 1px 3px 0 rgba(0, 0, 0, 0.1);
   position: relative;
@@ -183,7 +183,7 @@
   color: var(--text-primary);
   margin: 0 0 var(--spacing-04) 0;
   padding-bottom: var(--spacing-03);
-  border-bottom: 1px solid #fc0404;
+  border-bottom: 1px solid var(--interactive-primary);
   display: inline-block;
 
   @media (min-width: 672px) {
