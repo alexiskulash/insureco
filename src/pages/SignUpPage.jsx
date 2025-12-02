@@ -209,7 +209,7 @@ export default function SignUpPage() {
           <Stack gap={6}>
             <Heading className="signup-step-heading">Your Address</Heading>
             <p className="signup-step-description">
-              Where is your primary residence?
+              Let us know where you live
             </p>
             <TextInput
               id="streetAddress"
@@ -248,7 +248,7 @@ export default function SignUpPage() {
             </Select>
             <TextInput
               id="zipCode"
-              labelText="ZIP Code"
+              labelText="Sip"
               placeholder="12345"
               value={formData.zipCode}
               onChange={(e) => updateFormData('zipCode', e.target.value)}
@@ -260,7 +260,10 @@ export default function SignUpPage() {
       case 'type':
         return (
           <Stack gap={6}>
-            <Heading className="signup-step-heading">Personal Information</Heading>
+            <Heading className="signup-step-heading">What Will You Insure</Heading>
+            <p className="signup-step-description">
+              Which insurance coverage are you looking for
+            </p>
             <TileGroup
               className="signup-tile-group"
               legend="Select your insurance coverage type"
@@ -277,7 +280,7 @@ export default function SignUpPage() {
                   <Car size={32} className="tile-icon" />
                   <div className="tile-text">
                     <h4>Car Insurance</h4>
-                    <p>Get comprehensive coverage</p>
+                    <p>Get comprehensive coverage for your vehicle</p>
                   </div>
                 </div>
               </RadioTile>
@@ -291,14 +294,28 @@ export default function SignUpPage() {
                   <HomeIcon size={32} className="tile-icon" />
                   <div className="tile-text">
                     <h4>Home Insurance</h4>
-                    <p>Get comprehensive coverage</p>
+                    <p>Protect your most important asset for your family</p>
+                  </div>
+                </div>
+              </RadioTile>
+
+              <RadioTile
+                id="insurance-both"
+                value="both"
+                className="signup-radio-tile"
+              >
+                <div className="tile-content">
+                  <div className="tile-icon-group">
+                    <Car size={24} />
+                    <HomeIcon size={24} />
+                  </div>
+                  <div className="tile-text">
+                    <h4>Both Home and Car</h4>
+                    <p>Insure both and get bundle savings</p>
                   </div>
                 </div>
               </RadioTile>
             </TileGroup>
-            <p className="signup-step-description">
-              Let's start with some basic information about you.
-            </p>
           </Stack>
         );
 
