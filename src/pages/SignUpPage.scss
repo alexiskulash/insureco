@@ -232,6 +232,7 @@
   padding-top: var(--spacing-06);
   border-top: 2px solid var(--color-brand-red-20);
   margin-top: var(--spacing-06);
+  flex-wrap: wrap;
 
   // On smaller screens (tablet/medium): horizontal layout with Next to the right
   // Spacer pushes Next button to the right side
@@ -240,13 +241,19 @@
   @media (max-width: 480px) {
     flex-direction: column !important;
     gap: var(--spacing-04);
+    align-items: stretch;
   }
 
-  // Make buttons full-width on very small screens
+  // Make buttons full-width on very small screens to prevent icon/text overlap
   button {
+    // Ensure minimum width to prevent icon overlap on all screens
+    min-width: 120px;
+    white-space: nowrap;
+
     @media (max-width: 480px) {
       width: 100%;
       max-width: none;
+      min-width: auto;
     }
 
     // Next/Submit button appears first (on top) on very small screens
