@@ -192,7 +192,7 @@ export default function SignUpPage() {
             />
             <DatePicker
               datePickerType="single"
-              onChange={(dates) => updateFormData('dateOfBirth', dates[0])}
+              onChange={(dates) => updateFormData('dateOfBirth', dates?.[0] || '')}
             >
               <DatePickerInput
                 id="dateOfBirth"
@@ -391,7 +391,7 @@ export default function SignUpPage() {
               min={1800}
               max={new Date().getFullYear()}
               value={formData.homeYear}
-              onChange={(e) => updateFormData('homeYear', e.target.value)}
+              onChange={(e, { value }) => updateFormData('homeYear', value ?? '')}
               required
             />
             <NumberInput
@@ -400,7 +400,7 @@ export default function SignUpPage() {
               min={100}
               max={50000}
               value={formData.homeSquareFeet}
-              onChange={(e) => updateFormData('homeSquareFeet', e.target.value)}
+              onChange={(e, { value }) => updateFormData('homeSquareFeet', value ?? '')}
               required
             />
             <NumberInput
@@ -410,7 +410,7 @@ export default function SignUpPage() {
               max={10000000}
               step={1000}
               value={formData.homeValue}
-              onChange={(e) => updateFormData('homeValue', e.target.value)}
+              onChange={(e, { value }) => updateFormData('homeValue', value ?? '')}
             />
           </Stack>
         );
