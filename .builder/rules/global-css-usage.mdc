@@ -1,0 +1,315 @@
+---
+description: Global CSS usage guidelines and ThemePreviewPage reference
+globs:
+  - "**/*.jsx"
+  - "**/*.scss"
+alwaysApply: true
+---
+
+# Global CSS Usage Guidelines
+
+## ⚠️ CRITICAL RULE: Always Use Global CSS Settings
+
+**ALL components must use global CSS variables and design tokens from `src/styles/tokens/`.**
+
+**The ThemePreviewPage is the single source of truth for all global CSS settings.**
+
+## ThemePreviewPage Reference
+
+**Location**: `src/pages/ThemePreviewPage.jsx`  
+**Route**: `/theme-preview`
+
+### What ThemePreviewPage Shows
+
+The ThemePreviewPage provides a comprehensive visual reference for:
+
+1. **Color Tokens**
+   - Text colors (primary, secondary, tertiary, on-color, error)
+   - Background colors (primary, secondary, tertiary, selected)
+   - Interactive colors (primary, hover, active)
+   - Brand colors (red, success, warning, error, info)
+
+2. **Typography**
+   - Heading scales (H1-H4)
+   - Body text sizes (large, medium, small)
+   - Font families and weights
+
+3. **Buttons**
+   - Primary buttons (brand red, no gradients)
+   - Secondary buttons (dark grey/charcoal)
+   - Tertiary and ghost buttons
+   - Disabled states
+   - Buttons with icons
+
+4. **Form Fields**
+   - Text inputs (normal, error states)
+   - Select dropdowns
+   - Number inputs
+   - Checkboxes
+   - Radio buttons
+   - Toggle switches
+
+5. **Tiles**
+   - Standard tiles
+   - Selectable tiles (RadioTile)
+   - Tile hover and selected states
+
+6. **Step Indicators**
+   - Custom StepBreadcrumb component
+   - Progress states (current, complete, incomplete)
+
+7. **Contrast Examples**
+   - Proper text/background combinations
+   - Theme-aware color usage
+   - Examples for both light and dark modes
+
+## Rules for Using Global CSS
+
+### ✅ DO
+
+1. **Use Global CSS Variables**
+   ```scss
+   .my-component {
+     background: var(--background-primary);
+     color: var(--text-primary);
+     padding: var(--spacing-05);
+   }
+   ```
+
+2. **Reference ThemePreviewPage**
+   - Check ThemePreviewPage BEFORE adding new components
+   - Match button styles exactly as shown in ThemePreviewPage
+   - Use the same spacing, colors, and typography
+
+3. **Test in Both Themes**
+   - Light mode (white theme)
+   - Dark mode (g100 theme)
+   - Verify all interactive states (hover, focus, active)
+
+4. **Use Semantic Tokens**
+   - `--text-primary` for main text
+   - `--background-primary` for main background
+   - `--interactive-primary` for brand red elements
+   - `--field-background` for form inputs
+   - `--text-on-color` for text on colored backgrounds
+
+### ❌ DON'T
+
+1. **Create Page-Specific Style Overrides**
+   ```scss
+   // ❌ WRONG - Page-specific button gradient
+   .signup-page {
+     .cds--btn--primary {
+       background: linear-gradient(...);
+       box-shadow: ...;
+     }
+   }
+   ```
+
+2. **Hardcode Colors**
+   ```scss
+   // ❌ WRONG - Hardcoded colors
+   .my-button {
+     background: #da1e28;
+     color: #ffffff;
+   }
+   
+   // ✅ CORRECT - Use tokens
+   .my-button {
+     background: var(--interactive-primary);
+     color: var(--text-on-color);
+   }
+   ```
+
+3. **Override Global Button Styles**
+   - Buttons should look identical across all pages
+   - Use Carbon's `kind` prop to change button type
+   - Don't add custom gradients, shadows, or hover effects
+
+4. **Create Theme-Specific Hardcoded Styles**
+   ```scss
+   // ❌ WRONG - Only works in one theme
+   .dark-mode-text {
+     color: #f4f4f4;
+   }
+   
+   // ✅ CORRECT - Works in both themes
+   .adaptive-text {
+     color: var(--text-primary);
+   }
+   ```
+
+## Recent Updates (Dec 2024)
+
+### Car Details and Home Details Pages
+
+**Updated files**:
+- `src/pages/SignUpPage.jsx` - Car Details and Home Details sections
+
+**Changes made to match Figma designs**:
+
+#### Car Details Section
+- Updated heading: "Car Details"
+- Updated description: "Tell us about your car"
+- Make field: placeholder changed to "e.g. Toyota, Ford"
+- Model field: placeholder changed to "e.g. Corolla, Bronco"
+- Year field: dropdown with empty default option
+- VIN field: 
+  - Label changed to "VIN (optional)" (lowercase)
+  - Empty placeholder
+  - Helper text: "17 digits"
+
+#### Home Details Section
+- Updated heading: "Home Details"
+- Updated description: "Tell us about your home"
+- Home Type: dropdown with empty default option
+- Year Built: **Changed from NumberInput to Select dropdown** (major change)
+  - Provides years from 1800 to 2025
+  - Empty default option
+- Square Feet: NumberInput with helper text "We'll confirm this more accurately later"
+- Estimated Home Value: 
+  - Label changed to "Estimated Home Value" (removed "$")
+  - Helper text: "We'll confirm this more accurately later"
+
+### Documentation Updates
+
+**Updated files**:
+- `.builder/rules/component-structure.mdc` - Added critical section on global CSS usage
+- `.builder/rules/design-tokens.mdc` - Added ThemePreviewPage reference at top
+- `.builder/rules/global-css-usage.mdc` - This file (new)
+
+**Key documentation changes**:
+1. All rules now emphasize ThemePreviewPage as the single source of truth
+2. Clear DO/DON'T examples for global CSS usage
+3. Mandate to NEVER create page-specific style overrides
+4. Requirement to test all components in both themes
+5. Visual reference to ThemePreviewPage for consistent styling
+
+## Workflow for Adding New Components
+
+1. **Visit ThemePreviewPage** (`/theme-preview`)
+   - Review relevant component examples
+   - Note the tokens used for similar components
+   - Check both light and dark modes
+
+2. **Use Global Tokens**
+   - Import tokens: `@use '../styles/tokens' as *;`
+   - Use CSS variables: `var(--token-name)`
+   - Never hardcode colors or spacing
+
+3. **Follow Carbon Design Patterns**
+   - Use Carbon components from `@carbon/react`
+   - Use Carbon's built-in `kind`, `size`, and state props
+   - Override only when absolutely necessary (with high CSS specificity)
+
+4. **Test Thoroughly**
+   - Test in light mode
+   - Test in dark mode
+   - Test all interactive states (hover, focus, active, disabled)
+   - Test on mobile, tablet, and desktop sizes
+   - Compare against ThemePreviewPage
+
+5. **Document If Needed**
+   - If you create new global styles, add them to `src/styles/components.scss`
+   - Update ThemePreviewPage to show the new component
+   - Document any special considerations
+
+## Common Mistakes to Avoid
+
+### Mistake 1: Page-Specific Button Gradients
+
+**Problem**: Adding custom gradients to buttons on specific pages.
+
+**Example**:
+
+// ❌ WRONG - SignUpPage.scss
+.signup-page .cds--btn--primary {
+  background: linear-gradient(135deg, #a2191f, #da1e28);
+}
+```
+
+**Solution**: Buttons should use global styles only. If you need a special button, create a new global button variant in `src/styles/components.scss` and add it to ThemePreviewPage.
+
+### Mistake 2: Hardcoded Theme Colors
+
+**Problem**: Using hardcoded light/dark colors that break in the opposite theme.
+
+**Example**:
+```scss
+// ❌ WRONG - Only works in light mode
+.my-card {
+  background: #ffffff;
+  color: #161616;
+}
+```
+
+**Solution**:
+```scss
+// ✅ CORRECT - Works in both themes
+.my-card {
+  background: var(--background-primary);
+  color: var(--text-primary);
+}
+```
+
+### Mistake 3: Ignoring ThemePreviewPage
+
+**Problem**: Creating new components without checking ThemePreviewPage first.
+
+**Solution**: Always reference ThemePreviewPage to see:
+- What tokens are available
+- How similar components are styled
+- What the global standards are
+
+### Mistake 4: Not Testing Dark Mode
+
+**Problem**: Components that look great in light mode but break in dark mode.
+
+**Solution**: 
+- Always toggle to dark mode using the theme toggle in the header
+- Test all components in BOTH themes before considering them complete
+- Use the contrast examples in ThemePreviewPage as a guide
+
+## Related Documentation
+
+- **Theme Contrast Guidelines**: `.builder/rules/theme-contrast-guidelines.mdc`
+  - How to prevent contrast issues
+  - Which tokens to use for different scenarios
+  - WCAG AA compliance requirements
+
+- **Design Tokens**: `.builder/rules/design-tokens.mdc`
+  - Complete token reference
+  - Color scales and semantic tokens
+  - Typography, spacing, and sizing
+
+- **Component Structure**: `.builder/rules/component-structure.mdc`
+  - Component organization
+  - Styling approach
+  - Best practices
+
+- **Theming System**: `.builder/rules/theming-system.mdc`
+  - How themes work
+  - Theme switching and persistence
+  - Carbon theme integration
+
+- **Form Field Theming**: `.builder/rules/form-field-theming.mdc`
+  - Form input styling
+  - Field background and text tokens
+  - Autofill handling
+
+## Summary
+
+**ThemePreviewPage is your go-to reference for all styling decisions.**
+
+- Visit `/theme-preview` to see all global styles
+- Use only global CSS variables and design tokens
+- Never create page-specific overrides
+- Test in both light and dark themes
+- Match the visual standards shown in ThemePreviewPage
+
+By following these guidelines, we ensure:
+- ✅ Consistent styling across all pages
+- ✅ Proper theme support (light and dark)
+- ✅ Accessible color contrast
+- ✅ Maintainable codebase
+- ✅ No style conflicts or overrides
