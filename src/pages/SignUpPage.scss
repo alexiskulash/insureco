@@ -306,9 +306,18 @@
   max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  width: 100%;
 
   @media (min-width: 672px) {
     min-height: 450px;
+  }
+
+  // Ensure all text elements wrap properly
+  p, span, div {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
   }
 }
 
