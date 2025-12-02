@@ -10,6 +10,8 @@ import {
   Tile,
   DatePickerInput,
   DatePicker,
+  ProgressIndicator,
+  ProgressStep,
 } from '@carbon/react';
 import { ArrowRight } from '@carbon/icons-react';
 import './SignTestPage.scss';
@@ -47,10 +49,24 @@ export default function SignTestPage() {
         </header>
 
         <Tile className="sign-test-progress">
-          <div className="progress-label">Step 1 of 5</div>
-          <div className="progress-bar-track">
-            <div className="progress-bar-fill" style={{ width: '25%' }}></div>
-          </div>
+          <ProgressIndicator currentIndex={0} spaceEqually>
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+            <ProgressStep
+              label="Step"
+              description="Optional label"
+            />
+          </ProgressIndicator>
         </Tile>
 
         <Form className="sign-test-form" onSubmit={handleSubmit}>

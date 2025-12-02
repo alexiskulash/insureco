@@ -83,9 +83,9 @@
 .sign-test-progress {
   margin-bottom: var(--spacing-07);
   padding: var(--spacing-05);
-  border: 1px solid #da1e28;
+  border-top: 1px solid #da1e28;
   border-radius: var(--radius-sm);
-  box-shadow: 
+  box-shadow:
     0 1px 2px 0 rgba(0, 0, 0, 0.1),
     0 1px 3px 0 rgba(0, 0, 0, 0.1);
 
@@ -93,33 +93,65 @@
     padding: var(--spacing-05) var(--spacing-06);
     margin-bottom: var(--spacing-09);
   }
-}
 
-.progress-label {
-  font-family: var(--font-family-sans);
-  font-size: var(--body-sm-size);
-  font-weight: var(--font-weight-regular);
-  line-height: 1.29;
-  letter-spacing: 0.16px;
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-03);
-}
+  // Carbon ProgressIndicator overrides for theme compatibility
+  .cds--progress-indicator {
+    // Ensure proper spacing
+    gap: 0;
+  }
 
-.progress-bar-track {
-  height: 8px;
-  background: #c6c6c6;
-  border-radius: 0;
-  overflow: hidden;
-  position: relative;
-}
+  // Current step styling
+  .cds--progress-step--current {
+    border-top-color: #0f62fe !important;
 
-.progress-bar-fill {
-  height: 8px;
-  background: #0f62fe;
-  transition: width 0.3s ease;
-  position: absolute;
-  left: 0;
-  top: 0;
+    .cds--progress-label {
+      color: var(--text-primary) !important;
+      font-family: var(--font-family-sans);
+      font-size: var(--body-sm-size);
+      font-weight: var(--font-weight-regular);
+      line-height: 1.29;
+      letter-spacing: 0.16px;
+    }
+
+    .cds--progress-step-button .cds--progress-line {
+      background: #0f62fe;
+    }
+  }
+
+  // Incomplete step styling
+  .cds--progress-step--incomplete {
+    border-top-color: #e0e0e0 !important;
+
+    .cds--progress-label {
+      color: var(--text-primary) !important;
+      font-family: var(--font-family-sans);
+      font-size: var(--body-sm-size);
+      font-weight: var(--font-weight-regular);
+      line-height: 1.29;
+      letter-spacing: 0.16px;
+    }
+  }
+
+  // Optional label (description) styling
+  .cds--progress-optional {
+    color: #525252 !important;
+    font-family: var(--font-family-sans);
+    font-size: 12px;
+    font-weight: var(--font-weight-regular);
+    line-height: 1.33;
+    letter-spacing: 0.32px;
+  }
+
+  // Step icon styling
+  .cds--progress-step svg {
+    fill: currentColor;
+  }
+
+  // Ensure consistent spacing between steps
+  .cds--progress-step {
+    flex: 1 0 0;
+    min-width: 128px;
+  }
 }
 
 // ============================================
