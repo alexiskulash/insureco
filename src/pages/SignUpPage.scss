@@ -303,10 +303,12 @@
 
 .signup-step-content {
   min-height: 400px;
-  max-width: 100%;
+  max-width: 100% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  width: 100%;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important; // Prevent clipping but allow proper flow
 
   @media (min-width: 672px) {
     min-height: 450px;
@@ -318,6 +320,13 @@
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
+  }
+
+  // Ensure nested stacks don't overflow
+  .cds--stack {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -541,15 +550,23 @@
 .signup-form {
   // Ensure proper box-sizing to prevent overflow
   * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
+    max-width: 100%;
+  }
+
+  // Force all direct children to respect container width
+  > * {
+    max-width: 100% !important;
+    width: 100% !important;
   }
 
   // Make form inputs easier to tap on mobile
   .cds--text-input,
   .cds--select-input,
   .cds--number input {
-    max-width: 100%;
-    box-sizing: border-box;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 
     @media (max-width: 671px) {
       min-height: 48px;
@@ -626,6 +643,21 @@
   .cds--stack {
     max-width: 100%;
     width: 100%;
+    box-sizing: border-box;
+    overflow: visible; // Allow content to flow normally
+
+    // Ensure stack items don't overflow
+    > * {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  // Specifically target the step content stack
+  .signup-step-content.cds--stack {
+    max-width: 100%;
+    width: 100%;
+    overflow: visible;
   }
 
   .cds--label {
