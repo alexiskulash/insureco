@@ -233,28 +233,32 @@
   border-top: 2px solid var(--color-brand-red-20);
   margin-top: var(--spacing-06);
 
-  // Override Stack's default flex-direction on mobile
-  @media (max-width: 671px) {
+  // On smaller screens (tablet/medium): horizontal layout with Next to the right
+  // Spacer pushes Next button to the right side
+
+  // On very small screens (mobile): stack vertically with Next on top
+  @media (max-width: 480px) {
     flex-direction: column !important;
+    gap: var(--spacing-04);
   }
 
-  // Make buttons full-width on mobile
+  // Make buttons full-width on very small screens
   button {
-    @media (max-width: 671px) {
+    @media (max-width: 480px) {
       width: 100%;
       max-width: none;
     }
 
-    // Next/Submit button appears first on mobile
+    // Next/Submit button appears first (on top) on very small screens
     &.cds--btn--primary {
-      @media (max-width: 671px) {
+      @media (max-width: 480px) {
         order: 1;
       }
     }
 
-    // Back button appears second on mobile
+    // Back button appears second (below Next) on very small screens
     &.cds--btn--secondary {
-      @media (max-width: 671px) {
+      @media (max-width: 480px) {
         order: 2;
       }
     }
@@ -264,11 +268,13 @@
 .signup-actions-spacer {
   flex: 1;
 
-  @media (max-width: 671px) {
+  // Hide spacer on very small screens (stacked layout)
+  @media (max-width: 480px) {
     display: none;
   }
 
-  @media (min-width: 672px) {
+  // Show spacer on larger screens to push Next to the right
+  @media (min-width: 481px) {
     display: block;
   }
 }
