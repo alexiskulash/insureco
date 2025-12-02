@@ -165,7 +165,7 @@ export default function SignUpPage() {
           <Stack gap={6}>
             <Heading className="signup-step-heading">Personal Information</Heading>
             <p className="signup-step-description">
-              Let's start with some basic information about you.
+              Your basic info
             </p>
             <TextInput
               id="firstName"
