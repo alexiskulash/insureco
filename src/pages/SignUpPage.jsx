@@ -248,7 +248,7 @@ export default function SignUpPage() {
             </Select>
             <TextInput
               id="zipCode"
-              labelText="Sip"
+              labelText="Zip"
               placeholder="12345"
               value={formData.zipCode}
               onChange={(e) => updateFormData('zipCode', e.target.value)}
