@@ -663,15 +663,17 @@
 
   // Carbon Stack component width constraint
   .cds--stack {
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
+    max-width: 100% !important;
+    width: 100% !important;
+    min-width: 0 !important; // Allow shrinking on narrow screens
+    box-sizing: border-box !important;
     overflow: visible; // Allow content to flow normally
 
     // Ensure stack items don't overflow
     > * {
-      max-width: 100%;
-      box-sizing: border-box;
+      max-width: 100% !important;
+      min-width: 0 !important; // Critical for narrow screens
+      box-sizing: border-box !important;
     }
   }
 
