@@ -55,6 +55,9 @@ export default function Layout({ children }) {
               <HeaderMenuItem onClick={() => navigate("/dashboard")}>
                 Dashboard
               </HeaderMenuItem>
+              <HeaderMenuItem onClick={() => navigate("/login")}>
+                Login
+              </HeaderMenuItem>
               <HeaderMenuItem onClick={() => navigate("/signup")}>
                 Sign Up
               </HeaderMenuItem>
@@ -90,6 +93,9 @@ export default function Layout({ children }) {
                   </HeaderMenuItem>
                   <HeaderMenuItem onClick={() => navigate("/dashboard")}>
                     Dashboard
+                  </HeaderMenuItem>
+                  <HeaderMenuItem onClick={() => navigate("/login")}>
+                    Login
                   </HeaderMenuItem>
                   <HeaderMenuItem onClick={() => navigate("/signup")}>
                     Sign Up
