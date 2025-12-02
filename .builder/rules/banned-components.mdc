@@ -8,130 +8,35 @@ alwaysApply: true
 
 # Banned Carbon Components
 
-## ❌ DO NOT USE: ProgressIndicator
+This file documents Carbon Design System components that should not be used in this project due to compatibility, theming, or accessibility issues.
+
+## Currently Banned Components
+
+**None** - All Carbon components are currently approved for use.
+
+## Previously Banned Components
+
+### ProgressIndicator (Unbanned)
 
 **Component**: `ProgressIndicator` and `ProgressStep` from `@carbon/react`
 
-**Why Banned**: 
-- Carbon's ProgressIndicator has severe theming issues that cannot be reliably fixed
-- CSS specificity conflicts make it impossible to override Carbon's hardcoded colors
-- Causes dark-on-dark text in dark mode, violating WCAG accessibility standards
-- Multiple attempts to fix via CSS overrides have failed due to load order and cascade issues
+**Previous Issue**: Had theming issues that have been resolved through proper CSS overrides and specificity management.
 
-**What to Use Instead**: `StepBreadcrumb` (custom component)
+**Alternative Available**: `StepBreadcrumb` (custom component) is still available at `src/components/StepBreadcrumb.jsx` for projects preferring a custom implementation.
 
-### Using StepBreadcrumb
+## Guidelines for Using Carbon Components
 
-**Location**: `src/components/StepBreadcrumb.jsx`
+When using any Carbon component:
 
-**Import**:
-
-import StepBreadcrumb from '../components/StepBreadcrumb';
-```
-
-**Props**:
-```jsx
-<StepBreadcrumb
-  steps={[
-    { key: 'step1', label: 'Personal Info', description: 'Complete' },
-    { key: 'step2', label: 'Address', description: 'Current' },
-    { key: 'step3', label: 'Review', description: '' },
-  ]}
-  currentIndex={1}  // 0-based index of current step
-  spaceEqually={true}  // Whether to space steps equally (default: true)
-/>
-```
-
-**Step Object Shape**:
-```typescript
-{
-  key: string,        // Unique identifier (required)
-  label: string,      // Step label (required)
-  description?: string  // Optional description shown below label
-}
-```
-
-**Visual States**:
-- **Complete** (index < currentIndex): Green checkmark, primary text color
-- **Current** (index === currentIndex): Red background, white text, highlighted
-- **Incomplete** (index > currentIndex): Gray, subtle text
-
-**Theming**:
-- Fully supports light and dark modes
-- Uses semantic tokens for all colors
-- Guaranteed WCAG AA contrast ratios
-- No CSS override issues
-
-**Examples**:
-
-1. **Sign-Up Flow** (`src/pages/SignUpPage.jsx`):
-```jsx
-<StepBreadcrumb 
-  steps={steps.map((step, index) => ({
-    ...step,
-    description: index === currentStep ? 'Current' : ''
-  }))}
-  currentIndex={currentStep}
-  spaceEqually
-/>
-```
-
-2. **Theme Preview** (`src/pages/ThemePreviewPage.jsx`):
-```jsx
-<StepBreadcrumb 
-  steps={[
-    { key: 'step1', label: 'Step 1', description: 'Complete' },
-    { key: 'step2', label: 'Step 2', description: 'Complete' },
-    { key: 'step3', label: 'Step 3', description: 'Current' },
-    { key: 'step4', label: 'Step 4', description: '' },
-    { key: 'step5', label: 'Step 5', description: '' },
-  ]}
-  currentIndex={2}
-  spaceEqually
-/>
-```
-
-**Mobile Responsive**:
-- Stacks vertically on small screens
-- Hides connector lines on mobile for cleaner look
-- Truncates long labels with ellipsis
-- Touch-friendly marker sizing
-
-## Exceptions
-
-**Component Examples** (`src/component-examples/ProgressIndicator/`):
-- The Carbon component example files can remain for reference
-- These are demonstration files and not used in the application
-- DO NOT copy code from these examples into the application
-
-## Enforcement
-
-**Code Review Checklist**:
-- [ ] No imports of `ProgressIndicator` or `ProgressStep` from `@carbon/react`
-- [ ] All progress/stepper UI uses `StepBreadcrumb` instead
-- [ ] New features requiring step indicators use `StepBreadcrumb`
-
-**AI Assistant Rules**:
-- NEVER suggest using `ProgressIndicator`
-- ALWAYS use `StepBreadcrumb` for step/progress UI
-- Read this file (`alwaysApply: true`) before suggesting progress indicators
+1. **Test in Both Themes**: Always verify components work in both light and dark modes
+2. **Use Theme Tokens**: Override styles using semantic tokens from `src/styles/tokens`
+3. **Check Specificity**: If overriding Carbon styles, ensure sufficient CSS specificity
+4. **Validate Accessibility**: Ensure WCAG AA contrast ratios are maintained
+5. **Document Issues**: If you encounter persistent theming issues, document them here
 
 ## Related Documentation
 
-- **StepBreadcrumb Component**: `src/components/StepBreadcrumb.jsx`
-- **StepBreadcrumb Styles**: `src/components/StepBreadcrumb.scss`
 - **Theme Tokens**: `.builder/rules/design-tokens.mdc`
 - **Theming System**: `.builder/rules/theming-system.mdc`
-
-## History
-
-**Created**: January 2025  
-**Reason**: After multiple failed attempts to fix ProgressIndicator theming issues, the decision was made to create a custom component with full theme control.
-
-**Attempts to Fix ProgressIndicator** (all failed):
-1. CSS overrides in `src/styles/components.scss` - insufficient specificity
-2. Increased specificity with nested selectors - load order issues
-3. Moving overrides to `src/index.scss` after `@use` imports - still unreliable
-4. Various combinations of `!important` and selector chains - inconsistent results
-
-**Conclusion**: Carbon's ProgressIndicator is fundamentally incompatible with custom theming and should not be used in this project.
+- **Carbon Design System Guide**: `.builder/rules/carbon-design-system.mdc`
+- **Theme Contrast Guidelines**: `.builder/rules/theme-contrast-guidelines.mdc`
