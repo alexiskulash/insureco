@@ -368,9 +368,9 @@ export default function SignUpPage() {
       case 'home':
         return (
           <Stack gap={6}>
-            <Heading className="signup-step-heading">Car Details</Heading>
+            <Heading className="signup-step-heading">Home Details</Heading>
             <p className="signup-step-description">
-              Tell us about your car
+              Tell us about your home
             </p>
             <Select
               id="homeType"
