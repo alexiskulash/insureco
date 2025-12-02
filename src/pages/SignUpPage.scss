@@ -566,15 +566,39 @@
 
   // Stack labels and inputs better on mobile
   .cds--form-item {
+    max-width: 100%;
+    width: 100%;
+
     @media (max-width: 671px) {
       margin-bottom: var(--spacing-05);
     }
+  }
+
+  // Ensure all input wrappers don't overflow
+  .cds--text-input-wrapper,
+  .cds--text-input__field-wrapper,
+  .cds--select-input__wrapper,
+  .cds--number__input-wrapper,
+  .cds--date-picker__input,
+  .cds--date-picker-container {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  // Carbon Stack component width constraint
+  .cds--stack {
+    max-width: 100%;
+    width: 100%;
   }
 
   .cds--label {
     font-size: var(--body-sm-size);
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 
     @media (min-width: 672px) {
       font-size: var(--body-md-size);
