@@ -609,23 +609,22 @@ export default function SignUpPage() {
         </header>
 
         <Tile className="signup-progress">
-          <ProgressIndicator currentIndex={0} spaceEqually>
-            <ProgressStep
-              label="Step"
-              description="Optional label"
-            />
-            <ProgressStep
-              label="Step"
-              description="Optional label"
-            />
-            <ProgressStep
-              label="Step"
-              description="Optional label"
-            />
-            <ProgressStep
-              label="Step"
-              description="Optional label"
-            />
+          <ProgressIndicator currentIndex={currentStep} spaceEqually>
+            {steps.map((step, index) => (
+              <ProgressStep
+                key={step.key}
+                label={step.label}
+                description={
+                  index < currentStep
+                    ? 'Complete'
+                    : index === currentStep
+                    ? 'Current'
+                    : ''
+                }
+                complete={index < currentStep}
+                current={index === currentStep}
+              />
+            ))}
           </ProgressIndicator>
         </Tile>
 
