@@ -260,10 +260,7 @@ export default function SignUpPage() {
       case 'type':
         return (
           <Stack gap={6}>
-            <Heading className="signup-step-heading">Insurance Type</Heading>
-            <p className="signup-step-description">
-              What type of insurance coverage do you need?
-            </p>
+            <Heading className="signup-step-heading">Personal Information</Heading>
             <TileGroup
               className="signup-tile-group"
               legend="Select your insurance coverage type"
@@ -280,7 +277,7 @@ export default function SignUpPage() {
                   <Car size={32} className="tile-icon" />
                   <div className="tile-text">
                     <h4>Car Insurance</h4>
-                    <p>Protect your vehicle with comprehensive coverage</p>
+                    <p>Get comprehensive coverage</p>
                   </div>
                 </div>
               </RadioTile>
@@ -294,28 +291,14 @@ export default function SignUpPage() {
                   <HomeIcon size={32} className="tile-icon" />
                   <div className="tile-text">
                     <h4>Home Insurance</h4>
-                    <p>Secure your property and belongings</p>
-                  </div>
-                </div>
-              </RadioTile>
-
-              <RadioTile
-                id="insurance-both"
-                value="both"
-                className="signup-radio-tile"
-              >
-                <div className="tile-content">
-                  <div className="tile-icon-group">
-                    <Car size={24} />
-                    <HomeIcon size={24} />
-                  </div>
-                  <div className="tile-text">
-                    <h4>Both Car & Home</h4>
-                    <p>Bundle and save with combined coverage</p>
+                    <p>Get comprehensive coverage</p>
                   </div>
                 </div>
               </RadioTile>
             </TileGroup>
+            <p className="signup-step-description">
+              Let's start with some basic information about you.
+            </p>
           </Stack>
         );
 
