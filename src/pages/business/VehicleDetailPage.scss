@@ -3,9 +3,9 @@
 .vehicle-detail-page {
   padding: var(--spacing-06) 0;
 
-  // Add vertical spacing between grid rows
-  .cds--grid {
-    row-gap: var(--spacing-07);
+  // Add spacing to stat card row columns
+  > .cds--css-grid > .cds--col:has(.stat-card) {
+    margin-bottom: var(--spacing-07);
   }
 
   // Breadcrumb Section
@@ -60,10 +60,10 @@
   // Stat Cards
   .stat-card {
     padding: var(--spacing-05);
-    height: 100%;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-04);
+    min-height: 120px;
 
     .stat-icon {
       color: var(--interactive-primary);
