@@ -23,7 +23,7 @@ import {
   Money,
   DocumentView,
   WarningAlt,
-  Gauge,
+  Dashboard,
 } from '@carbon/icons-react';
 import { getVehicleById, getClaimsForAsset, getPaymentsForAsset } from '../../data/businessMockData';
 import { formatCurrency, formatDate, formatMileage, formatVehicleName, formatVIN, getStatusTagType } from '../../utils/businessHelpers';
@@ -125,7 +125,7 @@ export default function VehicleDetailPage() {
       <Column lg={4} md={2} sm={2}>
         <Tile className="stat-card">
           <div className="stat-icon">
-            <Gauge size={24} />
+            <Dashboard size={24} />
           </div>
           <div className="stat-content">
             <p className="stat-label">Current Mileage</p>
