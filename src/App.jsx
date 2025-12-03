@@ -33,8 +33,10 @@ export default function App() {
         <Route path="/business" element={<Navigate to="/business/dashboard" replace />} />
         <Route path="/business/dashboard" element={<BusinessDashboard />} />
         <Route path="/business/properties" element={<PropertiesPage />} />
+        <Route path="/business/properties/add" element={<BusinessComingSoon />} />
         <Route path="/business/properties/:propertyId" element={<PropertyDetailPage />} />
         <Route path="/business/fleet" element={<FleetPage />} />
+        <Route path="/business/fleet/add" element={<BusinessComingSoon />} />
         <Route path="/business/fleet/:vehicleId" element={<VehicleDetailPage />} />
         <Route path="/business/map" element={<BusinessComingSoon />} />
         <Route path="/business/claims" element={<BusinessComingSoon />} />
