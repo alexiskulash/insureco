@@ -12,8 +12,10 @@ import BusinessComingSoon from "./pages/business/BusinessComingSoon";
 import BusinessDashboard from "./pages/business/BusinessDashboard";
 import PropertiesPage from "./pages/business/PropertiesPage";
 import PropertyDetailPage from "./pages/business/PropertyDetailPage";
+import AddPropertyPage from "./pages/business/AddPropertyPage";
 import FleetPage from "./pages/business/FleetPage";
 import VehicleDetailPage from "./pages/business/VehicleDetailPage";
+import AddVehiclePage from "./pages/business/AddVehiclePage";
 import FileClaimPage from "./pages/business/FileClaimPage";
 import MakePaymentPage from "./pages/business/MakePaymentPage";
 
@@ -33,10 +35,10 @@ export default function App() {
         <Route path="/business" element={<Navigate to="/business/dashboard" replace />} />
         <Route path="/business/dashboard" element={<BusinessDashboard />} />
         <Route path="/business/properties" element={<PropertiesPage />} />
-        <Route path="/business/properties/add" element={<BusinessComingSoon />} />
+        <Route path="/business/properties/add" element={<AddPropertyPage />} />
         <Route path="/business/properties/:propertyId" element={<PropertyDetailPage />} />
         <Route path="/business/fleet" element={<FleetPage />} />
-        <Route path="/business/fleet/add" element={<BusinessComingSoon />} />
+        <Route path="/business/fleet/add" element={<AddVehiclePage />} />
         <Route path="/business/fleet/:vehicleId" element={<VehicleDetailPage />} />
         <Route path="/business/map" element={<BusinessComingSoon />} />
         <Route path="/business/claims" element={<BusinessComingSoon />} />
