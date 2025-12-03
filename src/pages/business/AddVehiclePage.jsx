@@ -191,8 +191,10 @@ export default function AddVehiclePage() {
       case 0:
         return (
           <div className="step-content">
-            <Heading className="step-title">Vehicle Information</Heading>
-            <p className="step-description">Enter the basic details about the vehicle.</p>
+            <div className="section-header">
+              <Heading className="section-title">Vehicle Information</Heading>
+            </div>
+            <p className="section-description">Enter the basic details about the vehicle</p>
 
             <Form>
               <TextInput
@@ -276,8 +278,10 @@ export default function AddVehiclePage() {
       case 1:
         return (
           <div className="step-content">
-            <Heading className="step-title">Assignment Details</Heading>
-            <p className="step-description">Assign the vehicle to a driver and department.</p>
+            <div className="section-header">
+              <Heading className="section-title">Assignment Details</Heading>
+            </div>
+            <p className="section-description">Assign the vehicle to a driver and department</p>
 
             <Form>
               <TextInput
@@ -308,8 +312,10 @@ export default function AddVehiclePage() {
       case 2:
         return (
           <div className="step-content">
-            <Heading className="step-title">Coverage Selection</Heading>
-            <p className="step-description">Choose your coverage options.</p>
+            <div className="section-header">
+              <Heading className="section-title">Coverage Selection</Heading>
+            </div>
+            <p className="section-description">Choose your coverage options</p>
 
             <Form>
               <Dropdown
@@ -342,8 +348,10 @@ export default function AddVehiclePage() {
       case 3:
         return (
           <div className="step-content">
-            <Heading className="step-title">Review & Submit</Heading>
-            <p className="step-description">Please review the vehicle details before submitting.</p>
+            <div className="section-header">
+              <Heading className="section-title">Review & Submit</Heading>
+            </div>
+            <p className="section-description">Please review the vehicle details before submitting</p>
 
             <div className="review-section">
               <div className="review-group">
@@ -417,23 +425,11 @@ export default function AddVehiclePage() {
 
   return (
     <Grid fullWidth className="add-vehicle-page">
-      {/* Breadcrumb Navigation */}
-      <Column lg={16} md={8} sm={4} className="breadcrumb-section">
-        <Breadcrumb noTrailingSlash>
-          <BreadcrumbItem href="/business/dashboard">Business Dashboard</BreadcrumbItem>
-          <BreadcrumbItem href="/business/fleet">Fleet</BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>Add Vehicle</BreadcrumbItem>
-        </Breadcrumb>
-      </Column>
-
-      {/* Header */}
-      <Column lg={16} md={8} sm={4} className="page-header">
-        <div className="header-content">
-          <CarFront size={32} className="page-icon" />
-          <div>
-            <Heading className="page-title">Add New Vehicle</Heading>
-            <p className="page-subtitle">Add a commercial vehicle to your fleet</p>
-          </div>
+      {/* Header Banner */}
+      <Column lg={16} md={8} sm={4} className="header-banner-section">
+        <div className="header-banner">
+          <Heading className="banner-title">Add New Vehicle</Heading>
+          <p className="banner-subtitle">Add a commercial vehicle to your fleet in just a few steps</p>
         </div>
       </Column>
 
