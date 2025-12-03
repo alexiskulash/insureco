@@ -9,6 +9,7 @@ import DashboardHome from "./pages/DashboardHome";
 import AboutPage from "./pages/AboutPage";
 import ThemePreviewPage from "./pages/ThemePreviewPage";
 import BusinessComingSoon from "./pages/business/BusinessComingSoon";
+import BusinessDashboard from "./pages/business/BusinessDashboard";
 
 export default function App() {
   return (
@@ -22,9 +23,9 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/theme-preview" element={<ThemePreviewPage />} />
 
-        {/* Business Routes - Placeholder pages for now */}
+        {/* Business Routes */}
         <Route path="/business" element={<Navigate to="/business/dashboard" replace />} />
-        <Route path="/business/dashboard" element={<BusinessComingSoon />} />
+        <Route path="/business/dashboard" element={<BusinessDashboard />} />
         <Route path="/business/properties" element={<BusinessComingSoon />} />
         <Route path="/business/fleet" element={<BusinessComingSoon />} />
         <Route path="/business/map" element={<BusinessComingSoon />} />
