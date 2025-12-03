@@ -3,14 +3,19 @@
 .property-detail-page {
   padding: var(--spacing-06) 0;
 
+  // Add spacing to stat card row columns
+  > .cds--css-grid > .cds--col:has(.stat-card) {
+    margin-bottom: var(--spacing-07);
+  }
+
   // Breadcrumb Section
   .breadcrumb-section {
-    margin-bottom: var(--spacing-05);
+    margin-bottom: var(--spacing-06);
   }
 
   // Page Header
   .page-header {
-    margin-bottom: var(--spacing-06);
+    margin-bottom: var(--spacing-08);
 
     .header-content {
       display: flex;
@@ -55,10 +60,10 @@
   // Stat Cards
   .stat-card {
     padding: var(--spacing-05);
-    height: 100%;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-04);
+    min-height: 120px;
 
     .stat-icon {
       color: var(--interactive-primary);
@@ -66,6 +71,9 @@
 
     .stat-content {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
 
       .stat-label {
         font-size: var(--body-sm-size);
@@ -331,7 +339,7 @@
     display: flex;
     gap: var(--spacing-04);
     flex-wrap: wrap;
-    padding: var(--spacing-05) 0;
+    padding: var(--spacing-06) 0;
   }
 
   // Responsive
