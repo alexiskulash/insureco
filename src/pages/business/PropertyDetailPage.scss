@@ -3,6 +3,11 @@
 .property-detail-page {
   padding: var(--spacing-06) 0;
 
+  // Add vertical spacing between grid rows
+  .cds--grid {
+    row-gap: var(--spacing-07);
+  }
+
   // Breadcrumb Section
   .breadcrumb-section {
     margin-bottom: var(--spacing-06);
@@ -59,7 +64,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-04);
-    margin-bottom: var(--spacing-07);
 
     .stat-icon {
       color: var(--interactive-primary);
@@ -351,7 +355,6 @@
 
     .stat-card {
       padding: var(--spacing-04);
-      margin-bottom: var(--spacing-06);
 
       .stat-value {
         font-size: var(--heading-h4-size);
