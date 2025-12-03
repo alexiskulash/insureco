@@ -195,8 +195,10 @@ export default function AddPropertyPage() {
       case 0:
         return (
           <div className="step-content">
-            <Heading className="step-title">Property Information</Heading>
-            <p className="step-description">Enter the basic details about the property.</p>
+            <div className="section-header">
+              <Heading className="section-title">Property Information</Heading>
+            </div>
+            <p className="section-description">Enter the basic details about the property</p>
 
             <Form>
               <TextInput
@@ -259,8 +261,10 @@ export default function AddPropertyPage() {
       case 1:
         return (
           <div className="step-content">
-            <Heading className="step-title">Building Details</Heading>
-            <p className="step-description">Provide information about the building structure.</p>
+            <div className="section-header">
+              <Heading className="section-title">Building Details</Heading>
+            </div>
+            <p className="section-description">Provide information about the building structure</p>
 
             <Form>
               <Dropdown
@@ -340,8 +344,10 @@ export default function AddPropertyPage() {
       case 2:
         return (
           <div className="step-content">
-            <Heading className="step-title">Coverage Selection</Heading>
-            <p className="step-description">Choose your coverage options.</p>
+            <div className="section-header">
+              <Heading className="section-title">Coverage Selection</Heading>
+            </div>
+            <p className="section-description">Choose your coverage options</p>
 
             <Form>
               <Dropdown
@@ -385,8 +391,10 @@ export default function AddPropertyPage() {
       case 3:
         return (
           <div className="step-content">
-            <Heading className="step-title">Review & Submit</Heading>
-            <p className="step-description">Please review the property details before submitting.</p>
+            <div className="section-header">
+              <Heading className="section-title">Review & Submit</Heading>
+            </div>
+            <p className="section-description">Please review the property details before submitting</p>
 
             <div className="review-section">
               <div className="review-group">
@@ -454,23 +462,11 @@ export default function AddPropertyPage() {
 
   return (
     <Grid fullWidth className="add-property-page">
-      {/* Breadcrumb Navigation */}
-      <Column lg={16} md={8} sm={4} className="breadcrumb-section">
-        <Breadcrumb noTrailingSlash>
-          <BreadcrumbItem href="/business/dashboard">Business Dashboard</BreadcrumbItem>
-          <BreadcrumbItem href="/business/properties">Properties</BreadcrumbItem>
-          <BreadcrumbItem isCurrentPage>Add Property</BreadcrumbItem>
-        </Breadcrumb>
-      </Column>
-
-      {/* Header */}
-      <Column lg={16} md={8} sm={4} className="page-header">
-        <div className="header-content">
-          <Building size={32} className="page-icon" />
-          <div>
-            <Heading className="page-title">Add New Property</Heading>
-            <p className="page-subtitle">Add a commercial property to your insurance portfolio</p>
-          </div>
+      {/* Header Banner */}
+      <Column lg={16} md={8} sm={4} className="header-banner-section">
+        <div className="header-banner">
+          <Heading className="banner-title">Add New Property</Heading>
+          <p className="banner-subtitle">Add a commercial property to your insurance portfolio in just a few steps</p>
         </div>
       </Column>
 
