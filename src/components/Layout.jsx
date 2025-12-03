@@ -18,7 +18,7 @@ import {
   SideNavMenu,
   SideNavMenuItem,
 } from "@carbon/react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import {
   Switcher as SwitcherIcon,
   Notification,
@@ -33,6 +33,7 @@ export default function Layout({ children }) {
 
   // Remove padding for landing page
   const isLandingPage = location.pathname === '/';
+
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
@@ -55,6 +56,29 @@ export default function Layout({ children }) {
               <HeaderMenuItem onClick={() => navigate("/dashboard")}>
                 Dashboard
               </HeaderMenuItem>
+
+              {/* Business Menu with Dropdown */}
+              <HeaderMenu aria-label="Business" menuLinkName="Business">
+                <HeaderMenuItem element={Link} to="/business/dashboard">
+                  Overview
+                </HeaderMenuItem>
+                <HeaderMenuItem element={Link} to="/business/properties">
+                  Properties
+                </HeaderMenuItem>
+                <HeaderMenuItem element={Link} to="/business/fleet">
+                  Fleet
+                </HeaderMenuItem>
+                <HeaderMenuItem element={Link} to="/business/map">
+                  Map View
+                </HeaderMenuItem>
+                <HeaderMenuItem element={Link} to="/business/claims">
+                  Claims
+                </HeaderMenuItem>
+                <HeaderMenuItem element={Link} to="/business/payments">
+                  Payments
+                </HeaderMenuItem>
+              </HeaderMenu>
+
               <HeaderMenuItem onClick={() => navigate("/login")}>
                 Login
               </HeaderMenuItem>
@@ -94,6 +118,29 @@ export default function Layout({ children }) {
                   <HeaderMenuItem onClick={() => navigate("/dashboard")}>
                     Dashboard
                   </HeaderMenuItem>
+
+                  {/* Business Section in Sidebar with Submenu */}
+                  <SideNavMenu title="Business">
+                    <SideNavMenuItem element={Link} to="/business/dashboard">
+                      Overview
+                    </SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/business/properties">
+                      Properties
+                    </SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/business/fleet">
+                      Fleet
+                    </SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/business/map">
+                      Map View
+                    </SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/business/claims">
+                      Claims
+                    </SideNavMenuItem>
+                    <SideNavMenuItem element={Link} to="/business/payments">
+                      Payments
+                    </SideNavMenuItem>
+                  </SideNavMenu>
+
                   <HeaderMenuItem onClick={() => navigate("/login")}>
                     Login
                   </HeaderMenuItem>
