@@ -1,0 +1,212 @@
+@use '../../styles/tokens' as *;
+
+.faceted-filter-button {
+  position: relative;
+  display: inline-block;
+
+  .filter-button-active {
+    background: var(--background-hover) !important;
+  }
+
+  .filter-label {
+    margin: 0 var(--spacing-02);
+  }
+
+  .filter-count {
+    margin-left: var(--spacing-02);
+  }
+
+  // Dropdown Container
+  .filter-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-02));
+    left: 0;
+    right: auto;
+    z-index: 9999;
+    display: flex;
+    background: var(--background-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    box-shadow: var(--modal-shadow);
+    min-width: 500px;
+    max-width: calc(100vw - 2rem);
+    max-height: 500px;
+    overflow: hidden;
+
+    // Prevent overflow on right side
+    @media (min-width: 673px) {
+      // If dropdown would overflow, align to right edge instead
+      &::before {
+        content: '';
+        position: absolute;
+        right: 100%;
+      }
+    }
+
+    @media (max-width: 672px) {
+      min-width: 320px;
+      max-width: calc(100vw - var(--spacing-05));
+      flex-direction: column;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  // When button is on the right side, align dropdown to right
+  &:last-child .filter-dropdown {
+    left: auto;
+    right: 0;
+  }
+
+  // Facet Menu (left side)
+  .facet-menu {
+    min-width: 180px;
+    background: var(--background-secondary);
+    border-right: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 672px) {
+      min-width: 100%;
+      border-right: none;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .facet-menu-header {
+      padding: var(--spacing-04) var(--spacing-05);
+      font-size: var(--body-xs-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .facet-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-03);
+      padding: var(--spacing-04) var(--spacing-05);
+      background: transparent;
+      border: none;
+      border-left: 3px solid transparent;
+      color: var(--text-primary);
+      font-size: var(--body-sm-size);
+      cursor: pointer;
+      transition: all var(--duration-fast-01) var(--easing-standard);
+      text-align: left;
+
+      span:first-child {
+        flex: 1;
+      }
+
+      .facet-arrow {
+        color: var(--text-secondary);
+        transition: transform var(--duration-fast-01) var(--easing-standard);
+      }
+
+      &:hover {
+        background: var(--background-hover);
+      }
+
+      &.active {
+        background: var(--background-primary);
+        border-left-color: var(--interactive-primary);
+        font-weight: var(--font-weight-semibold);
+
+        .facet-arrow {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+
+  // Options Panel (right side)
+  .options-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 280px;
+    max-width: 400px;
+
+    @media (max-width: 672px) {
+      min-width: 100%;
+      max-width: 100%;
+    }
+
+    .options-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--spacing-04) var(--spacing-05);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--background-primary);
+
+      span {
+        font-size: var(--body-sm-size);
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+      }
+    }
+
+    .options-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--spacing-03) var(--spacing-05);
+      max-height: 350px;
+
+      .option-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-03);
+        padding: var(--spacing-02) 0;
+
+        .option-count {
+          font-size: var(--body-xs-size);
+          color: var(--text-secondary);
+          margin-left: auto;
+        }
+      }
+    }
+  }
+
+  // Actions Footer
+  .filter-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: var(--spacing-04) var(--spacing-05);
+    border-top: 1px solid var(--border-subtle);
+    background: var(--background-primary);
+    gap: var(--spacing-03);
+
+    @media (max-width: 672px) {
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  // Scrollbar styling for options list
+  .options-list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-subtle) transparent;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: var(--radius-sm);
+
+      &:hover {
+        background: var(--border-strong);
+      }
+    }
+  }
+}

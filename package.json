@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@carbon/react": "^1.83.0-rc.0",
+    "mapbox-gl": "^3.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.6.0"
+    "react-map-gl": "^8.1.0",
+    "react-router-dom": "^7.6.0",
+    "supercluster": "^8.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.4.1",
