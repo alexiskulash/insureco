@@ -394,18 +394,16 @@ export default function MapViewPage() {
           </div>
 
           {/* Apply Filters Footer */}
-          {(totalPendingCount > 0 || hasPendingChanges) && (
-            <div className="filters-footer">
-              <Button
-                kind="primary"
-                size="md"
-                onClick={handleApplyFilters}
-                disabled={!hasPendingChanges}
-              >
-                Apply Filters {totalPendingCount > 0 && `(${totalPendingCount})`}
-              </Button>
-            </div>
-          )}
+          <div className="filters-footer">
+            <Button
+              kind="primary"
+              size="md"
+              onClick={handleApplyFilters}
+              disabled={!hasPendingChanges && totalPendingCount === 0}
+            >
+              Apply Filters {totalPendingCount > 0 && `(${totalPendingCount})`}
+            </Button>
+          </div>
         </Tile>
       </Column>
 
