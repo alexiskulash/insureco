@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Map, { Marker, Popup, NavigationControl } from 'react-map-gl';
+import { Map, Marker, Popup, NavigationControl } from 'react-map-gl/mapbox';
 import Supercluster from 'supercluster';
 import { Button } from '@carbon/react';
 import { Building, CarFront } from '@carbon/icons-react';
