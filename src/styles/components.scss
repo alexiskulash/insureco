@@ -327,3 +327,80 @@
   background-color: var(--background-secondary);
   color: var(--text-primary);
 }
+
+// ============================================
+// Leaflet Map Components
+// ============================================
+// IMPORTANT: Override Leaflet default styles for theme support
+// Leaflet uses hardcoded colors that don't adapt to custom themes
+
+// Zoom Controls
+.leaflet-control-zoom {
+  border: 1px solid var(--border-subtle) !important;
+  box-shadow: var(--shadow-02) !important;
+  border-radius: var(--radius-sm) !important;
+  overflow: hidden;
+
+  a {
+    background-color: var(--background-primary) !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    transition: background-color var(--duration-fast-02) var(--easing-standard);
+
+    &:hover {
+      background-color: var(--background-hover) !important;
+      color: var(--interactive-primary) !important;
+    }
+
+    &:last-child {
+      border-bottom: none !important;
+    }
+  }
+}
+
+// Attribution Control
+.leaflet-control-attribution {
+  background-color: var(--background-primary) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-01) !important;
+  font-size: var(--font-size-xs) !important;
+  padding: var(--spacing-02) var(--spacing-03) !important;
+
+  a {
+    color: var(--interactive-primary) !important;
+
+    &:hover {
+      color: var(--interactive-hover) !important;
+      text-decoration: underline;
+    }
+  }
+}
+
+// Map Container
+.leaflet-container {
+  background-color: var(--background-secondary) !important;
+  font-family: var(--font-family-sans) !important;
+}
+
+// Tile Loading
+.leaflet-tile-pane {
+  opacity: 1;
+  transition: opacity var(--duration-moderate-01) var(--easing-standard);
+}
+
+// Marker Shadow (ensure it's visible in dark mode)
+.leaflet-marker-shadow {
+  opacity: 0.3;
+}
+
+// Map Panes (ensure proper layering)
+.leaflet-pane {
+  z-index: auto;
+}
+
+// Interactive elements (ensure proper cursor)
+.leaflet-interactive {
+  cursor: pointer;
+}
