@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -68,32 +68,41 @@ export default function MapView({ properties = [], vehicles = [], selectedAssetT
   const showProperties = selectedAssetType === 'all' || selectedAssetType === 'properties';
   const showVehicles = selectedAssetType === 'all' || selectedAssetType === 'vehicles';
 
-  // Collect all marker positions for bounds fitting
-  const allPositions = [];
-  
-  if (showProperties) {
-    properties.forEach(prop => {
-      if (prop.lat && prop.lng) {
-        allPositions.push([prop.lat, prop.lng]);
-      }
-    });
-  }
-  
-  if (showVehicles) {
-    vehicles.forEach(vehicle => {
-      if (vehicle.lastKnownLocation?.lat && vehicle.lastKnownLocation?.lng) {
-        allPositions.push([vehicle.lastKnownLocation.lat, vehicle.lastKnownLocation.lng]);
-      }
-    });
-  }
+  // Collect all marker positions for bounds fitting (memoized to prevent recalculation)
+  const allPositions = useMemo(() => {
+    const positions = [];
+
+    if (showProperties) {
+      properties.forEach(prop => {
+        if (prop.lat && prop.lng) {
+          positions.push([prop.lat, prop.lng]);
+        }
+      });
+    }
+
+    if (showVehicles) {
+      vehicles.forEach(vehicle => {
+        if (vehicle.lastKnownLocation?.lat && vehicle.lastKnownLocation?.lng) {
+          positions.push([vehicle.lastKnownLocation.lat, vehicle.lastKnownLocation.lng]);
+        }
+      });
+    }
+
+    return positions;
+  }, [properties, vehicles, showProperties, showVehicles]);
 
   // Default center (California)
   const defaultCenter = [37.5, -121.5];
   const defaultZoom = 7;
 
+  // Create a unique key for the map to force remount when asset type changes
+  // This prevents "Map container is already initialized" error in React Strict Mode
+  const mapKey = `map-${selectedAssetType}`;
+
   return (
     <div className="map-view-container">
       <MapContainer
+        key={mapKey}
         center={defaultCenter}
         zoom={defaultZoom}
         className="leaflet-map"
