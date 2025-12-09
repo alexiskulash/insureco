@@ -142,9 +142,10 @@
       }
 
       .filters-content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-05);
+        // Cascading filter button container
+        .faceted-filter-button {
+          width: 100%;
+        }
       }
     }
 
