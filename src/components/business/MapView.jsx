@@ -1,245 +1,286 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Map, Marker, Popup, NavigationControl } from 'react-map-gl/mapbox';
-import Supercluster from 'supercluster';
-import { Button } from '@carbon/react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import L from 'leaflet';
+import { Button, Tag } from '@carbon/react';
 import { Building, CarFront } from '@carbon/icons-react';
-import { useTheme } from '../../contexts/ThemeContext';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { formatCurrency, getStatusTagType } from '../../utils/businessHelpers';
+import 'leaflet/dist/leaflet.css';
 import './MapView.scss';
 
-// Carbon Design System's official Mapbox style URLs
-const CARBON_MAP_STYLES = {
-  white: 'mapbox://styles/carbondesignsystem/ck7c8cfpp08h61irrudv7f1xg',
-  g10: 'mapbox://styles/carbondesignsystem/ck7c8ce1y05h61ipb2fixfe76',
-  g90: 'mapbox://styles/carbondesignsystem/ck7c8ccac08jj1imhvd2g4qfb',
-  g100: 'mapbox://styles/carbondesignsystem/ck7c89g8708gy1imlz9g5o6h9'
+// Fix for default marker icons in React Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+});
+
+// Custom icon for properties (building/red)
+const propertyIcon = new L.DivIcon({
+  className: 'custom-marker property-marker',
+  html: `<div class="marker-icon">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M16 2L6 12v18h8v-10h4v10h8V12L16 2zm0 2.8L24 13v15h-4V18h-8v10H8V13l8-8.2z"/>
+    </svg>
+  </div>`,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
+
+// Custom icon for vehicles (car/blue)
+const vehicleIcon = new L.DivIcon({
+  className: 'custom-marker vehicle-marker',
+  html: `<div class="marker-icon">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M26 14h-2.276l-2.276-4.553A2.004 2.004 0 0019.658 8H12.34a2.004 2.004 0 00-1.789 1.106L8.277 14H6a2.002 2.002 0 00-2 2v7a2.002 2.002 0 002 2v3h2v-3h20v3h2v-3a2.002 2.002 0 002-2v-7a2.002 2.002 0 00-2-2zM12.341 10h7.317l2 4H10.343zM6 23v-7h20v7zM10 18a2 2 0 11-2 2 2.002 2.002 0 012-2zm14 0a2 2 0 11-2 2 2.002 2.002 0 012-2z"/>
+    </svg>
+  </div>`,
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
+
+// Custom cluster icon function for properties (red clusters)
+const createPropertyClusterIcon = (cluster) => {
+  const count = cluster.getChildCount();
+  let sizeClass = 'marker-cluster-small';
+  
+  if (count >= 100) {
+    sizeClass = 'marker-cluster-large';
+  } else if (count >= 10) {
+    sizeClass = 'marker-cluster-medium';
+  }
+  
+  return L.divIcon({
+    html: `<div><span>${count}</span></div>`,
+    className: `marker-cluster marker-cluster-property ${sizeClass}`,
+    iconSize: L.point(40, 40, true),
+  });
 };
 
-/**
- * MapView - Interactive map component with clustering
- * Displays properties and vehicles as markers with Carbon Design System theming
- */
-export default function MapView({ markers = [] }) {
-  const navigate = useNavigate();
-  const { theme } = useTheme();
-  const mapRef = useRef();
-
-  // Viewport state
-  const [viewport, setViewport] = useState({
-    latitude: 37.7749, // San Francisco center
-    longitude: -122.4194,
-    zoom: 9
+// Custom cluster icon function for vehicles (blue clusters)
+const createVehicleClusterIcon = (cluster) => {
+  const count = cluster.getChildCount();
+  let sizeClass = 'marker-cluster-small';
+  
+  if (count >= 100) {
+    sizeClass = 'marker-cluster-large';
+  } else if (count >= 10) {
+    sizeClass = 'marker-cluster-medium';
+  }
+  
+  return L.divIcon({
+    html: `<div><span>${count}</span></div>`,
+    className: `marker-cluster marker-cluster-vehicle ${sizeClass}`,
+    iconSize: L.point(40, 40, true),
   });
+};
 
-  const [selectedMarker, setSelectedMarker] = useState(null);
-  const [clusters, setClusters] = useState([]);
+// Component to fit map bounds to markers
+function FitBounds({ positions }) {
+  const map = useMap();
 
-  // Get appropriate map style based on theme
-  const mapStyle = CARBON_MAP_STYLES[theme] || CARBON_MAP_STYLES.white;
-
-  // Initialize supercluster
-  const supercluster = useMemo(() => {
-    const cluster = new Supercluster({
-      radius: 60,
-      maxZoom: 16
-    });
-
-    // Convert markers to GeoJSON features
-    const points = markers.map((marker, index) => ({
-      type: 'Feature',
-      properties: {
-        cluster: false,
-        markerId: marker.id,
-        markerType: marker.type,
-        name: marker.name,
-        ...marker
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: [marker.lng, marker.lat]
-      }
-    }));
-
-    cluster.load(points);
-    return cluster;
-  }, [markers]);
-
-  // Update clusters when viewport changes
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (positions.length > 0) {
+      const bounds = L.latLngBounds(positions);
+      map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
+    }
+  }, [positions, map]);
 
-    const map = mapRef.current.getMap();
-    const bounds = map.getBounds();
-    const zoom = Math.floor(viewport.zoom);
+  return null;
+}
 
-    const clustersData = supercluster.getClusters(
-      [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()],
-      zoom
-    );
+/**
+ * MapView - Reusable Leaflet map component
+ * Displays properties and vehicles on an interactive map
+ */
+export default function MapView({ properties = [], vehicles = [], selectedAssetType = 'all' }) {
+  const navigate = useNavigate();
 
-    setClusters(clustersData);
-  }, [viewport, supercluster]);
+  // Determine which assets to show
+  const showProperties = selectedAssetType === 'all' || selectedAssetType === 'properties';
+  const showVehicles = selectedAssetType === 'all' || selectedAssetType === 'vehicles';
 
-  // Handle cluster click - zoom into cluster
-  const handleClusterClick = (cluster) => {
-    const expansionZoom = Math.min(
-      supercluster.getClusterExpansionZoom(cluster.id),
-      20
-    );
+  // Collect all marker positions for bounds fitting (memoized to prevent recalculation)
+  const allPositions = useMemo(() => {
+    const positions = [];
 
-    setViewport({
-      ...viewport,
-      latitude: cluster.geometry.coordinates[1],
-      longitude: cluster.geometry.coordinates[0],
-      zoom: expansionZoom,
-      transitionDuration: 500
-    });
-  };
+    if (showProperties) {
+      properties.forEach(prop => {
+        if (prop.lat && prop.lng) {
+          positions.push([prop.lat, prop.lng]);
+        }
+      });
+    }
 
-  // Handle marker click - show popup
-  const handleMarkerClick = (marker) => {
-    setSelectedMarker(marker.properties);
-  };
+    if (showVehicles) {
+      vehicles.forEach(vehicle => {
+        if (vehicle.lastKnownLocation?.lat && vehicle.lastKnownLocation?.lng) {
+          positions.push([vehicle.lastKnownLocation.lat, vehicle.lastKnownLocation.lng]);
+        }
+      });
+    }
 
-  // Navigate to detail page
-  const handleViewDetails = () => {
-    if (!selectedMarker) return;
+    return positions;
+  }, [properties, vehicles, showProperties, showVehicles]);
 
-    const basePath = selectedMarker.markerType === 'property' ? 'properties' : 'fleet';
-    navigate(`/business/${basePath}/${selectedMarker.markerId}`);
-  };
+  // Default center (California)
+  const defaultCenter = [37.5, -121.5];
+  const defaultZoom = 7;
 
   return (
-    <div className="map-view">
-      <Map
-        ref={mapRef}
-        {...viewport}
-        onMove={evt => setViewport(evt.viewState)}
-        mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
-        mapStyle={mapStyle}
-        style={{ width: '100%', height: '100%' }}
-        attributionControl={true}
+    // Key on parent div forces React to create new DOM element when selectedAssetType changes
+    // This prevents "Map container is already initialized" error in React Strict Mode
+    <div key={`map-container-${selectedAssetType}`} className="map-view-container">
+      <MapContainer
+        center={defaultCenter}
+        zoom={defaultZoom}
+        className="leaflet-map"
+        scrollWheelZoom={true}
       >
-        {/* Navigation controls */}
-        <NavigationControl position="top-right" />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
-        {/* Render clusters and markers */}
-        {clusters.map((cluster) => {
-          const [longitude, latitude] = cluster.geometry.coordinates;
-          const { cluster: isCluster, point_count: pointCount } = cluster.properties;
+        {/* Fit bounds to all markers */}
+        <FitBounds positions={allPositions} />
 
-          if (isCluster) {
-            // Render cluster marker
-            return (
-              <Marker
-                key={`cluster-${cluster.id}`}
-                latitude={latitude}
-                longitude={longitude}
-              >
-                <div
-                  className="cluster-marker"
-                  onClick={() => handleClusterClick(cluster)}
-                >
-                  {pointCount}
-                </div>
-              </Marker>
-            );
-          }
-
-          // Render individual marker
-          const markerType = cluster.properties.markerType;
-          const isProperty = markerType === 'property';
-
-          return (
-            <Marker
-              key={`marker-${cluster.properties.markerId}`}
-              latitude={latitude}
-              longitude={longitude}
-            >
-              <div
-                className={`custom-marker ${isProperty ? 'property-marker' : 'vehicle-marker'}`}
-                onClick={() => handleMarkerClick(cluster)}
-              >
-                {isProperty ? <Building size={20} /> : <CarFront size={20} />}
-              </div>
-            </Marker>
-          );
-        })}
-
-        {/* Popup for selected marker */}
-        {selectedMarker && (
-          <Popup
-            latitude={selectedMarker.lat}
-            longitude={selectedMarker.lng}
-            onClose={() => setSelectedMarker(null)}
-            closeButton={true}
-            closeOnClick={false}
-            anchor="bottom"
-            offset={25}
+        {/* Property Markers with Clustering (Red) */}
+        {showProperties && (
+          <MarkerClusterGroup 
+            chunkedLoading
+            iconCreateFunction={createPropertyClusterIcon}
+            spiderfyOnMaxZoom={true}
+            showCoverageOnHover={false}
+            zoomToBoundsOnClick={true}
+            maxClusterRadius={80}
           >
-            <div className="map-popup">
-              <div className="popup-header">
-                <div className="popup-icon">
-                  {selectedMarker.markerType === 'property' ? (
-                    <Building size={20} />
-                  ) : (
-                    <CarFront size={20} />
-                  )}
-                </div>
-                <h4 className="popup-title">{selectedMarker.name}</h4>
-              </div>
+            {properties.map((property) => {
+              if (!property.lat || !property.lng) return null;
 
-              <div className="popup-content">
-                {selectedMarker.markerType === 'property' ? (
-                  <>
-                    <p className="popup-detail">{selectedMarker.address}</p>
-                    <p className="popup-detail">
-                      <strong>Status:</strong> {selectedMarker.status}
-                    </p>
-                    {selectedMarker.premium && (
-                      <p className="popup-detail">
-                        <strong>Monthly Premium:</strong> ${selectedMarker.premium.toFixed(2)}
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    {selectedMarker.licensePlate && (
-                      <p className="popup-detail">
-                        <strong>License:</strong> {selectedMarker.licensePlate}
-                      </p>
-                    )}
-                    {selectedMarker.driver && (
-                      <p className="popup-detail">
-                        <strong>Driver:</strong> {selectedMarker.driver}
-                      </p>
-                    )}
-                    <p className="popup-detail">
-                      <strong>Status:</strong> {selectedMarker.status}
-                    </p>
-                  </>
-                )}
-              </div>
-
-              <Button
-                size="sm"
-                kind="primary"
-                onClick={handleViewDetails}
-                className="popup-button"
-              >
-                View Details
-              </Button>
-            </div>
-          </Popup>
+              return (
+                <Marker
+                  key={property.id}
+                  position={[property.lat, property.lng]}
+                  icon={propertyIcon}
+                >
+                  <Popup className="custom-popup">
+                    <div className="popup-content">
+                      <h4 className="popup-title">{property.name}</h4>
+                      <p className="popup-address">{property.address}</p>
+                      <div className="popup-details">
+                        <div className="popup-row">
+                          <span className="popup-label">Type:</span>
+                          <span className="popup-value">{property.propertyType}</span>
+                        </div>
+                        <div className="popup-row">
+                          <span className="popup-label">Status:</span>
+                          <Tag type={getStatusTagType(property.status)} size="sm">
+                            {property.status}
+                          </Tag>
+                        </div>
+                        <div className="popup-row">
+                          <span className="popup-label">Monthly Premium:</span>
+                          <span className="popup-value popup-premium">
+                            {formatCurrency(property.monthlyPremium)}
+                          </span>
+                        </div>
+                        {property.openClaims > 0 && (
+                          <div className="popup-row">
+                            <span className="popup-label">Open Claims:</span>
+                            <span className="popup-value popup-claims">{property.openClaims}</span>
+                          </div>
+                        )}
+                      </div>
+                      <Button
+                        kind="primary"
+                        size="sm"
+                        className="popup-button"
+                        onClick={() => navigate(`/business/properties/${property.id}`)}
+                      >
+                        View Details
+                      </Button>
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })}
+          </MarkerClusterGroup>
         )}
-      </Map>
 
-      {markers.length === 0 && (
-        <div className="map-empty-state">
-          <p>No assets to display on map</p>
-        </div>
-      )}
+        {/* Vehicle Markers with Clustering (Blue) */}
+        {showVehicles && (
+          <MarkerClusterGroup 
+            chunkedLoading
+            iconCreateFunction={createVehicleClusterIcon}
+            spiderfyOnMaxZoom={true}
+            showCoverageOnHover={false}
+            zoomToBoundsOnClick={true}
+            maxClusterRadius={80}
+          >
+            {vehicles.map((vehicle) => {
+              if (!vehicle.lastKnownLocation?.lat || !vehicle.lastKnownLocation?.lng) return null;
+
+              return (
+                <Marker
+                  key={vehicle.id}
+                  position={[vehicle.lastKnownLocation.lat, vehicle.lastKnownLocation.lng]}
+                  icon={vehicleIcon}
+                >
+                  <Popup className="custom-popup">
+                    <div className="popup-content">
+                      <h4 className="popup-title">
+                        {vehicle.year} {vehicle.make} {vehicle.model}
+                      </h4>
+                      <p className="popup-address">{vehicle.licensePlate}</p>
+                      <div className="popup-details">
+                        <div className="popup-row">
+                          <span className="popup-label">Type:</span>
+                          <span className="popup-value">{vehicle.vehicleType}</span>
+                        </div>
+                        <div className="popup-row">
+                          <span className="popup-label">Driver:</span>
+                          <span className="popup-value">{vehicle.assignedDriver}</span>
+                        </div>
+                        <div className="popup-row">
+                          <span className="popup-label">Status:</span>
+                          <Tag type={getStatusTagType(vehicle.status)} size="sm">
+                            {vehicle.status}
+                          </Tag>
+                        </div>
+                        <div className="popup-row">
+                          <span className="popup-label">Monthly Premium:</span>
+                          <span className="popup-value popup-premium">
+                            {formatCurrency(vehicle.monthlyPremium)}
+                          </span>
+                        </div>
+                        {vehicle.openClaims > 0 && (
+                          <div className="popup-row">
+                            <span className="popup-label">Open Claims:</span>
+                            <span className="popup-value popup-claims">{vehicle.openClaims}</span>
+                          </div>
+                        )}
+                      </div>
+                      <Button
+                        kind="primary"
+                        size="sm"
+                        className="popup-button"
+                        onClick={() => navigate(`/business/fleet/${vehicle.id}`)}
+                      >
+                        View Details
+                      </Button>
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })}
+          </MarkerClusterGroup>
+        )}
+      </MapContainer>
     </div>
   );
 }
