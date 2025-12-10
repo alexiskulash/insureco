@@ -1,5 +1,25 @@
 @use '../styles/tokens' as *;
 
+.carbon-list-progress-wrapper {
+  width: 100%;
+}
+
+.carbon-list-progress__ellipsis {
+  padding: var(--spacing-03) var(--spacing-04);
+  color: var(--text-secondary);
+  font-size: var(--body-sm-size);
+  font-style: italic;
+  text-align: center;
+  background: var(--background-hover);
+  border-radius: var(--radius-sm);
+  margin: var(--spacing-02) 0;
+
+  @media (max-width: 671px) {
+    font-size: var(--body-xs-size);
+    padding: var(--spacing-02) var(--spacing-03);
+  }
+}
+
 .carbon-list-progress {
   list-style: none;
   padding: 0;

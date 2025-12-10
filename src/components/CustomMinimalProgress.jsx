@@ -15,8 +15,18 @@ export default function CustomMinimalProgress({ steps, currentIndex = 0 }) {
     return index >= currentIndex - 1 && index <= currentIndex + 1;
   });
 
+  // Check if there are hidden steps
+  const hasStepsBefore = currentIndex > 1;
+  const hasStepsAfter = currentIndex < steps.length - 2;
+
   return (
     <div className="custom-minimal-progress">
+      {hasStepsBefore && (
+        <div className="custom-minimal-progress__ellipsis">
+          ⋯ {currentIndex - 1} previous
+        </div>
+      )}
+
       {visibleSteps.map((step, index) => {
         const actualIndex = currentIndex - 1 + index;
         const isComplete = actualIndex < currentIndex;
@@ -48,6 +58,12 @@ export default function CustomMinimalProgress({ steps, currentIndex = 0 }) {
           </div>
         );
       })}
+
+      {hasStepsAfter && (
+        <div className="custom-minimal-progress__ellipsis">
+          ⋯ {steps.length - currentIndex - 2} more
+        </div>
+      )}
     </div>
   );
 }

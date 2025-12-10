@@ -19,8 +19,18 @@ export default function VerticalProgressBar({ steps, currentIndex = 0 }) {
   // Calculate the current index within the visible steps
   const visibleCurrentIndex = Math.min(currentIndex, 1);
 
+  // Check if there are hidden steps
+  const hasStepsBefore = currentIndex > 1;
+  const hasStepsAfter = currentIndex < steps.length - 2;
+
   return (
     <div className="vertical-progress-bar">
+      {hasStepsBefore && (
+        <div className="vertical-progress-bar__ellipsis">
+          ⋯ {currentIndex - 1} previous {currentIndex - 1 === 1 ? 'step' : 'steps'}
+        </div>
+      )}
+
       <ProgressIndicator vertical currentIndex={visibleCurrentIndex}>
         {visibleSteps.map((step, index) => {
           const actualIndex = currentIndex - 1 + index;
@@ -41,6 +51,12 @@ export default function VerticalProgressBar({ steps, currentIndex = 0 }) {
           );
         })}
       </ProgressIndicator>
+
+      {hasStepsAfter && (
+        <div className="vertical-progress-bar__ellipsis">
+          ⋯ {steps.length - currentIndex - 2} more {steps.length - currentIndex - 2 === 1 ? 'step' : 'steps'}
+        </div>
+      )}
     </div>
   );
 }

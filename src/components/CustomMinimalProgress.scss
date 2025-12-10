@@ -7,6 +7,19 @@
   gap: 0;
 }
 
+.custom-minimal-progress__ellipsis {
+  padding: var(--spacing-02) var(--spacing-04);
+  color: var(--text-tertiary);
+  font-size: var(--body-xs-size);
+  font-style: italic;
+  text-align: center;
+  margin: var(--spacing-02) 0;
+
+  @media (min-width: 672px) {
+    font-size: var(--body-sm-size);
+  }
+}
+
 .custom-minimal-progress__step {
   display: flex;
   gap: var(--spacing-04);
