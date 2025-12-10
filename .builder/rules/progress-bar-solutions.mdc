@@ -27,39 +27,49 @@ Visit this page to see all three solutions in both vertical and horizontal layou
 
 All three solutions show only the **previous step**, **current step**, and **next step** at any given time, making them extremely compact and focused.
 
-### Solution 1: Vertical Progress Bar
+### Solution 1: Carbon Progress Indicator
 
-**Component**: `VerticalProgressBar.jsx`
-**Approach**: Uses Carbon's ProgressIndicator with vertical orientation
+**Components**:
+- `VerticalProgressBar.jsx` - Vertical orientation
+- `HorizontalProgressBar.jsx` - Horizontal orientation
+
+**Approach**: Uses Carbon's ProgressIndicator component in both layouts
 
 **Features**:
 - Carbon Design System component (maintains consistency)
-- Vertical layout eliminates horizontal scrolling
 - Shows only 3 steps at a time (prev, current, next)
+- Ellipsis indicators for hidden steps
 - Familiar stepper UI pattern
 - Accessible by default (Carbon's built-in accessibility)
 - Theme-aware styling
+- Both vertical and horizontal orientations
 
 **Props**:
 
-<VerticalProgressBar 
+<VerticalProgressBar
   steps={stepsArray}     // Array of { label, key } objects
   currentIndex={number}  // Current step index (0-based)
 />
 
+<HorizontalProgressBar
+  steps={stepsArray}     // Array of { label, key } objects
+  currentIndex={number}  // Current step index (0-based)
+/>
+```
 
 **When to Use**:
 - Want to keep Carbon ProgressIndicator component
-- Need vertical stepper UI
-- Prefer familiar design patterns
-- Accessibility is critical
+- Need familiar stepper UI pattern
+- Prefer accessible-by-default components
+- Vertical: Sidebars, left/right navigation
+- Horizontal: Top bars, compact mobile layouts
 
 **Trade-offs**:
 - ✅ Carbon component (consistent with design system)
 - ✅ Accessible by default
 - ✅ Familiar UI pattern
 - ✅ Easy to maintain
-- ❌ Takes more vertical space than horizontal
+- ✅ Both orientations available
 
 ---
 
