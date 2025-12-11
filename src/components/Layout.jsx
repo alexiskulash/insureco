@@ -37,12 +37,10 @@ export default function Layout({ children }) {
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => {
-        // Helper function to handle navigation and close menu
-        const handleNavigateAndClose = (path) => {
+        // Helper function to handle navigation WITHOUT closing menu (intentional "bug" for demo)
+        const handleNavigate = (path) => {
           navigate(path);
-          if (isSideNavExpanded) {
-            onClickSideNavExpand();
-          }
+          // Note: Not closing the side nav here - it will only close when clicking outside
         };
 
         return (
@@ -121,10 +119,10 @@ export default function Layout({ children }) {
               >
                 <SideNavItems>
                   <HeaderSideNavItems hasDivider>
-                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/")}>
+                    <HeaderMenuItem onClick={() => handleNavigate("/")}>
                       Home
                     </HeaderMenuItem>
-                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/dashboard")}>
+                    <HeaderMenuItem onClick={() => handleNavigate("/dashboard")}>
                       Dashboard
                     </HeaderMenuItem>
 
@@ -133,54 +131,48 @@ export default function Layout({ children }) {
                       <SideNavMenuItem
                         element={Link}
                         to="/business/dashboard"
-                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Overview
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
                         to="/business/properties"
-                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Properties
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
                         to="/business/fleet"
-                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Fleet
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
                         to="/business/map"
-                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Map View
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
                         to="/business/claims"
-                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Claims
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
                         to="/business/payments"
-                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Payments
                       </SideNavMenuItem>
                     </SideNavMenu>
 
-                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/login")}>
+                    <HeaderMenuItem onClick={() => handleNavigate("/login")}>
                       Login
                     </HeaderMenuItem>
-                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/signup")}>
+                    <HeaderMenuItem onClick={() => handleNavigate("/signup")}>
                       Sign Up
                     </HeaderMenuItem>
-                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/about")}>
+                    <HeaderMenuItem onClick={() => handleNavigate("/about")}>
                       About
                     </HeaderMenuItem>
                   </HeaderSideNavItems>
