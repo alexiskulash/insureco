@@ -14,8 +14,8 @@ This document provides guidelines for using Carbon's `InlineNotification` compon
 
 `InlineNotification` is a Carbon Design System component used to display contextual feedback messages inline within page content. These notifications are theme-aware and automatically adapt colors for both light and dark modes.
 
-**Location**: `@carbon/react`  
-**Custom styling**: `src/pages/LandingPage.scss` and `src/styles/tokens/colors.scss`  
+**Location**: `@carbon/react`
+**Styling**: Handled automatically through global tokens in `src/styles/tokens/colors.scss`
 **Tokens used**: `--notification-error-bg`, `--notification-warning-bg`, `--notification-info-bg`, `--notification-success-bg`, `--notification-text`
 
 ## When to Use
@@ -55,7 +55,7 @@ All variants are **fully theme-aware** and automatically adjust colors for light
 **Background**: Light yellow in light mode, dark yellow in dark mode  
 **Use for**: Warnings about potential issues, important alerts  
 **Example**:
-```jsx
+
 <InlineNotification
   kind="warning"
   title="Warning Notification"
