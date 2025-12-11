@@ -21,6 +21,7 @@ import {
 } from '@carbon/react';
 import { ArrowLeft, ArrowRight, Checkmark, Building } from '@carbon/icons-react';
 import StepBreadcrumb from '../../components/StepBreadcrumb';
+import { formatDateForInput } from '../../utils/businessHelpers';
 import './AddPropertyPage.scss';
 
 /**
