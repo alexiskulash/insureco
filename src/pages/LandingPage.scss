@@ -23,6 +23,64 @@
     &:last-child {
       margin-bottom: var(--spacing-07);
     }
+
+    // ============================================
+    // Notification Variant Background Colors
+    // ============================================
+
+    // Error Notification - Red backgrounds
+    .cds--inline-notification--error {
+      background-color: #fff1f1 !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #520408 !important;
+      }
+    }
+
+    // Warning Notification - Yellow/Gold backgrounds
+    .cds--inline-notification--warning {
+      background-color: #fcf4d6 !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #332e00 !important;
+      }
+    }
+
+    // Warning Alt Notification - Yellow/Gold backgrounds
+    .cds--inline-notification--warning-alt {
+      background-color: #fcf4d6 !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #332e00 !important;
+      }
+    }
+
+    // Info Notification - Blue backgrounds
+    .cds--inline-notification--info {
+      background-color: #edf5ff !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #001d6c !important;
+      }
+    }
+
+    // Info Square Notification - Blue backgrounds
+    .cds--inline-notification--info-square {
+      background-color: #edf5ff !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #001d6c !important;
+      }
+    }
+
+    // Success Notification - Green backgrounds
+    .cds--inline-notification--success {
+      background-color: #defbe6 !important;
+
+      @media (prefers-color-scheme: dark) {
+        background-color: #0e6027 !important;
+      }
+    }
   }
 }
 
