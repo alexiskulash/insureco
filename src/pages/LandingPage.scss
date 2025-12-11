@@ -37,6 +37,16 @@
       .cds--inline-notification__subtitle {
         color: var(--notification-text) !important;
       }
+
+      // Style the close button with theme-aware color
+      .cds--inline-notification__close-button {
+        color: var(--notification-text) !important;
+
+        // Target the SVG icon inside the close button
+        svg {
+          fill: var(--notification-text) !important;
+        }
+      }
     }
 
     // Error Notification - Red backgrounds
