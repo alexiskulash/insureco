@@ -73,11 +73,11 @@ export default function LandingPage() {
       {warningVisible && (
         <div className="warning-banner">
           <InlineNotification
-            kind="warning"
+            kind="error"
             title="This is a warning message"
             onCloseButtonClick={() => setWarningVisible(false)}
             aria-label="Dismiss warning notification"
-            statusIconDescription="warning"
+            statusIconDescription="error"
             hideCloseButton={false}
           />
         </div>
