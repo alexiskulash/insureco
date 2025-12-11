@@ -69,6 +69,20 @@ export default function LandingPage() {
 
   return (
     <div className="landing-page">
+      {/* Warning Banner */}
+      {warningVisible && (
+        <div className="warning-banner">
+          <InlineNotification
+            kind="warning"
+            title="This is a warning message"
+            onCloseButtonClick={() => setWarningVisible(false)}
+            aria-label="Dismiss warning notification"
+            statusIconDescription="warning"
+            hideCloseButton={false}
+          />
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="hero-section">
         <Grid>
