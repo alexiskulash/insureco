@@ -28,6 +28,17 @@
     // Notification Variant Background Colors
     // ============================================
 
+    // All notification variants - set background and text colors
+    .cds--inline-notification {
+      color: var(--notification-text) !important;
+
+      // Ensure title and subtitle text also use the theme-aware color
+      .cds--inline-notification__title,
+      .cds--inline-notification__subtitle {
+        color: var(--notification-text) !important;
+      }
+    }
+
     // Error Notification - Red backgrounds
     .cds--inline-notification--error {
       background-color: var(--notification-error-bg) !important;
