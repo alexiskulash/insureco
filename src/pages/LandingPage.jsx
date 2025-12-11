@@ -24,7 +24,21 @@ import './LandingPage.scss';
 export default function LandingPage() {
   const navigate = useNavigate();
   const [demoModalOpen, setDemoModalOpen] = useState(false);
-  const [warningVisible, setWarningVisible] = useState(true);
+  const [visibleNotifications, setVisibleNotifications] = useState({
+    error: true,
+    warning: true,
+    warningAlt: true,
+    info: true,
+    infoSquare: true,
+    success: true,
+  });
+
+  const toggleNotification = (key) => {
+    setVisibleNotifications(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
   const features = [
     {
