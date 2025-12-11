@@ -37,12 +37,10 @@ export default function Layout({ children }) {
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => {
-        // Helper function to handle navigation and close menu
-        const handleNavigateAndClose = (path) => {
+        // Helper function to handle navigation WITHOUT closing menu (intentional "bug" for demo)
+        const handleNavigate = (path) => {
           navigate(path);
-          if (isSideNavExpanded) {
-            onClickSideNavExpand();
-          }
+          // Note: Not closing the side nav here - it will only close when clicking outside
         };
 
         return (
