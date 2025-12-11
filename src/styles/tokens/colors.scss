@@ -252,8 +252,8 @@ $dark-text-on-dark: $color-grey-10;  // Light text for dark backgrounds
   --text-on-dark-bg: #{$dark-text-on-dark};    // Light text (use on dark/colored backgrounds)
 
   // Notification backgrounds
-  --notification-error-bg: #{$color-error-90};
+  --notification-error-bg: #{$color-error-70};
   --notification-warning-bg: #{$color-warning-70};
-  --notification-info-bg: #{$color-info-90};
+  --notification-info-bg: #{$color-info-70};
   --notification-success-bg: #{$color-success-70};
 }
