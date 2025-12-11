@@ -5,6 +5,20 @@
   background: var(--background-primary);
 }
 
+// Warning Banner
+.warning-banner {
+  padding: var(--spacing-05) var(--spacing-05) 0;
+  background: var(--background-primary);
+
+  // Ensure full width on all screen sizes
+  .cds--inline-notification {
+    max-width: 100%;
+  }
+
+  // Add margin below banner to separate from hero section
+  margin-bottom: var(--spacing-05);
+}
+
 // Hero Section
 .hero-section {
   padding: var(--spacing-13) var(--spacing-05);
