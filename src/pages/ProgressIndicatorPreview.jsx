@@ -46,6 +46,29 @@ function VariantOne() {
     <Tile className="variant-container">
       <Heading level={3}>Option 1: Vertical ProgressIndicator</Heading>
       <p className="variant-description">Stack steps vertically instead of horizontally. Great for mobile, but takes vertical space.</p>
+
+      <div className="variant-pros-cons">
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">✅ Pros</h5>
+          <ul className="pros-cons-list">
+            <li>All steps always visible</li>
+            <li>Clear visual hierarchy</li>
+            <li>Native Carbon component</li>
+            <li>Accessibility built-in</li>
+            <li>Shows completed steps with checkmarks</li>
+          </ul>
+        </div>
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">❌ Cons</h5>
+          <ul className="pros-cons-list">
+            <li>Takes significant vertical space</li>
+            <li>Not ideal for mobile (5+ steps)</li>
+            <li>Scrolling required on narrow screens</li>
+            <li>Less modern appearance</li>
+            <li>High implementation effort to customize</li>
+          </ul>
+        </div>
+      </div>
       
       <div className="variant-layout variant-one-layout">
         <div className="variant-progress">
@@ -106,6 +129,29 @@ function VariantTwo() {
     <Tile className="variant-container">
       <Heading level={3}>Option 2: ProgressBar + Step Counter</Heading>
       <p className="variant-description">Compact percentage indicator with step counter. Very mobile-friendly, but no labeled steps visible.</p>
+
+      <div className="variant-pros-cons">
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">✅ Pros</h5>
+          <ul className="pros-cons-list">
+            <li>Most mobile-friendly design</li>
+            <li>Minimal space required</li>
+            <li>Shows percentage completion</li>
+            <li>Native Carbon component</li>
+            <li>Works with any number of steps</li>
+            <li>Easy to implement</li>
+          </ul>
+        </div>
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">❌ Cons</h5>
+          <ul className="pros-cons-list">
+            <li>Step names not visible in indicator</li>
+            <li>No visual "completed" state</li>
+            <li>Less visual progress communication</li>
+            <li>Users may not see step overview</li>
+          </ul>
+        </div>
+      </div>
       
       <div className="variant-layout variant-two-layout">
         <div className="variant-progress">
@@ -157,6 +203,31 @@ function VariantFour() {
     <Tile className="variant-container">
       <Heading level={3}>Option 4: Tabs Component</Heading>
       <p className="variant-description">Use tabs for each step. Clean keyboard navigation, but loses "progress" visualization.</p>
+
+      <div className="variant-pros-cons">
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">✅ Pros</h5>
+          <ul className="pros-cons-list">
+            <li>Excellent keyboard navigation</li>
+            <li>Familiar UX pattern</li>
+            <li>Mobile-responsive tabs</li>
+            <li>Native Carbon component</li>
+            <li>Users can jump between steps</li>
+            <li>Built-in accessibility</li>
+          </ul>
+        </div>
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">❌ Cons</h5>
+          <ul className="pros-cons-list">
+            <li>Looks like content tabs, not a stepper</li>
+            <li>No visual progress state</li>
+            <li>No "completed" checkmarks</li>
+            <li>Users can navigate anywhere</li>
+            <li>May confuse with tabbed content</li>
+            <li>Requires form restructuring</li>
+          </ul>
+        </div>
+      </div>
       
       <div className="variant-layout variant-four-layout">
         <Tabs selectedIndex={selectedIndex} onChange={({ selectedIndex }) => setSelectedIndex(selectedIndex)}>
@@ -225,6 +296,31 @@ function VariantSix() {
     <Tile className="variant-container">
       <Heading level={3}>Option 6: Custom Compact Step Indicator</Heading>
       <p className="variant-description">Dots with labels. Super compact and mobile-optimized. Shows step name below dots.</p>
+
+      <div className="variant-pros-cons">
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">✅ Pros</h5>
+          <ul className="pros-cons-list">
+            <li>Best mobile experience</li>
+            <li>Ultra-compact design</li>
+            <li>Shows step count at a glance</li>
+            <li>Full control over styling</li>
+            <li>Shows completed checkmarks</li>
+            <li>Displays current step label</li>
+            <li>Modern appearance</li>
+          </ul>
+        </div>
+        <div className="pros-cons-column">
+          <h5 className="pros-cons-title">❌ Cons</h5>
+          <ul className="pros-cons-list">
+            <li>Requires custom build</li>
+            <li>More code to maintain</li>
+            <li>Less context for each step</li>
+            <li>Requires custom testing</li>
+            <li>Dots harder to read on very small screens</li>
+          </ul>
+        </div>
+      </div>
       
       <div className="variant-layout variant-six-layout">
         <div className="variant-progress">
