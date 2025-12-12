@@ -125,7 +125,7 @@ export const Operational = (args) => {
       <div
         aria-label="Operational tags"
         role="group"
-        style={ marginBottom: '1rem' }>
+        style={{ marginBottom: '1rem' }}>
         <OperationalTag
           type="red"
           className="some-class"
@@ -389,7 +389,7 @@ export const Dismissible = (args) => {
     <>
       <Button
         // aria-label="Re-render all tags in the screen"
-        style={ marginBottom: '3rem' }
+        style={{ marginBottom: '3rem' }}
         onClick={resetTabs}>
         Reset
       </Button>

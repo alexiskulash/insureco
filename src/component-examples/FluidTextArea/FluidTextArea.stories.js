@@ -113,7 +113,7 @@ const sharedArgTypes = {
 };
 
 export const Default = (args) => (
-  <div style={ width: args.defaultWidth }>
+  <div style={{ width: args.defaultWidth }}>
     <FluidTextArea {...args} />
   </div>
 );
@@ -171,7 +171,7 @@ export const DefaultWithTooltip = () => (
 );
 
 export const Skeleton = () => (
-  <div style={ width: '300px' }>
+  <div style={{ width: '300px' }}>
     <FluidTextAreaSkeleton />
   </div>
 );

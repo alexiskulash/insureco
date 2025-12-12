@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import ShapeIndicator from ".";
+import { ShapeIndicator } from "@carbon/react";
 import mdx from "./ShapeIndicator.mdx";
 
 export default {

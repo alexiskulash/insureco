@@ -64,7 +64,7 @@ export default {
       },
     },
   },
-  decorators: [(story) => <div style={ width: '400px' }>{story()}</div>],
+  decorators: [(story) => <div style={{ width: '400px' }}>{story()}</div>],
   subcomponents: {
     SelectItem,
     SelectItemGroup,

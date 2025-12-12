@@ -6,8 +6,7 @@
  */
 
 import React from "react";
-import IconIndicator from ".";
-import { IconIndicatorKinds } from "./index";
+import { IconIndicator } from "@carbon/react";
 import mdx from "./IconIndicator.mdx";
 
 export default {

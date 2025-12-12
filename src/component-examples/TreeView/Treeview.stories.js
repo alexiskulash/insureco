@@ -821,7 +821,7 @@ export const WithControlledExpansion = () => {
 
   return (
     <>
-      <div style={ marginBottom: '1rem' }>
+      <div style={{ marginBottom: '1rem' }}>
         <Button onClick={() => setExpanded(true)}>Expand all</Button>
         &nbsp;
         <Button onClick={() => setExpanded(false)}>Collapse all</Button>

@@ -25,7 +25,7 @@ import {
   MenuItemGroup,
   MenuItemRadioGroup,
   MenuItemDivider,
-} from "./";
+} from "@carbon/react";
 import mdx from "./Menu.mdx";
 
 export default {

@@ -6,8 +6,7 @@
  */
 
 import React from "react";
-
-import { AILabel, AILabelContent, AILabelActions } from ".";
+import { AILabel, AILabelContent, AILabelActions } from "@carbon/react";
 import { View, FolderOpen, Folders } from "@carbon/icons-react";
 import { Button } from "@carbon/react";
 import { IconButton } from "@carbon/react";

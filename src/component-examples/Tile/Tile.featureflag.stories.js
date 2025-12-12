@@ -6,18 +6,18 @@
  */
 
 import React from 'react';
-import { Button } from '@carbon/react';
-import { default as TextInput } from '@carbon/react';
-import { default as RadioTile } from '@carbon/react';
 import {
+  Button,
+  TextInput,
+  RadioTile,
   ClickableTile,
   ExpandableTile,
   SelectableTile,
   Tile,
   TileAboveTheFoldContent,
   TileBelowTheFoldContent,
-} from '.';
-import { TileGroup } from '@carbon/react';
+  TileGroup,
+} from '@carbon/react';
 import { Layer } from '@carbon/react';
 import './tile-story.scss';
 import '../AILabel/ailabel-story.scss';
@@ -170,14 +170,14 @@ export const Radio = (args) => {
         <RadioTile
           id="radio-tile-1"
           value="radio-tile-1"
-          style={ marginBottom: '.5rem' }
+          style={{ marginBottom: '.5rem' }}
           {...args}>
           Option 1
         </RadioTile>
         <RadioTile
           id="radio-tile-2"
           value="radio-tile-2"
-          style={ marginBottom: '.5rem' }
+          style={{ marginBottom: '.5rem' }}
           {...args}>
           Option 2
         </RadioTile>
@@ -212,7 +212,7 @@ export const RadioWithLayer = () => {
             <RadioTile
               id={`radio-tile-${layer}-1`}
               value={`radio-tile-${layer}-1`}
-              style={ marginBottom: '.5rem' }>
+              style={{ marginBottom: '.5rem' }}>
               Option 1
             </RadioTile>
             <RadioTile
@@ -228,37 +228,37 @@ export const RadioWithLayer = () => {
 };
 
 export const Expandable = () => (
-  <div style={ width: '400px' } className={experimentalClassname}>
+  <div style={{ width: '400px' }} className={experimentalClassname}>
     <ExpandableTile
       id="expandable-tile-1"
       tileCollapsedIconText="Interact to Expand tile"
       tileExpandedIconText="Interact to Collapse tile">
       <TileAboveTheFoldContent>
-        <div style={ height: '200px' }>Above the fold content here</div>
+        <div style={{ height: '200px' }}>Above the fold content here</div>
       </TileAboveTheFoldContent>
       <TileBelowTheFoldContent>
-        <div style={ height: '400px' }>Below the fold content here</div>
+        <div style={{ height: '400px' }}>Below the fold content here</div>
       </TileBelowTheFoldContent>
     </ExpandableTile>
   </div>
 );
 
 export const ExpandableWithInteractive = () => (
-  <div style={ width: '400px' } className={experimentalClassname}>
+  <div style={{ width: '400px' }} className={experimentalClassname}>
     <ExpandableTile
       id="expandable-tile-1"
       tileCollapsedIconText="Interact to Expand tile"
       tileExpandedIconText="Interact to Collapse tile">
       <TileAboveTheFoldContent>
-        <div style={ height: '200px', width: '200px' }>
+        <div style={{ height: '200px', width: '200px' }}>
           Above the fold content here
-          <div style={ paddingTop: '1rem' }>
+          <div style={{ paddingTop: '1rem' }}>
             <Button>Example</Button>
           </div>
         </div>
       </TileAboveTheFoldContent>
       <TileBelowTheFoldContent>
-        <div style={ height: '200px', width: '200px' }>
+        <div style={{ height: '200px', width: '200px' }}>
           Below the fold content here
           <TextInput id="test2" invalidText="A valid value is required" />
         </div>
@@ -271,18 +271,18 @@ export const ExpandableWithLayer = () => {
   return (
     <WithLayer>
       {(layer) => (
-        <div style={ width: '400px' } className={experimentalClassname}>
+        <div style={{ width: '400px' }} className={experimentalClassname}>
           <ExpandableTile
             id={`expandable-tile-${layer}`}
             tileCollapsedIconText="Interact to Expand tile"
             tileExpandedIconText="Interact to Collapse tile">
             <TileAboveTheFoldContent>
-              <div style={ height: '100px', width: '200px' }>
+              <div style={{ height: '100px', width: '200px' }}>
                 Above the fold content here
               </div>
             </TileAboveTheFoldContent>
             <TileBelowTheFoldContent>
-              <div style={ height: '200px', width: '200px' }>
+              <div style={{ height: '200px', width: '200px' }}>
                 Below the fold content here
                 <Layer>
                   <TextInput

@@ -27,7 +27,7 @@ export const Skeleton = (args) => {
   const { ...rest } = props();
 
   return (
-    <div style={ width: '800px' }>
+    <div style={{ width: '800px' }}>
       <DataTableSkeleton
         {...args}
         {...rest}

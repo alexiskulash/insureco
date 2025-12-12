@@ -7,9 +7,8 @@
 
 import React from "react";
 import "../AILabel/ailabel-story.scss";
-import { default as Checkbox, CheckboxSkeleton } from "./";
+import { Checkbox, CheckboxSkeleton, CheckboxGroup } from "@carbon/react";
 import mdx from "./Checkbox.mdx";
-import { CheckboxGroup } from "@carbon/react";
 import { Button } from "@carbon/react";
 import { AILabel, AILabelContent, AILabelActions } from "@carbon/react";
 import { IconButton } from "@carbon/react";

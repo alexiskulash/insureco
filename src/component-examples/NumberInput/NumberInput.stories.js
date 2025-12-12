@@ -142,7 +142,7 @@ export const withAILabel = (args) => {
   );
 
   return (
-    <div style={ width: 400 }>
+    <div style={{ width: 400 }}>
       <NumberInput
         min={-100}
         max={100}

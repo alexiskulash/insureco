@@ -375,8 +375,8 @@ export const withAILabel = (args) => {
       </Form>
 
       <FluidForm aria-label="sample ai form" className="fluid-ai-label-form">
-        <div style={ display: 'flex' }>
-          <FluidDatePicker datePickerType="single" style={ width: '100%' }>
+        <div style={{ display: 'flex' }}>
+          <FluidDatePicker datePickerType="single" style={{ width: '100%' }}>
             <FluidDatePickerInput
               placeholder="mm/dd/yyyy"
               labelText="Date Picker label"
@@ -388,7 +388,7 @@ export const withAILabel = (args) => {
           </FluidDatePicker>
         </div>
 
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidNumberInput
             {...numberInputProps}
             id="fluid-number-input"
@@ -396,7 +396,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidTextInput
             {...TextInputProps}
             id="fluid-text-input"
@@ -404,7 +404,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidTextArea
             {...textareaProps}
             id="fluid-text-area"
@@ -412,7 +412,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidDropdown
             isCondensed
             initialSelectedItem={items[2]}
@@ -425,7 +425,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidComboBox
             isCondensed
             onChange={() => {}}
@@ -438,7 +438,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidMultiSelect
             isCondensed
             onChange={() => {}}
@@ -452,7 +452,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidMultiSelect
             isFilterable
             isCondensed
@@ -467,7 +467,7 @@ export const withAILabel = (args) => {
             {...rest}
           />
         </div>
-        <div style={ display: 'flex' }>
+        <div style={{ display: 'flex' }}>
           <FluidSelect decorator={aiLabel} {...rest} id="select-2">
             <SelectItem value="" text="" />
             <SelectItem value="option-1" text="Option 1" />

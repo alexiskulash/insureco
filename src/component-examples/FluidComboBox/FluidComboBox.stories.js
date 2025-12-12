@@ -103,7 +103,7 @@ const sharedArgTypes = {
 };
 
 export const Default = (args) => (
-  <div style={ width: args.defaultWidth }>
+  <div style={{ width: args.defaultWidth }}>
     <FluidComboBox
       onChange={() => {}}
       id="default"
@@ -153,7 +153,7 @@ const ToggleTip = (
 );
 
 export const Condensed = () => (
-  <div style={ width: '400px' }>
+  <div style={{ width: '400px' }}>
     <FluidComboBox
       onChange={() => {}}
       id="default"
@@ -198,7 +198,7 @@ const aiLabel = (
 );
 
 export const withAILabel = (args) => (
-  <div style={ width: '400px' }>
+  <div style={{ width: '400px' }}>
     <FluidComboBox
       onChange={() => {}}
       id="default"
@@ -217,7 +217,7 @@ withAILabel.argTypes = {
 };
 
 export const Skeleton = () => (
-  <div style={ width: 400 }>
+  <div style={{ width: 400 }}>
     <FluidComboBoxSkeleton />
   </div>
 );

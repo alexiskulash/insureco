@@ -214,7 +214,7 @@ export const ContentWithHeroImage = (args) => (
                 <img
                   src={image1}
                   alt="a default image"
-                  style={ maxWidth: '100%', height: 'auto' }
+                  style={{ maxWidth: '100%', height: 'auto' }}
                 />
               </picture>
             </PageHeader.HeroImage>

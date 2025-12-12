@@ -22,7 +22,7 @@ export default {
 
 export const Default = (args) => {
   return (
-    <div style={ width: args.defaultWidth }>
+    <div style={{ width: args.defaultWidth }}>
       <PasswordInput
         {...args}
         id="text-input-1"

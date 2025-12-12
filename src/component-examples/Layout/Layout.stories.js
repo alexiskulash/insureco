@@ -32,7 +32,7 @@ const Demo = () => (
   <VStack gap={6}>
     <HStack>
       <TextInput labelText="<TextInput />" placeholder="Placeholder" />
-      <div style={ display: 'flex', alignItems: 'flex-end' }>
+      <div style={{ display: 'flex', alignItems: 'flex-end' }}>
         <Button>&lt;Button /&gt;</Button>
       </div>
       <TextInput
@@ -40,7 +40,7 @@ const Demo = () => (
         size="sm"
         placeholder="Placeholder"
       />
-      <div style={ display: 'flex', alignItems: 'flex-end' }>
+      <div style={{ display: 'flex', alignItems: 'flex-end' }}>
         <Button size="sm">&lt;Button size=&quot;sm&quot; /&gt;</Button>
       </div>
     </HStack>

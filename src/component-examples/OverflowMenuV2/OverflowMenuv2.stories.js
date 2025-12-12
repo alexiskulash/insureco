@@ -19,7 +19,7 @@ import {
   MenuItemSelectable,
 } from "../Menu";
 
-import { OverflowMenuV2 } from "./";
+import { OverflowMenuV2 } from "@carbon/react";
 
 export default {
   title: "Experimental/unstable__OverflowMenuV2",

@@ -103,7 +103,7 @@ export const UseLayer = () => {
   function ExampleComponent() {
     const { level } = useLayer();
     return (
-      <div style={ padding: '1rem', background: 'var(--cds-layer)' }>
+      <div style={{ padding: '1rem', background: 'var(--cds-layer)' }}>
         The current layer level is: {level}
       </div>
     );

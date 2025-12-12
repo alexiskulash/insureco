@@ -213,7 +213,7 @@ export const withAILabel = () => {
   );
 
   return (
-    <div style={ marginBottom: '4rem' }>
+    <div style={{ marginBottom: '4rem' }}>
       <Tag
         decorator={aiLabel}
         className="some-class"

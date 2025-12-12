@@ -29,8 +29,7 @@ import {
 } from "@carbon/react";
 
 import mdx from "./ContainedList.mdx";
-
-import ContainedList, { ContainedListItem } from ".";
+import { ContainedList, ContainedListItem } from "@carbon/react";
 
 export default {
   title: "Components/ContainedList",

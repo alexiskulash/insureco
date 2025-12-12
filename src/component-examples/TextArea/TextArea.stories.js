@@ -12,7 +12,7 @@ import { View, FolderOpen, Folders, Information } from "@carbon/icons-react";
 import { Button } from "@carbon/react";
 import { AILabel, AILabelContent, AILabelActions } from "@carbon/react";
 import { IconButton } from "@carbon/react";
-import { default as TextArea, TextAreaSkeleton } from "./";
+import { TextArea, TextAreaSkeleton } from "@carbon/react";
 import { Tooltip } from "@carbon/react";
 import mdx from "./TextArea.mdx";
 

@@ -8,7 +8,7 @@
 import "./story.scss";
 
 import React from "react";
-import { DefinitionTooltip } from "./";
+import { DefinitionTooltip } from "@carbon/react";
 import mdx from "./DefinitionTooltip.mdx";
 
 export default {

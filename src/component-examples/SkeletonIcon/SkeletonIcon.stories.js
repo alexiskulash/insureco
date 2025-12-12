@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import SkeletonIcon from ".";
+import { SkeletonIcon } from "@carbon/react";
 import mdx from "./SkeletonIcon.mdx";
 
 export default {

@@ -16,7 +16,7 @@ import {
   StructuredListRow,
   StructuredListInput,
   StructuredListCell,
-} from "./";
+} from "@carbon/react";
 import { WithFeatureFlags } from "../../../.storybook/templates/WithFeatureFlags";
 
 export default {

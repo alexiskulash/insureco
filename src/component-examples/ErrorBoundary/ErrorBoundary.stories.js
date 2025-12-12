@@ -65,7 +65,7 @@ export const WithCustomContext = () => {
     }
 
     return (
-      <ErrorBoundaryContext.Provider value={ log: action('log') }>
+      <ErrorBoundaryContext.Provider value={{ log: action('log') }}>
         <Button onClick={onClick}>Toggle throwing error</Button>
         <div>
           <ErrorBoundary fallback={<Fallback />}>

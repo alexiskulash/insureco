@@ -6,9 +6,7 @@
  */
 
 import React from 'react';
-import { LayoutDirection } from '@carbon/react';
-import { TextDirection, Text } from '.';
-import { RadioButtonGroup } from '@carbon/react';
+import { LayoutDirection, TextDirection, Text, RadioButtonGroup } from '@carbon/react';
 import { RadioButton } from '@carbon/react';
 import { Button } from '@carbon/react';
 import { Dropdown } from '@carbon/react';
@@ -82,7 +80,7 @@ export const SetTextDirection = () => {
         legendText={legendText}
         name="radio-button-group"
         defaultSelected="radio-1"
-        style={ maxWidth: '400px' }>
+        style={{ maxWidth: '400px' }}>
         <RadioButton
           labelText="שלום עולם Option 1"
           value="radio-1"
@@ -123,7 +121,7 @@ export const UsageExamples = () => {
       <Button kind="ghost">
         <Text>{rtlText}</Text>
       </Button>
-      <div style={ width: 400 }>
+      <div style={{ width: 400 }}>
         {/* // TODO: This dropdown doesn't work. */}
         <Dropdown
           id="default"

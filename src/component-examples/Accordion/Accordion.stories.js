@@ -8,11 +8,10 @@
 /* eslint-disable no-console */
 
 import React from 'react';
-import './story.scss';
-import { default as Accordion, AccordionItem, AccordionSkeleton } from '.';
-import { Button } from '@carbon/react';
+// import './story.scss';
+import { Accordion, AccordionItem, AccordionSkeleton, Button } from '@carbon/react';
 import { ButtonSet } from '@carbon/react';
-import mdx from './Accordion.mdx';
+// import mdx from './Accordion.mdx';
 import { WithLayer } from '../../../.storybook/templates/WithLayer';
 
 export default {
@@ -22,11 +21,11 @@ export default {
     AccordionItem,
     AccordionSkeleton,
   },
-  parameters: {
-    docs: {
-      page: mdx,
-    },
-  },
+  // parameters: {
+  //   docs: {
+  //     page: mdx,
+  //   },
+  // },
 };
 
 const sharedArgTypes = {
@@ -214,19 +213,19 @@ export const _WithLayer = (args) => {
   );
 };
 
-WithLayer.args = {
+_WithLayer.args = {
   disabled: false,
   isFlush: false,
 };
 
-WithLayer.argTypes = { ...sharedArgTypes };
+_WithLayer.argTypes = { ...sharedArgTypes };
 
 export const Skeleton = (args) => (
   <AccordionSkeleton open count={4} {...args} />
 );
 
 Skeleton.decorators = [
-  (story) => <div style={ width: '500px' }>{story()}</div>,
+  (story) => <div style={{ width: '500px' }}>{story()}</div>,
 ];
 
 Skeleton.args = {

@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { FluidSearch, FluidSearchSkeleton } from '.';
+import { FluidSearch, FluidSearchSkeleton } from '@carbon/react';
 
 export default {
   title: 'Experimental/Fluid Components/unstable__FluidSearch',
@@ -17,13 +17,13 @@ export default {
 };
 
 export const Skeleton = () => (
-  <div style={ width: '400px' }>
+  <div style={{ width: '400px' }}>
     <FluidSearchSkeleton />
   </div>
 );
 
 export const Default = (args) => (
-  <div style={ width: args.defaultWidth }>
+  <div style={{ width: args.defaultWidth }}>
     <FluidSearch {...args} />
   </div>
 );

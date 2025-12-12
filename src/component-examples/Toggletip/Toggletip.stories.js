@@ -56,7 +56,7 @@ export const ExperimentalAutoAlign = () => {
   });
 
   return (
-    <div style={ width: '5000px', height: '5000px' }>
+    <div style={{ width: '5000px', height: '5000px' }}>
       <div
         style={{
           position: 'absolute',

@@ -8,8 +8,7 @@
 /* eslint-disable no-console */
 
 import React from "react";
-
-import AISkeletonIcon from "./AISkeletonIcon";
+import { AISkeletonIcon } from "@carbon/react";
 import mdx from "./AISkeleton.mdx";
 
 export default {

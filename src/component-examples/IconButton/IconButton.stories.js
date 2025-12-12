@@ -39,7 +39,7 @@ export default {
 
 export const Default = (args) => {
   return (
-    <div style={ margin: '3rem' }>
+    <div style={{ margin: '3rem' }}>
       <IconButton {...args}>
         <Edit />
       </IconButton>
@@ -91,7 +91,7 @@ Default.argTypes = {
 
 export const withBadgeIndicator = (args) => {
   return (
-    <div style={ margin: '3rem' }>
+    <div style={{ margin: '3rem' }}>
       <IconButton
         label="Notification"
         kind="ghost"

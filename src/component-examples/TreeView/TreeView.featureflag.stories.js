@@ -8,9 +8,7 @@
 import React, { useState } from "react";
 import { action } from "@storybook/addon-actions";
 import { Document, Folder } from "@carbon/icons-react";
-import { Button, VStack } from "../../";
-
-import { TreeView, TreeNode } from "./";
+import { Button, VStack, TreeView, TreeNode } from "@carbon/react";
 
 import { WithFeatureFlags } from "../../../.storybook/templates/WithFeatureFlags";
 

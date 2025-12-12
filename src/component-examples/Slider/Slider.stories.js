@@ -8,9 +8,7 @@
 import React, { useState } from "react";
 
 import { WithLayer } from "../../../.storybook/templates/WithLayer";
-
-import { SliderSkeleton } from ".";
-import Slider from "./Slider";
+import { Slider, SliderSkeleton } from "@carbon/react";
 import mdx from "./Slider.mdx";
 
 export default {

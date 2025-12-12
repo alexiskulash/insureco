@@ -8,8 +8,7 @@
 /* eslint-disable no-console */
 
 import React from "react";
-
-import SkeletonPlaceholder from ".";
+import { SkeletonPlaceholder } from "@carbon/react";
 import mdx from "./SkeletonPlaceholder.mdx";
 
 export default {

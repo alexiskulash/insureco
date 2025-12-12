@@ -8,8 +8,7 @@
 /* eslint-disable no-console */
 
 import React from "react";
-
-import SkeletonText from ".";
+import { SkeletonText } from "@carbon/react";
 import mdx from "./SkeletonText.mdx";
 
 export default {

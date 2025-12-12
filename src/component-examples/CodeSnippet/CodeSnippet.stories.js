@@ -8,8 +8,7 @@
 import React from 'react';
 
 import { WithLayer } from '../../../.storybook/templates/WithLayer';
-
-import { default as CodeSnippet, CodeSnippetSkeleton } from '.';
+import { CodeSnippet, CodeSnippetSkeleton } from '@carbon/react';
 import mdx from './CodeSnippet.mdx';
 
 export default {
@@ -144,7 +143,7 @@ export const SinglelineWithLayer = () => {
 export const Skeleton = () => {
   return (
     <div>
-      <CodeSnippetSkeleton type="single" style={ marginBottom: 8 } />
+      <CodeSnippetSkeleton type="single" style={{ marginBottom: 8 }} />
       <CodeSnippetSkeleton type="multi" />
     </div>
   );

@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import Loading from ".";
+import { Loading } from "@carbon/react";
 import mdx from "./Loading.mdx";
 
 export default {

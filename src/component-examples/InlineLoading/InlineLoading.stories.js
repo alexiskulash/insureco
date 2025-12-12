@@ -6,8 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button } from '@carbon/react';
-import InlineLoading from '.';
+import { Button, InlineLoading } from '@carbon/react';
 import mdx from './InlineLoading.mdx';
 
 export default {
@@ -57,13 +56,13 @@ export const UxExample = () => {
   return (
     <MockSubmission>
       {({ handleSubmit, isSubmitting, success, description, ariaLive }) => (
-        <div style={ display: 'flex', width: '300px' }>
+        <div style={{ display: 'flex', width: '300px' }}>
           <Button kind="secondary" disabled={isSubmitting || success}>
             Cancel
           </Button>
           {isSubmitting || success ? (
             <InlineLoading
-              style={ marginLeft: '1rem' }
+              style={{ marginLeft: '1rem' }}
               description={description}
               status={success ? 'finished' : 'active'}
               aria-live={ariaLive}

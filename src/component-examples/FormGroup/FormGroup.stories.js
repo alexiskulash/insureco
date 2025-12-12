@@ -49,7 +49,7 @@ export default {
 
 export const Default = (args) => {
   return (
-    <FormGroup style={ maxWidth: '400px' } {...args}>
+    <FormGroup style={{ maxWidth: '400px' }} {...args}>
       <Stack gap={7}>
         <TextInput id="one" labelText="First Name" />
         <TextInput id="two" labelText="Last Name" />

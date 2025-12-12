@@ -13,8 +13,8 @@ import {
   DialogHeader,
   DialogControls,
   DialogCloseButton,
-} from "./";
-import { Button } from "@carbon/react";
+  Button,
+} from "@carbon/react";
 import { action } from "@storybook/addon-actions";
 import mdx from "./Dialog.mdx";
 

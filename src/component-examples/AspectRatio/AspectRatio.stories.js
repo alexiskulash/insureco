@@ -8,8 +8,7 @@
 import "./AspectRatio-story.scss";
 
 import React from "react";
-import { Grid, Column } from "@carbon/react";
-import { AspectRatio } from "./";
+import { Grid, Column, AspectRatio } from "@carbon/react";
 import mdx from "./AspectRatio.mdx";
 
 export default {

@@ -6,13 +6,14 @@
  */
 
 import React from 'react';
-import { FluidNumberInput, FluidNumberInputSkeleton } from '.';
 import {
+  FluidNumberInput,
+  FluidNumberInputSkeleton,
   ToggletipLabel,
   Toggletip,
   ToggletipButton,
   ToggletipContent,
-} from '../Toggletip';
+} from '@carbon/react';
 import { Information } from '@carbon/icons-react';
 
 export default {
@@ -38,7 +39,7 @@ const ToggleTip = (
 );
 
 export const Default = (args) => (
-  <div style={ width: args.defaultWidth }>
+  <div style={{ width: args.defaultWidth }}>
     <FluidNumberInput {...args} />
   </div>
 );
@@ -103,7 +104,7 @@ Default.argTypes = {
 };
 
 export const Skeleton = () => (
-  <div style={ width: '400px' }>
+  <div style={{ width: '400px' }}>
     <FluidNumberInputSkeleton
       label="Label"
       placeholder="Placeholder text"

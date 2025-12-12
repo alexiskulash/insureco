@@ -6,9 +6,7 @@
  */
 
 import React from 'react';
-
-import FluidForm from '.';
-import { FluidDatePicker } from '@carbon/react';
+import { FluidForm, FluidDatePicker } from '@carbon/react';
 import { FluidDatePickerInput } from '@carbon/react';
 import { FluidSelect } from '@carbon/react';
 import { SelectItem } from '@carbon/react';
@@ -59,7 +57,7 @@ export default {
 export const Default = () => (
   <>
     <FluidForm aria-label="sample form" {...additionalProps}>
-      <div style={ display: 'flex' }>
+      <div style={{ display: 'flex' }}>
         <FluidTimePicker
           id="time-picker-1"
           labelText="Time"
@@ -107,7 +105,7 @@ export const Default = () => (
           </SelectItemGroup>
         </FluidSelect>
       </div>
-      <div style={ display: 'flex' }>
+      <div style={{ display: 'flex' }}>
         <FluidTextInput {...TextInputProps} />
         <FluidNumberInput
           label="Number Input Label"

@@ -8,8 +8,7 @@
 /* eslint-disable no-console */
 
 import React from "react";
-
-import AISkeletonPlaceholder from "./AISkeletonPlaceholder";
+import { AISkeletonPlaceholder } from "@carbon/react";
 
 export default {
   title: "Components/Skeleton/AISkeleton",

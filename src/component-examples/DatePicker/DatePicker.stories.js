@@ -328,7 +328,7 @@ export const withAILabel = (args) => {
     </AILabel>
   );
   return (
-    <div style={ width: 400 }>
+    <div style={{ width: 400 }}>
       <DatePicker datePickerType="single" {...args}>
         <DatePickerInput
           placeholder="mm/dd/yyyy"

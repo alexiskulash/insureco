@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { ChatButton, ChatButtonSkeleton } from "./";
+import { ChatButton, ChatButtonSkeleton } from "@carbon/react";
 import { Add } from "@carbon/icons-react";
 import "./chat-button-story.scss";
 

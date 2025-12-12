@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { ProgressIndicator, ProgressStep, ProgressIndicatorSkeleton } from "./";
+import { ProgressIndicator, ProgressStep, ProgressIndicatorSkeleton } from "@carbon/react";
 import mdx from "./ProgressIndicator.mdx";
 
 export default {

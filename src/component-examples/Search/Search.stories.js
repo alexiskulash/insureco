@@ -8,9 +8,7 @@
 import React, { useState, useCallback } from 'react';
 
 import { WithLayer } from '../../../.storybook/templates/WithLayer';
-
-import { ExpandableSearch } from '@carbon/react';
-import Search from '.';
+import { ExpandableSearch, Search } from '@carbon/react';
 import mdx from './Search.mdx';
 
 export default {
@@ -99,7 +97,7 @@ export const ExpandableWithLayer = () => {
 
 export const Default = (args) => {
   return (
-    <div style={ width: args.defaultWidth }>
+    <div style={{ width: args.defaultWidth }}>
       <Search id="search-default-1" {...args} />
     </div>
   );
