@@ -6,23 +6,14 @@ import {
   Tile,
   Button,
   Stack,
-  ProgressIndicator,
-  ProgressStep,
-  Breadcrumb,
-  BreadcrumbItem,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
 } from '@carbon/react';
-import { Checkmark, ChevronRight } from '@carbon/icons-react';
+import MobileStepper from '../components/MobileStepper';
 import './ProgressOptionsPreview.scss';
 
 export default function ProgressOptionsPreview() {
   const [currentStep, setCurrentStep] = useState(2);
 
-  // Sample steps - more than a few to demonstrate mobile scrolling issue
+  // Sample steps - more than a few to demonstrate mobile scrolling solution
   const steps = [
     { label: 'Personal Info', key: 'personal' },
     { label: 'Address', key: 'address' },
@@ -37,9 +28,9 @@ export default function ProgressOptionsPreview() {
     <Grid className="progress-preview">
       <Column sm={4} md={8} lg={16}>
         <header className="preview-header">
-          <Heading className="preview-title">Progress Bar Options</Heading>
+          <Heading className="preview-title">Mobile Dots Stepper</Heading>
           <p className="preview-subtitle">
-            Comparing 4 different approaches for step navigation on mobile
+            Custom mobile-first progress indicator for multi-step forms
           </p>
         </header>
 
@@ -68,212 +59,14 @@ export default function ProgressOptionsPreview() {
           </Stack>
         </Tile>
 
-        {/* Option 1: Carbon ProgressIndicator - Vertical Compact */}
+        {/* Mobile Dots Stepper Demo */}
         <section className="option-section">
-          <Heading className="option-heading">Option 1: Vertical Compact Progress</Heading>
-          <p className="option-type">Carbon Component (ProgressIndicator)</p>
-          
-          <Tile className="option-preview">
-            <div className="vertical-progress-wrapper">
-              <ProgressIndicator currentIndex={currentStep} vertical>
-                {steps.map((step, index) => (
-                  <ProgressStep
-                    key={step.key}
-                    label={step.label}
-                    complete={index < currentStep}
-                    current={index === currentStep}
-                  />
-                ))}
-              </ProgressIndicator>
-            </div>
-          </Tile>
-
-          <Tile className="pros-cons">
-            <div className="pros">
-              <h4>Pros</h4>
-              <ul>
-                <li>Uses Carbon component (consistent with design system)</li>
-                <li>No horizontal scrolling on mobile</li>
-                <li>Shows all steps at once</li>
-                <li>Clear visual hierarchy</li>
-                <li>Familiar pattern for users</li>
-              </ul>
-            </div>
-            <div className="cons">
-              <h4>Cons</h4>
-              <ul>
-                <li>Takes up more vertical space</li>
-                <li>Can feel long with many steps (7+ steps)</li>
-                <li>Less common pattern for mobile forms</li>
-                <li>Pushes content further down the page</li>
-              </ul>
-            </div>
-          </Tile>
-        </section>
-
-        {/* Option 2: Carbon Breadcrumb - Condensed Navigation */}
-        <section className="option-section">
-          <Heading className="option-heading">Option 2: Breadcrumb Navigation</Heading>
-          <p className="option-type">Carbon Component (Breadcrumb)</p>
-          
-          <Tile className="option-preview">
-            <div className="breadcrumb-progress-wrapper">
-              <Breadcrumb noTrailingSlash className="step-breadcrumb">
-                {steps.map((step, index) => (
-                  <BreadcrumbItem
-                    key={step.key}
-                    className={`breadcrumb-step ${
-                      index < currentStep ? 'breadcrumb-step--complete' : ''
-                    } ${index === currentStep ? 'breadcrumb-step--current' : ''} ${
-                      index > currentStep ? 'breadcrumb-step--incomplete' : ''
-                    }`}
-                  >
-                    {index < currentStep && <Checkmark size={16} className="step-check" />}
-                    {step.label}
-                  </BreadcrumbItem>
-                ))}
-              </Breadcrumb>
-            </div>
-          </Tile>
-
-          <Tile className="pros-cons">
-            <div className="pros">
-              <h4>Pros</h4>
-              <ul>
-                <li>Uses Carbon component (consistent with design system)</li>
-                <li>Compact horizontal layout</li>
-                <li>Shows completed steps with checkmarks</li>
-                <li>Familiar breadcrumb pattern</li>
-                <li>Minimal vertical space</li>
-              </ul>
-            </div>
-            <div className="cons">
-              <h4>Cons</h4>
-              <ul>
-                <li>Still requires horizontal scrolling on mobile with 5+ steps</li>
-                <li>Small touch targets on mobile</li>
-                <li>Text can be truncated on narrow screens</li>
-                <li>Not typically used for multi-step forms</li>
-                <li>Less emphasis on current step</li>
-              </ul>
-            </div>
-          </Tile>
-        </section>
-
-        {/* Option 3: Carbon Tabs - Step Tabs */}
-        <section className="option-section">
-          <Heading className="option-heading">Option 3: Tab-Based Steps</Heading>
-          <p className="option-type">Carbon Component (Tabs)</p>
-          
-          <Tile className="option-preview">
-            <div className="tabs-progress-wrapper">
-              <Tabs selectedIndex={currentStep}>
-                <TabList aria-label="Step navigation" contained>
-                  {steps.map((step, index) => (
-                    <Tab
-                      key={step.key}
-                      className={`tab-step ${
-                        index < currentStep ? 'tab-step--complete' : ''
-                      }`}
-                    >
-                      {index < currentStep ? (
-                        <>
-                          <Checkmark size={16} className="tab-check" />
-                          <span className="tab-label">{step.label}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="tab-number">{index + 1}</span>
-                          <span className="tab-label">{step.label}</span>
-                        </>
-                      )}
-                    </Tab>
-                  ))}
-                </TabList>
-                <TabPanels>
-                  {steps.map((step) => (
-                    <TabPanel key={step.key}>
-                      <p className="tab-panel-content">Content for {step.label}</p>
-                    </TabPanel>
-                  ))}
-                </TabPanels>
-              </Tabs>
-            </div>
-          </Tile>
-
-          <Tile className="pros-cons">
-            <div className="pros">
-              <h4>Pros</h4>
-              <ul>
-                <li>Uses Carbon component (consistent with design system)</li>
-                <li>Interactive - users can see step labels clearly</li>
-                <li>Shows completion status with checkmarks</li>
-                <li>Good visual separation of steps</li>
-                <li>Contained variant provides clear boundaries</li>
-              </ul>
-            </div>
-            <div className="cons">
-              <h4>Cons</h4>
-              <ul>
-                <li>Requires horizontal scrolling on mobile with 5+ steps</li>
-                <li>Tabs are meant for switching content, not linear progression</li>
-                <li>Takes up moderate vertical space</li>
-                <li>May confuse users (tabs suggest non-linear navigation)</li>
-                <li>Not the intended use case for Tab component</li>
-              </ul>
-            </div>
-          </Tile>
-        </section>
-
-        {/* Option 4: Custom Mobile-First Stepper */}
-        <section className="option-section">
-          <Heading className="option-heading">Option 4: Mobile Dots Stepper</Heading>
-          <p className="option-type">Custom Component (No Carbon)</p>
+          <Heading className="option-heading">Interactive Demo</Heading>
+          <p className="option-type">Custom Component</p>
           
           <Tile className="option-preview">
             <div className="custom-stepper-wrapper">
-              <div className="mobile-stepper">
-                <div className="stepper-dots">
-                  {/* Previous step (if exists) */}
-                  {currentStep > 0 && (
-                    <div className="step-dot step-dot--previous">
-                      <div className="dot-circle dot-circle--complete">
-                        <Checkmark size={12} />
-                      </div>
-                      <span className="dot-label">{steps[currentStep - 1].label}</span>
-                    </div>
-                  )}
-
-                  {/* Current step */}
-                  <div className="step-dot step-dot--current">
-                    <div className="dot-circle dot-circle--current">
-                      <span className="dot-number">{currentStep + 1}</span>
-                    </div>
-                    <span className="dot-label dot-label--current">{steps[currentStep].label}</span>
-                  </div>
-
-                  {/* Next step (if exists) */}
-                  {currentStep < steps.length - 1 && (
-                    <div className="step-dot step-dot--next">
-                      <div className="dot-circle dot-circle--incomplete">
-                        <span className="dot-number">{currentStep + 2}</span>
-                      </div>
-                      <span className="dot-label">{steps[currentStep + 1].label}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="stepper-progress-bar">
-                  <div 
-                    className="stepper-progress-fill"
-                    style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-                  />
-                </div>
-
-                <div className="stepper-counter">
-                  Step {currentStep + 1} of {steps.length}
-                </div>
-              </div>
+              <MobileStepper steps={steps} currentIndex={currentStep} />
             </div>
           </Tile>
 
@@ -287,6 +80,7 @@ export default function ProgressOptionsPreview() {
                 <li>Progress bar provides overall completion context</li>
                 <li>Large touch targets for mobile</li>
                 <li>Works great with any number of steps</li>
+                <li>Smooth animations and transitions</li>
               </ul>
             </div>
             <div className="cons">
@@ -302,21 +96,67 @@ export default function ProgressOptionsPreview() {
           </Tile>
         </section>
 
-        {/* Recommendation */}
+        {/* Implementation Details */}
+        <section className="implementation-section">
+          <Tile className="implementation-details">
+            <Heading className="implementation-heading">Implementation</Heading>
+            
+            <div className="implementation-content">
+              <div className="implementation-item">
+                <h4>Component Location</h4>
+                <code>src/components/MobileStepper.jsx</code>
+              </div>
+
+              <div className="implementation-item">
+                <h4>Usage</h4>
+                <pre><code>{`import MobileStepper from '../components/MobileStepper';
+
+<MobileStepper 
+  steps={steps} 
+  currentIndex={currentStep} 
+/>`}</code></pre>
+              </div>
+
+              <div className="implementation-item">
+                <h4>Props</h4>
+                <ul>
+                  <li><strong>steps</strong> (array, required): Array of step objects with <code>label</code> and <code>key</code> properties</li>
+                  <li><strong>currentIndex</strong> (number, optional): Index of current step (0-based), defaults to 0</li>
+                </ul>
+              </div>
+
+              <div className="implementation-item">
+                <h4>Features</h4>
+                <ul>
+                  <li>Displays previous, current, and next steps only</li>
+                  <li>Progress bar shows overall completion percentage</li>
+                  <li>Step counter shows "Step X of Y"</li>
+                  <li>Checkmark icon for completed steps</li>
+                  <li>Pulsing animation on current step</li>
+                  <li>Fully theme-aware (works in light and dark modes)</li>
+                  <li>Responsive design for mobile and desktop</li>
+                </ul>
+              </div>
+            </div>
+          </Tile>
+        </section>
+
+        {/* Why This Solution */}
         <Tile className="recommendation-section">
-          <Heading className="recommendation-heading">Recommendation</Heading>
+          <Heading className="recommendation-heading">Why This Solution?</Heading>
           <p className="recommendation-text">
-            For a mobile-first multi-step form with 5+ steps, <strong>Option 4 (Custom Mobile Dots Stepper)</strong> provides 
-            the best user experience despite being custom. It eliminates scrolling, shows relevant context, and works 
-            seamlessly on all screen sizes.
+            Traditional progress indicators require horizontal scrolling on mobile when there are 5+ steps. 
+            This creates a poor user experience and makes it difficult to see where you are in the journey.
           </p>
           <p className="recommendation-text">
-            However, if staying within the Carbon Design System is a priority, <strong>Option 1 (Vertical Compact Progress)</strong> is 
-            the best Carbon-based solution. It avoids horizontal scrolling and provides a clear, accessible navigation pattern.
+            The <strong>Mobile Dots Stepper</strong> solves this by showing only the most relevant context: 
+            the previous step (to see where you came from), the current step (where you are now), and the 
+            next step (where you're going). The progress bar provides overall context without requiring 
+            horizontal scrolling.
           </p>
           <p className="recommendation-text">
-            <strong>Options 2 and 3</strong> are not recommended as they still have mobile scrolling issues and use Carbon components 
-            outside their intended purposes.
+            This approach is especially effective for forms with 5-10 steps, where traditional progress 
+            indicators become unwieldy on mobile devices.
           </p>
         </Tile>
       </Column>
