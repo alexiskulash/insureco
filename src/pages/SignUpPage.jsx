@@ -17,12 +17,11 @@ import {
   NumberInput,
   TileGroup,
   RadioTile,
-  ProgressIndicator,
-  ProgressStep,
   DatePicker,
   DatePickerInput,
 } from '@carbon/react';
 import { ArrowRight, ArrowLeft, Checkmark, Car, Home as HomeIcon } from '@carbon/icons-react';
+import MobileStepper from '../components/MobileStepper';
 import './SignUpPage.scss';
 
 export default function SignUpPage() {
