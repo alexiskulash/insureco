@@ -19,7 +19,7 @@ import {
   TableToolbarContent,
   TableToolbarSearch,
 } from '@carbon/react';
-import { TrendUp, TrendDown, Analytics } from '@carbon/icons-react';
+import { ArrowUp, ArrowDown, Analytics } from '@carbon/icons-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import { monthlyData, assetData, calculateSummaryStats, formatCurrency, formatDate } from '../data/financialData';
 import './FinancialDashboard2.scss';
