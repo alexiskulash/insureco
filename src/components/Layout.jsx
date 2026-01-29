@@ -65,6 +65,9 @@ export default function Layout({ children }) {
                 <HeaderMenuItem onClick={() => navigate("/dashboard")}>
                   Dashboard
                 </HeaderMenuItem>
+                <HeaderMenuItem onClick={() => navigate("/financial-dashboards")}>
+                  Financial Dashboards
+                </HeaderMenuItem>
 
                 {/* Business Menu with Dropdown */}
                 <HeaderMenu aria-label="Business" menuLinkName="Business">
