@@ -40,10 +40,13 @@ export default function FinancialDashboard3() {
   };
 
   const handleAssetClick = (asset) => {
+    // Navigate to existing property or vehicle pages based on category
     if (asset.category === 'Property') {
-      navigate('/property-details', { state: { asset } });
+      // Navigate to business property detail page
+      navigate(`/business/properties/${asset.id}`, { state: { asset } });
     } else {
-      navigate('/vehicle-details', { state: { asset } });
+      // Navigate to business fleet vehicle detail page
+      navigate(`/business/fleet/${asset.id}`, { state: { asset } });
     }
   };
 
