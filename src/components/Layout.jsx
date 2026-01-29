@@ -130,6 +130,9 @@ export default function Layout({ children }) {
                     <HeaderMenuItem onClick={() => handleNavigateAndClose("/dashboard")}>
                       Dashboard
                     </HeaderMenuItem>
+                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/financial-dashboards")}>
+                      Financial Dashboards
+                    </HeaderMenuItem>
 
                     {/* Business Section in Sidebar with Submenu */}
                     <SideNavMenu title="Business">
