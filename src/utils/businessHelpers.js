@@ -573,6 +573,7 @@ export default {
   formatNumber,
 
   // Dates
+  formatDateForInput,
   formatDate,
   formatDateTime,
   daysBetween,
