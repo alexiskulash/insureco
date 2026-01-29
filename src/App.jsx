@@ -33,6 +33,9 @@ export default function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signup/confirmation" element={<SignUpConfirmationPage />} />
         <Route path="/dashboard" element={<DashboardHome />} />
+        <Route path="/financial-dashboard-1" element={<FinancialDashboard1 />} />
+        <Route path="/financial-dashboard-2" element={<FinancialDashboard2 />} />
+        <Route path="/financial-dashboard-3" element={<FinancialDashboard3 />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/theme-preview" element={<ThemePreviewPage />} />
         <Route path="/progress-preview" element={<ProgressIndicatorPreview />} />
