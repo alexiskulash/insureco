@@ -37,6 +37,17 @@ export default function FinancialDashboard1() {
 
   const stats = calculateSummaryStats();
 
+  // Calculate high-risk assets (worst claims-to-premium ratios)
+  const highRiskAssets = useMemo(() => {
+    return assetData
+      .map(asset => ({
+        ...asset,
+        lossRatio: (asset.totalClaims / asset.premiumDue) * 100,
+      }))
+      .sort((a, b) => b.lossRatio - a.lossRatio)
+      .slice(0, 5); // Top 5 highest risk assets
+  }, []);
+
   // Table headers configuration
   const headers = [
     { key: 'assetName', header: 'Asset Name' },
