@@ -130,9 +130,6 @@ export default function Layout({ children }) {
                     <HeaderMenuItem onClick={() => handleNavigateAndClose("/dashboard")}>
                       Dashboard
                     </HeaderMenuItem>
-                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/financial-dashboards")}>
-                      Financial Dashboards
-                    </HeaderMenuItem>
 
                     {/* Business Section in Sidebar with Submenu */}
                     <SideNavMenu title="Business">
@@ -142,6 +139,13 @@ export default function Layout({ children }) {
                         onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Overview
+                      </SideNavMenuItem>
+                      <SideNavMenuItem
+                        element={Link}
+                        to="/financial-dashboards"
+                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
+                      >
+                        Financial Dashboards
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
