@@ -97,6 +97,9 @@ export default function Layout({ children }) {
                 <HeaderMenuItem onClick={() => navigate("/signup")}>
                   Sign Up
                 </HeaderMenuItem>
+                <HeaderMenuItem onClick={() => navigate("/ai-explainability")}>
+                  AI Explainability
+                </HeaderMenuItem>
                 <HeaderMenuItem onClick={() => navigate("/about")}>
                   About
                 </HeaderMenuItem>
@@ -189,6 +192,9 @@ export default function Layout({ children }) {
                     </HeaderMenuItem>
                     <HeaderMenuItem onClick={() => handleNavigateAndClose("/signup")}>
                       Sign Up
+                    </HeaderMenuItem>
+                    <HeaderMenuItem onClick={() => handleNavigateAndClose("/ai-explainability")}>
+                      AI Explainability
                     </HeaderMenuItem>
                     <HeaderMenuItem onClick={() => handleNavigateAndClose("/about")}>
                       About

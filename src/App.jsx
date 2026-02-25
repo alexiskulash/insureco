@@ -24,6 +24,7 @@ import FinancialDashboard1 from "./pages/FinancialDashboard1";
 import FinancialDashboard2 from "./pages/FinancialDashboard2";
 import FinancialDashboard3 from "./pages/FinancialDashboard3";
 import FinancialDashboardOptions from "./pages/FinancialDashboardOptions";
+import AIExplainabilityPage from "./pages/AIExplainabilityPage";
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/theme-preview" element={<ThemePreviewPage />} />
         <Route path="/progress-preview" element={<ProgressIndicatorPreview />} />
+        <Route path="/ai-explainability" element={<AIExplainabilityPage />} />
 
         {/* Business Routes */}
         <Route path="/business" element={<Navigate to="/business/dashboard" replace />} />

@@ -1,0 +1,367 @@
+@use '../styles/tokens' as *;
+
+// ============================================
+// AI Explainability Popover
+// ============================================
+// Implements the IBM Carbon AI Explainability Popover pattern.
+// The popover surfaces transparency info about AI-generated content.
+// Design ref: https://w3.ibm.com/w3publisher/design-for-ai/carbon-for-ai/ai-explainability-popover
+
+// ── Shared AI border gradient ──────────────────────────────────────────────
+$ai-border-gradient: linear-gradient(180deg, #78a9ff 0%, rgba(166, 200, 255, 0.64) 48.96%);
+$ai-aura-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(69, 137, 255, 0.1) 100%);
+
+// ============================================
+// Primary Explanation Popover
+// ============================================
+.ai-explainability-popover {
+  position: relative;
+  width: 320px;
+  border-radius: 8px;
+  background: var(--background-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // AI blue aura gradient background
+  &__aura {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: $ai-aura-gradient;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // ── Caret (top pointer triangle) ───────────────────────────────────────
+  &__caret-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    z-index: 2;
+    // Nudge caret slightly right to match Figma design
+    padding-right: 0;
+  }
+
+  &__caret-spacer {
+    flex: 1;
+  }
+
+  &__caret-icon {
+    color: var(--background-primary);
+    filter: drop-shadow(0 -1px 0 #78a9ff);
+    margin-bottom: -1px;
+  }
+
+  // ── Scrollable content area ─────────────────────────────────────────────
+  &__scroll-area {
+    position: relative;
+    flex: 1;
+    overflow-y: auto;
+    z-index: 1;
+    // Hide scrollbar visually but keep functionality
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 2px;
+    }
+  }
+
+  &__content {
+    padding: 24px 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  // ── Sections ────────────────────────────────────────────────────────────
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &--bordered {
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+    }
+  }
+
+  &__subsection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  // ── Typography ──────────────────────────────────────────────────────────
+  &__eyebrow {
+    display: block;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+    color: var(--text-secondary);
+  }
+
+  &__title {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 36px;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  &__description {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  &__subsection-label {
+    display: block;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+    color: var(--text-secondary);
+  }
+
+  &__body-text {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  // ── Lists ────────────────────────────────────────────────────────────────
+  &__ordered-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: ai-ordered;
+  }
+
+  &__dash-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__list-item {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+    color: var(--text-primary);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+
+    strong {
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    // Ordered list item – prepend counter
+    .ai-explainability-popover__ordered-list & {
+      counter-increment: ai-ordered;
+
+      &::before {
+        content: counter(ai-ordered) '.';
+        min-width: 16px;
+        color: var(--text-primary);
+        flex-shrink: 0;
+      }
+    }
+
+    // Dash list item – prepend dash
+    .ai-explainability-popover__dash-list & {
+      &::before {
+        content: '–';
+        color: var(--text-primary);
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // ── External links ──────────────────────────────────────────────────────
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+    color: #0f62fe;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      color: #0043ce;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #0f62fe;
+      outline-offset: 2px;
+    }
+  }
+
+  &__link-icon {
+    flex-shrink: 0;
+    fill: #0f62fe;
+  }
+
+  // ── Bottom gradient feather ─────────────────────────────────────────────
+  &__gradient-feather {
+    height: 48px;
+    background: linear-gradient(to bottom, transparent 0%, var(--background-primary) 100%);
+    pointer-events: none;
+    position: sticky;
+    bottom: 0;
+  }
+
+  // ── Footer spacer (so last section isn't hidden by footer) ─────────────
+  &__footer-spacer {
+    height: 8px;
+  }
+
+  // ── Sticky action footer ─────────────────────────────────────────────────
+  &__footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: stretch;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--background-primary);
+
+    // Blur backdrop for footer
+    backdrop-filter: blur(42.5px);
+  }
+
+  &__view-btn {
+    &.cds--btn {
+      border-radius: 0 0 8px 0;
+      min-width: 160px;
+      background-color: #0f62fe !important;
+      color: #ffffff !important;
+
+      &:hover {
+        background-color: #0043ce !important;
+      }
+
+      &:active {
+        background-color: #002d9c !important;
+      }
+    }
+  }
+
+  // ── AI gradient border overlay ──────────────────────────────────────────
+  &__border {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: $ai-border-gradient border-box;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 3;
+  }
+}
+
+// ============================================
+// Secondary Explanation Callout
+// ============================================
+.ai-explainability-callout {
+  position: relative;
+  width: 320px;
+  border-radius: 8px;
+  background: var(--background-primary);
+  overflow: hidden;
+
+  // AI blue aura
+  &__aura {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background: $ai-aura-gradient;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    padding: 32px 24px;
+  }
+
+  &__text {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  // Blue border overlay using same mask technique
+  &__border {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    border: 1px solid #78a9ff;
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+// ============================================
+// Dark theme overrides
+// ============================================
+:root[data-carbon-theme='g90'],
+:root[data-carbon-theme='g100'] {
+  .ai-explainability-popover {
+    &__aura {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(69, 137, 255, 0.08) 100%);
+    }
+
+    &__gradient-feather {
+      background: linear-gradient(to bottom, transparent 0%, var(--background-primary) 100%);
+    }
+  }
+
+  .ai-explainability-callout {
+    &__aura {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(69, 137, 255, 0.08) 100%);
+    }
+  }
+}
