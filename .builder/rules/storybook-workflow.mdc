@@ -1,0 +1,179 @@
+---
+description: Storybook workflow - new story files require restart
+globs:
+  - "src/stories/**/*.stories.{jsx,tsx,js,ts}"
+  - "src/component-examples/**/*.stories.{jsx,tsx,js,ts}"
+alwaysApply: false
+---
+
+# Storybook Workflow Guidelines
+
+## Critical Rule: New Story Files Require Restart
+
+**Problem**: When creating a new `.stories.jsx` file while Storybook is running, the component **will not appear** in the Storybook sidebar automatically.
+
+**Why**: Storybook's Hot Module Replacement (HMR) detects changes to existing files well, but does not automatically register brand new story files in the story index without a restart.
+
+### Symptoms
+- Story file created successfully
+- No errors in the console
+- HMR logs show `hmr update` messages
+- Component does NOT appear in Storybook sidebar
+
+### Solution
+**Always restart Storybook after creating a new story file:**
+
+
+# Use DevServerControl tool
+DevServerControl({ restart: true })
+```
+
+### Behavior Matrix
+
+| Scenario | Storybook Behavior | Action Required |
+|----------|-------------------|-----------------|
+| Edit existing story | ✅ HMR picks it up instantly | None - just save |
+| Add new story export to existing file | ✅ HMR picks it up | None - just save |
+| Create brand new `.stories.jsx` file | ❌ NOT picked up by HMR | **Restart required** |
+| Rename story file | ❌ NOT picked up by HMR | **Restart required** |
+| Delete story file | ⚠️ May show stale entry | Restart recommended |
+
+## Workflow Best Practices
+
+### When Creating New Components
+
+1. **Create the component** (`src/components/MyComponent.jsx`)
+2. **Create the styles** (`src/components/MyComponent.scss`)
+3. **Create the story** (`src/stories/MyComponent.stories.jsx`)
+4. **Restart Storybook** using `DevServerControl({ restart: true })`
+5. **Verify** component appears in sidebar
+6. **Iterate** - now HMR will work for edits
+
+### When Adding Stories to Existing Files
+
+1. **Edit** the existing `.stories.jsx` file
+2. **Add** new story export
+3. **Save** - HMR will pick it up automatically
+4. **No restart needed**
+
+### When Debugging "Missing Component"
+
+If a user reports they don't see a component in Storybook:
+
+1. ✅ **Check the file exists** - verify `.stories.jsx` file was created
+2. ✅ **Check the export** - ensure component is exported properly
+3. ✅ **Check console** - look for import/syntax errors
+4. ✅ **Restart Storybook** - this fixes 90% of "missing component" issues
+5. ✅ **Verify story structure** - ensure proper Storybook CSF format
+
+## Storybook Dev Server
+
+### Current Configuration
+- **Dev command**: `npm run storybook`
+- **Port**: `6006`
+- **Framework**: React + Vite
+- **Version**: 8.6.14
+
+### DevServerControl Tool Usage
+
+```javascript
+// Get logs and status (read-only)
+DevServerControl({ get_logs: true })
+
+// Restart Storybook (picks up new files)
+DevServerControl({ restart: true })
+```
+
+### Expected Restart Logs
+
+After restart, you should see:
+```
+Storybook 8.6.14 for react-vite started
+Local:            http://localhost:6006/
+```
+
+And the new component will appear alphabetically in the sidebar.
+
+## Story File Structure
+
+### Location
+- **Primary location**: `src/stories/` - Simple component stories
+- **Advanced examples**: `src/component-examples/` - Complex Carbon component examples
+
+### Naming Convention
+- `ComponentName.stories.jsx` - matches component name
+- Example: `AIExplainabilityPopover.stories.jsx`
+
+### Standard Template
+
+```jsx
+import React from 'react';
+import ComponentName from '../components/ComponentName';
+
+export default {
+  title: 'Components/ComponentName',
+  component: ComponentName,
+  parameters: {
+    docs: {
+      description: {
+        component: 'Component description here',
+      },
+    },
+  },
+};
+
+export const Default = {
+  args: {
+    // default props
+  },
+};
+
+export const Variant = {
+  args: {
+    // variant props
+  },
+};
+```
+
+## Common Issues
+
+### Issue: "Component not in sidebar after creation"
+**Solution**: Restart Storybook
+
+### Issue: "Story shows old content after edit"
+**Solution**: Check if file saved, refresh browser, or restart Storybook
+
+### Issue: "Multiple stories with same name"
+**Solution**: Ensure unique `title` in default export, restart Storybook
+
+### Issue: "Story loads but component broken"
+**Solution**: Check browser console for import errors, verify component path
+
+## Integration with Development Workflow
+
+### Recommended Flow
+
+1. **Component development** - Build component with styles
+2. **Story creation** - Create story file
+3. **Restart Storybook** - Register new story
+4. **Iterate** - Edit component/story (HMR works)
+5. **Test in app** - Create demo page if needed
+6. **Document** - Update rules if needed
+
+### Communication with User
+
+When creating a new story, proactively inform the user:
+
+✅ **Good**: "I've created the story file and restarted Storybook. You should now see 'ComponentName' in the sidebar under Components."
+
+❌ **Bad**: "I've created the story file." (User expects it to appear but it doesn't)
+
+## Summary
+
+- ✅ **New story files → restart required**
+- ✅ **Edits to existing stories → HMR works**
+- ✅ **Always use DevServerControl tool to restart**
+- ✅ **Inform user when restart happens**
+- ✅ **Verify component appears after restart**
+
+This prevents the "I don't see the component" confusion.
