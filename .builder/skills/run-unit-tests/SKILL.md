@@ -7,7 +7,7 @@ description: Run the unit test suite for this project. Use this skill when the u
 
 ## Commands
 
-**Single run (CI-style, shows results and exits):**
+**Single run (CI-style, shows results and coverage):**
 ```bash
 npm run test:run
 ```
@@ -17,10 +17,12 @@ npm run test:run
 npm test
 ```
 
-**With coverage report:**
+**Coverage only (alias):**
 ```bash
 npm run test:coverage
 ```
+
+> Note: `npm run test:run` includes coverage automatically via `--coverage`.
 
 ## Stack
 
@@ -67,6 +69,15 @@ After running the tests, ALWAYS reply with a summary in this exact format:
 
 **Files:** `file1.test.js` ✅ · `file2.test.jsx` ✅ · `file3.test.jsx` ❌
 
+### 📊 Coverage
+
+| Metric | Coverage |
+|---|---|
+| **Statements** | X% |
+| **Branches** | X% |
+| **Functions** | X% |
+| **Lines** | X% |
+
 #### ❌ Failures
 
 **`path/to/file.test.js` › describe block › test name**
@@ -84,3 +95,5 @@ Rules for the report:
 - If all tests pass, replace the ❌ Failures section with: **🎉 All tests passed!**
 - For each failure, include the describe + test name, the Expected/Received diff, and the file:line
 - Keep failure explanations factual — what the assertion got vs what it wanted, not speculation
+- Always include the Coverage table using the "All files" row totals from the v8 coverage report
+- Coverage percentages should be rounded to one decimal place
