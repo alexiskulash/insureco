@@ -22,7 +22,7 @@ alwaysApply: false
 npm run test:run      # Single run with coverage (use in CI or to check results)
 npm test              # Watch mode — re-runs on file save
 npm run test:coverage # Coverage only
-```
+
 
 ## File Structure
 
@@ -121,6 +121,18 @@ it('submits the form', async () => {
 ```
 
 Always `await` userEvent calls — they are async.
+
+## ⚠️ Important: Do Not Write Tests Unprompted
+
+**Never write, add, or modify unit tests unless the user explicitly asks for them.**
+
+This includes:
+- Do not add tests when implementing new features or components
+- Do not add tests when fixing bugs
+- Do not suggest adding tests as a follow-up step unless asked
+- Do not update existing tests unless explicitly requested
+
+Only write tests when the user's request clearly and directly asks for them (e.g. "write a test for...", "add test coverage for...").
 
 ## What to Test
 
