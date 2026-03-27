@@ -93,8 +93,9 @@
     flex-shrink: 0;
 
     .cds--pagination {
-      background: transparent;
+      background: transparent !important;
       border: none;
+      color: var(--text-primary) !important;
 
       // Hide items-per-page select since it's not needed here
       .cds--pagination__left {
@@ -103,10 +104,26 @@
 
       .cds--pagination__right {
         border-left: none;
+        background: transparent !important;
       }
 
       .cds--pagination__control-buttons {
         border-left: 1px solid var(--border-subtle);
+        background: transparent !important;
+      }
+
+      button {
+        color: var(--text-primary) !important;
+
+        svg {
+          fill: var(--text-primary) !important;
+        }
+      }
+
+      select,
+      .cds--select-input {
+        background: var(--background-secondary) !important;
+        color: var(--text-primary) !important;
       }
     }
   }
@@ -139,12 +156,55 @@
   }
 
   .chart-card {
-    border: 1px solid rgba(0, 0, 0, 0.69);
-    background: var(--background-primary);
+    border: 1px solid var(--border-subtle);
+    background: var(--background-secondary);
     overflow: hidden;
 
-    .cds--chart-holder {
+    // Carbon Charts internal overrides — force backgrounds to be transparent
+    // so the card background shows through in both light and dark mode
+    .cds--chart-holder,
+    .bx--chart-holder {
       padding: 1rem;
+      background: transparent !important;
+    }
+
+    // Chart SVG background rects
+    svg rect.chart-grid-backdrop,
+    svg .chart-grid-backdrop {
+      fill: transparent !important;
+    }
+
+    // Legend text inherits from theme
+    .cds--cc--legend .legend-item p,
+    .bx--cc--legend .legend-item p {
+      color: var(--text-primary) !important;
+    }
+
+    // Axis labels
+    .cds--cc--axes g.axis text,
+    .bx--cc--axes g.axis text {
+      fill: var(--text-secondary) !important;
+    }
+
+    // Axis lines
+    .cds--cc--axes g.axis path,
+    .cds--cc--axes g.axis line,
+    .bx--cc--axes g.axis path,
+    .bx--cc--axes g.axis line {
+      stroke: var(--border-subtle) !important;
+    }
+
+    // Grid lines
+    .cds--cc--grid g.grid line,
+    .bx--cc--grid g.grid line {
+      stroke: var(--border-subtle) !important;
+    }
+
+    // Chart title
+    p.bx--cc--title,
+    p.cds--cc--title,
+    .chart-title {
+      color: var(--text-primary) !important;
     }
   }
 
@@ -185,6 +245,63 @@
     font-size: 0.875rem;
     color: var(--text-secondary);
     margin: 0;
+  }
+
+  // =====================
+  // DataTable dark mode fixes
+  // =====================
+  .cds--data-table-container {
+    background: var(--background-secondary) !important;
+  }
+
+  .cds--data-table-header {
+    background: var(--background-secondary) !important;
+
+    .cds--data-table-header__title,
+    .cds--data-table-header__description {
+      color: var(--text-primary) !important;
+    }
+  }
+
+  .cds--data-table {
+    background: var(--background-primary) !important;
+
+    thead {
+      background: var(--background-secondary) !important;
+    }
+
+    th {
+      background: var(--background-secondary) !important;
+      color: var(--text-primary) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+    }
+
+    td {
+      background: var(--background-primary) !important;
+      color: var(--text-primary) !important;
+      border-bottom: 1px solid var(--border-subtle) !important;
+    }
+
+    tr:hover td {
+      background: var(--background-hover) !important;
+    }
+  }
+
+  .cds--pagination {
+    background: var(--background-secondary) !important;
+    border-top: 1px solid var(--border-subtle) !important;
+    color: var(--text-primary) !important;
+
+    select,
+    .cds--select-input {
+      background: var(--background-secondary) !important;
+      color: var(--text-primary) !important;
+    }
+
+    button {
+      color: var(--text-primary) !important;
+      svg { fill: var(--text-primary) !important; }
+    }
   }
 
   // =====================

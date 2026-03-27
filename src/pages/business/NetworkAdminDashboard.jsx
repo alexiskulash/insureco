@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 import {
   Button,
   Breadcrumb,
@@ -34,31 +35,10 @@ const areaChartData = [
   { group: 'Network Traffic', date: new Date('2024-01-10').getTime(), value: 20 },
 ];
 
-const areaChartOptions = {
-  title: 'Network Traffic',
-  axes: {
-    left: { title: 'Info', mapsTo: 'value' },
-    bottom: { title: 'Info', mapsTo: 'date', scaleType: 'time' },
-  },
-  curve: 'curveNatural',
-  height: '300px',
-  color: { scale: { 'Network Traffic': '#6929C4' } },
-  legend: { enabled: true },
-};
-
 const gaugeChartData = [
   { group: 'value', value: 42 },
   { group: 'delta', value: -13.37 },
 ];
-
-const gaugeChartOptions = {
-  title: 'Credit Usage',
-  resizable: true,
-  height: '300px',
-  gauge: { type: 'semi', status: 'danger' },
-  color: { scale: { value: '#6929C4' } },
-  legend: { enabled: false },
-};
 
 const deviceHeaders = [
   { key: 'name', header: 'Device Name' },
@@ -80,6 +60,32 @@ const deviceRows = [
 ];
 
 export default function NetworkAdminDashboard() {
+  const { theme } = useTheme();
+  const chartTheme = (theme === 'g90' || theme === 'g100') ? 'g100' : 'white';
+
+  const areaChartOptions = {
+    title: 'Network Traffic',
+    axes: {
+      left: { title: 'Info', mapsTo: 'value' },
+      bottom: { title: 'Info', mapsTo: 'date', scaleType: 'time' },
+    },
+    curve: 'curveNatural',
+    height: '300px',
+    theme: chartTheme,
+    color: { scale: { 'Network Traffic': '#6929C4' } },
+    legend: { enabled: true },
+  };
+
+  const gaugeChartOptions = {
+    title: 'Credit Usage',
+    resizable: true,
+    height: '300px',
+    theme: chartTheme,
+    gauge: { type: 'semi', status: 'danger' },
+    color: { scale: { value: '#6929C4' } },
+    legend: { enabled: false },
+  };
+
   const [warningDismissed, setWarningDismissed] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
