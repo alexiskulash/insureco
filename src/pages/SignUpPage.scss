@@ -145,6 +145,15 @@
   margin: 0;
 }
 
+.signup-step__field-error {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.33;
+  letter-spacing: 0.32px;
+  color: var(--text-error);
+  margin: 0;
+}
+
 .signup-step__fields {
   display: flex;
   flex-direction: column;

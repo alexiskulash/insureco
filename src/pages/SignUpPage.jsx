@@ -53,6 +53,53 @@ const HomeIcon = () => (
   </svg>
 );
 
+// ─── Validation ───────────────────────────────────────────────────────────────
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ZIP_RE = /^\d{5}(-\d{4})?$/;
+const VIN_RE = /^[A-HJ-NPR-Z0-9]{17}$/i;
+
+const VALIDATORS = {
+  personal: (d) => {
+    const e = {};
+    if (!d.firstName.trim()) e.firstName = 'First name is required';
+    if (!d.lastName.trim()) e.lastName = 'Last name is required';
+    if (!d.email.trim()) e.email = 'Email is required';
+    else if (!EMAIL_RE.test(d.email)) e.email = 'Enter a valid email address';
+    if (!d.phone.trim()) e.phone = 'Phone number is required';
+    if (!d.dateOfBirth) e.dateOfBirth = 'Date of birth is required';
+    return e;
+  },
+  address: (d) => {
+    const e = {};
+    if (!d.streetAddress.trim()) e.streetAddress = 'Street address is required';
+    if (!d.city.trim()) e.city = 'City is required';
+    if (!d.state) e.state = 'State is required';
+    if (!d.zip.trim()) e.zip = 'Zip code is required';
+    else if (!ZIP_RE.test(d.zip.trim())) e.zip = 'Enter a valid 5-digit zip code';
+    return e;
+  },
+  coverage: (d) => {
+    const e = {};
+    if (!d.insuranceType) e.insuranceType = 'Please select a coverage type';
+    return e;
+  },
+  carDetails: (d) => {
+    const e = {};
+    if (!d.carMake.trim()) e.carMake = 'Make is required';
+    if (!d.carModel.trim()) e.carModel = 'Model is required';
+    if (!d.carYear) e.carYear = 'Year is required';
+    if (d.carVin.trim() && !VIN_RE.test(d.carVin.trim())) e.carVin = 'VIN must be exactly 17 characters';
+    return e;
+  },
+  homeDetails: (d) => {
+    const e = {};
+    if (!d.homeType) e.homeType = 'Home type is required';
+    if (!d.yearBuilt) e.yearBuilt = 'Year built is required';
+    return e;
+  },
+};
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const getStepSequence = (insuranceType) => {
@@ -70,7 +117,7 @@ const getBreadcrumbIndex = (stepKey) => {
 
 // ─── Step Components ──────────────────────────────────────────────────────────
 
-function StepPersonalInfo({ data, onChange }) {
+function StepPersonalInfo({ data, onChange, errors }) {
   return (
     <div className="signup-step">
       <div className="signup-step__header">
@@ -85,6 +132,8 @@ function StepPersonalInfo({ data, onChange }) {
           value={data.firstName}
           onChange={(e) => onChange('firstName', e.target.value)}
           size="lg"
+          invalid={!!errors.firstName}
+          invalidText={errors.firstName}
         />
         <TextInput
           id="lastName"
@@ -93,6 +142,8 @@ function StepPersonalInfo({ data, onChange }) {
           value={data.lastName}
           onChange={(e) => onChange('lastName', e.target.value)}
           size="lg"
+          invalid={!!errors.lastName}
+          invalidText={errors.lastName}
         />
         <TextInput
           id="email"
@@ -102,6 +153,8 @@ function StepPersonalInfo({ data, onChange }) {
           value={data.email}
           onChange={(e) => onChange('email', e.target.value)}
           size="lg"
+          invalid={!!errors.email}
+          invalidText={errors.email}
         />
         <TextInput
           id="phone"
@@ -111,6 +164,8 @@ function StepPersonalInfo({ data, onChange }) {
           value={data.phone}
           onChange={(e) => onChange('phone', e.target.value)}
           size="lg"
+          invalid={!!errors.phone}
+          invalidText={errors.phone}
         />
         <TextInput
           id="dateOfBirth"
@@ -120,13 +175,15 @@ function StepPersonalInfo({ data, onChange }) {
           value={data.dateOfBirth}
           onChange={(e) => onChange('dateOfBirth', e.target.value)}
           size="lg"
+          invalid={!!errors.dateOfBirth}
+          invalidText={errors.dateOfBirth}
         />
       </div>
     </div>
   );
 }
 
-function StepAddress({ data, onChange }) {
+function StepAddress({ data, onChange, errors }) {
   return (
     <div className="signup-step">
       <div className="signup-step__header">
@@ -141,6 +198,8 @@ function StepAddress({ data, onChange }) {
           value={data.streetAddress}
           onChange={(e) => onChange('streetAddress', e.target.value)}
           size="lg"
+          invalid={!!errors.streetAddress}
+          invalidText={errors.streetAddress}
         />
         <TextInput
           id="city"
@@ -149,6 +208,8 @@ function StepAddress({ data, onChange }) {
           value={data.city}
           onChange={(e) => onChange('city', e.target.value)}
           size="lg"
+          invalid={!!errors.city}
+          invalidText={errors.city}
         />
         <Select
           id="state"
@@ -156,6 +217,8 @@ function StepAddress({ data, onChange }) {
           value={data.state}
           onChange={(e) => onChange('state', e.target.value)}
           size="lg"
+          invalid={!!errors.state}
+          invalidText={errors.state}
         >
           <SelectItem value="" text="" />
           {US_STATES.map((s) => (
@@ -165,17 +228,19 @@ function StepAddress({ data, onChange }) {
         <TextInput
           id="zip"
           labelText="Zip"
-          placeholder="(555) 123-4567"
+          placeholder="12345"
           value={data.zip}
           onChange={(e) => onChange('zip', e.target.value)}
           size="lg"
+          invalid={!!errors.zip}
+          invalidText={errors.zip}
         />
       </div>
     </div>
   );
 }
 
-function StepCoverage({ data, onChange }) {
+function StepCoverage({ data, onChange, errors }) {
   const options = [
     {
       value: 'car',
@@ -203,6 +268,9 @@ function StepCoverage({ data, onChange }) {
         <h2 className="signup-step__title">What Will You Insure</h2>
       </div>
       <p className="signup-step__description">Which insurance coverage are you looking for</p>
+      {errors.insuranceType && (
+        <p className="signup-step__field-error">{errors.insuranceType}</p>
+      )}
       <div className="signup-step__tiles">
         {options.map((option) => (
           <button
@@ -226,7 +294,7 @@ function StepCoverage({ data, onChange }) {
   );
 }
 
-function StepCarDetails({ data, onChange, showWarning, onDismissWarning }) {
+function StepCarDetails({ data, onChange, errors, showWarning, onDismissWarning }) {
   return (
     <div className="signup-step">
       {showWarning && (
@@ -252,6 +320,8 @@ function StepCarDetails({ data, onChange, showWarning, onDismissWarning }) {
           value={data.carMake}
           onChange={(e) => onChange('carMake', e.target.value)}
           size="lg"
+          invalid={!!errors.carMake}
+          invalidText={errors.carMake}
         />
         <TextInput
           id="carModel"
@@ -260,6 +330,8 @@ function StepCarDetails({ data, onChange, showWarning, onDismissWarning }) {
           value={data.carModel}
           onChange={(e) => onChange('carModel', e.target.value)}
           size="lg"
+          invalid={!!errors.carModel}
+          invalidText={errors.carModel}
         />
         <Select
           id="carYear"
@@ -267,6 +339,8 @@ function StepCarDetails({ data, onChange, showWarning, onDismissWarning }) {
           value={data.carYear}
           onChange={(e) => onChange('carYear', e.target.value)}
           size="lg"
+          invalid={!!errors.carYear}
+          invalidText={errors.carYear}
         >
           <SelectItem value="" text="" />
           {CAR_YEARS.map((y) => (
@@ -299,13 +373,15 @@ function StepCarDetails({ data, onChange, showWarning, onDismissWarning }) {
           value={data.carVin}
           onChange={(e) => onChange('carVin', e.target.value)}
           size="lg"
+          invalid={!!errors.carVin}
+          invalidText={errors.carVin}
         />
       </div>
     </div>
   );
 }
 
-function StepHomeDetails({ data, onChange }) {
+function StepHomeDetails({ data, onChange, errors }) {
   return (
     <div className="signup-step">
       <div className="signup-step__header">
@@ -319,6 +395,8 @@ function StepHomeDetails({ data, onChange }) {
           value={data.homeType}
           onChange={(e) => onChange('homeType', e.target.value)}
           size="lg"
+          invalid={!!errors.homeType}
+          invalidText={errors.homeType}
         >
           <SelectItem value="" text="" />
           {HOME_TYPES.map((t) => (
@@ -331,6 +409,8 @@ function StepHomeDetails({ data, onChange }) {
           value={data.yearBuilt}
           onChange={(e) => onChange('yearBuilt', e.target.value)}
           size="lg"
+          invalid={!!errors.yearBuilt}
+          invalidText={errors.yearBuilt}
         >
           <SelectItem value="" text="" />
           {HOME_YEARS.map((y) => (
@@ -397,6 +477,7 @@ export default function SignUpPage() {
   const [stepIndex, setStepIndex] = useState(0);
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [showWarning, setShowWarning] = useState(true);
+  const [errors, setErrors] = useState({});
 
   const stepSequence = getStepSequence(formData.insuranceType);
   const currentStepKey = stepSequence[stepIndex];
@@ -406,11 +487,29 @@ export default function SignUpPage() {
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error for this field as user types
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
   };
 
   const handleNext = () => {
+    // Validate current step
+    const validate = VALIDATORS[currentStepKey];
+    if (validate) {
+      const stepErrors = validate(formData);
+      if (Object.keys(stepErrors).length > 0) {
+        setErrors(stepErrors);
+        return;
+      }
+    }
+    setErrors({});
+
     if (isLastStep) {
-      // Final submission - navigate to dashboard
       navigate('/dashboard');
       return;
     }
@@ -420,6 +519,7 @@ export default function SignUpPage() {
 
   const handleBack = () => {
     if (stepIndex > 0) {
+      setErrors({});
       setStepIndex((i) => i - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -432,22 +532,23 @@ export default function SignUpPage() {
   const renderStep = () => {
     switch (currentStepKey) {
       case 'personal':
-        return <StepPersonalInfo data={formData} onChange={handleChange} />;
+        return <StepPersonalInfo data={formData} onChange={handleChange} errors={errors} />;
       case 'address':
-        return <StepAddress data={formData} onChange={handleChange} />;
+        return <StepAddress data={formData} onChange={handleChange} errors={errors} />;
       case 'coverage':
-        return <StepCoverage data={formData} onChange={handleChange} />;
+        return <StepCoverage data={formData} onChange={handleChange} errors={errors} />;
       case 'carDetails':
         return (
           <StepCarDetails
             data={formData}
             onChange={handleChange}
+            errors={errors}
             showWarning={showWarning}
             onDismissWarning={() => setShowWarning(false)}
           />
         );
       case 'homeDetails':
-        return <StepHomeDetails data={formData} onChange={handleChange} />;
+        return <StepHomeDetails data={formData} onChange={handleChange} errors={errors} />;
       default:
         return null;
     }
