@@ -71,6 +71,9 @@ export default function Layout({ children }) {
                   <HeaderMenuItem element={Link} to="/business/dashboard">
                     Overview
                   </HeaderMenuItem>
+                  <HeaderMenuItem element={Link} to="/business/network">
+                    Network Dashboard
+                  </HeaderMenuItem>
                   <HeaderMenuItem element={Link} to="/financial-dashboards">
                     Financial Dashboards
                   </HeaderMenuItem>
@@ -139,6 +142,13 @@ export default function Layout({ children }) {
                         onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
                       >
                         Overview
+                      </SideNavMenuItem>
+                      <SideNavMenuItem
+                        element={Link}
+                        to="/business/network"
+                        onClick={isSideNavExpanded ? onClickSideNavExpand : undefined}
+                      >
+                        Network Dashboard
                       </SideNavMenuItem>
                       <SideNavMenuItem
                         element={Link}
