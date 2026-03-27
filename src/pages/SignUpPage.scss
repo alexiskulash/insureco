@@ -1,0 +1,326 @@
+@use '../styles/tokens' as *;
+
+// ─── Page Container ───────────────────────────────────────────────────────────
+
+.signup-page {
+  min-height: 100vh;
+  background: var(--background-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-05) var(--spacing-05) var(--spacing-09);
+
+  @media (min-width: 672px) {
+    padding: var(--spacing-07) var(--spacing-07) var(--spacing-10);
+  }
+}
+
+// ─── Header Banner ────────────────────────────────────────────────────────────
+
+.signup-page__header {
+  width: 100%;
+  max-width: 703px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #a2191f 70.71%, #da1e28 0%);
+  box-shadow: 0 4px 12px 0 rgba(218, 30, 40, 0.15);
+  padding: var(--spacing-07) var(--spacing-05);
+  margin-bottom: var(--spacing-05);
+  text-align: center;
+
+  @media (min-width: 672px) {
+    padding: 31px var(--spacing-09) 32px;
+    margin-bottom: var(--spacing-07);
+  }
+}
+
+.signup-page__header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.signup-page__title {
+  color: #fff;
+  font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0;
+
+  @media (min-width: 672px) {
+    font-size: 28px;
+  }
+}
+
+.signup-page__subtitle {
+  color: #fff;
+  font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  opacity: 0.95;
+
+  @media (min-width: 672px) {
+    font-size: 16px;
+  }
+}
+
+// ─── Progress Indicator ───────────────────────────────────────────────────────
+
+.signup-page__progress {
+  width: 100%;
+  max-width: 703px;
+  background: var(--background-secondary);
+  border-top: 1px solid var(--interactive-primary);
+  border-radius: 4px;
+  padding: var(--spacing-05) var(--spacing-04);
+  margin-bottom: var(--spacing-05);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 672px) {
+    padding: 18px var(--spacing-05);
+    margin-bottom: var(--spacing-07);
+  }
+}
+
+// ─── Form Card ────────────────────────────────────────────────────────────────
+
+.signup-page__card {
+  width: 100%;
+  max-width: 703px;
+  background: var(--background-secondary);
+  border-top: 5px solid var(--interactive-primary);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-06) var(--spacing-05) var(--spacing-06);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-07);
+
+  @media (min-width: 672px) {
+    padding: var(--spacing-07) var(--spacing-06);
+  }
+}
+
+// ─── Step Content ─────────────────────────────────────────────────────────────
+
+.signup-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-05);
+}
+
+.signup-step__notification {
+  // InlineNotification wrapper - no custom colors
+  .cds--inline-notification {
+    max-width: 100%;
+  }
+}
+
+.signup-step__header {
+  padding-bottom: var(--spacing-04);
+  border-bottom: 1px solid var(--interactive-primary);
+}
+
+.signup-step__title {
+  font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin: 0;
+
+  @media (min-width: 672px) {
+    font-size: 24px;
+  }
+}
+
+.signup-step__description {
+  font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.signup-step__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-06);
+
+  // Ensure all form fields fill the width
+  .cds--text-input-wrapper,
+  .cds--number,
+  .cds--select {
+    width: 100%;
+  }
+}
+
+// ─── Coverage Tiles ───────────────────────────────────────────────────────────
+
+.signup-step__tiles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-04);
+}
+
+.coverage-tile {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: var(--spacing-05);
+  background: var(--background-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  min-height: 80px;
+
+  &:hover {
+    border-color: var(--interactive-primary);
+    box-shadow: 0 2px 6px rgba(218, 30, 40, 0.1);
+  }
+
+  &:focus {
+    outline: 2px solid var(--interactive-primary);
+    outline-offset: -2px;
+  }
+
+  &--selected {
+    border-color: var(--interactive-primary);
+    border-width: 2px;
+    box-shadow: 0 2px 6px rgba(218, 30, 40, 0.15);
+
+    .coverage-tile__icons {
+      color: var(--interactive-primary);
+    }
+  }
+}
+
+.coverage-tile__icons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-02);
+  flex-shrink: 0;
+  color: var(--text-primary);
+}
+
+.coverage-tile__content {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  flex: 1;
+  min-width: 0;
+}
+
+.coverage-tile__title {
+  font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-primary);
+
+  @media (min-width: 672px) {
+    font-size: 20px;
+  }
+}
+
+.coverage-tile__description {
+  font-family: 'Inter', -apple-system, Roboto, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  color: var(--text-primary);
+}
+
+// ─── Action Buttons ───────────────────────────────────────────────────────────
+
+.signup-page__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-04);
+  padding-top: var(--spacing-06);
+  border-top: 1px solid var(--interactive-primary);
+  flex-wrap: wrap;
+
+  @media (max-width: 671px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    .cds--btn {
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+.signup-page__nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-04);
+
+  @media (max-width: 671px) {
+    flex-direction: column;
+    width: 100%;
+
+    .cds--btn {
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// ─── Form Field Theme Overrides ───────────────────────────────────────────────
+// Ensure fields use proper theme-aware colors
+
+.signup-page {
+  // Text inputs
+  .cds--text-input {
+    background-color: var(--field-background) !important;
+    color: var(--field-text) !important;
+    border-bottom-color: var(--border-strong) !important;
+
+    &::placeholder {
+      color: var(--field-placeholder) !important;
+    }
+  }
+
+  // Labels
+  .cds--label {
+    color: var(--text-primary) !important;
+  }
+
+  // Helper text
+  .cds--form__helper-text {
+    color: var(--text-helper) !important;
+  }
+
+  // Select
+  .cds--select-input {
+    background-color: var(--field-background) !important;
+    color: var(--field-text) !important;
+    border-bottom-color: var(--border-strong) !important;
+  }
+
+  // Number input
+  .cds--number input[type='number'] {
+    background-color: var(--field-background) !important;
+    color: var(--field-text) !important;
+    border-bottom-color: var(--border-strong) !important;
+  }
+
+  .cds--number__control-btn {
+    background-color: var(--field-background) !important;
+
+    svg {
+      fill: var(--text-primary) !important;
+    }
+  }
+}
