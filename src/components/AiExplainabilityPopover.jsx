@@ -23,6 +23,9 @@ import './AiExplainabilityPopover.scss';
  * - onViewDetails {Function}  Callback for the "View details" button
  * - caretOffset  {'left'|'center'|'right'}  Horizontal caret position
  */
+const POPOVER_ID_PREFIX = 'ai-popover';
+let popoverCounter = 0;
+
 export function AiExplainabilityPopover({
   title = 'Name of feature',
   description = 'High level 1-2 sentence description of how the AI is being used in the UI.',
@@ -41,9 +44,19 @@ export function AiExplainabilityPopover({
   trainingDataSet = { name: 'IBM Security data piles', url: '#' },
   onViewDetails,
   caretOffset = 'right',
+  id,
 }) {
+  const instanceId = id || `${POPOVER_ID_PREFIX}-${++popoverCounter}`;
+  const titleId = `${instanceId}-title`;
+  const descId = `${instanceId}-desc`;
+
   return (
-    <div className="ai-popover">
+    <div
+      className="ai-popover"
+      role="dialog"
+      aria-labelledby={titleId}
+      aria-describedby={descId}
+    >
       {/* Top caret / pointer */}
       <div className={`ai-popover__caret-row ai-popover__caret-row--${caretOffset}`}>
         <span className="ai-popover__caret" />
@@ -60,15 +73,15 @@ export function AiExplainabilityPopover({
             {/* Section 1 – Header */}
             <section className="ai-popover__section">
               <span className="ai-popover__eyebrow">AI explained</span>
-              <h2 className="ai-popover__title">{title}</h2>
-              <p className="ai-popover__description">{description}</p>
+              <h2 className="ai-popover__title" id={titleId}>{title}</h2>
+              <p className="ai-popover__description" id={descId}>{description}</p>
             </section>
 
             {/* Section 2 – How it works + Data types */}
             <section className="ai-popover__section ai-popover__section--divided">
               <div className="ai-popover__subsection">
                 <p className="ai-popover__section-label">How it works</p>
-                <ol className="ai-popover__ordered-list">
+                <ol className="ai-popover__ordered-list" role="list">
                   {howItWorks.map((item, i) => (
                     <li key={i} className="ai-popover__list-item">
                       <span className="ai-popover__list-marker">{i + 1}.</span>
@@ -82,10 +95,10 @@ export function AiExplainabilityPopover({
 
               <div className="ai-popover__subsection">
                 <p className="ai-popover__section-label">Data types used</p>
-                <ul className="ai-popover__dash-list">
+                <ul className="ai-popover__dash-list" role="list">
                   {dataTypes.map((item, i) => (
                     <li key={i} className="ai-popover__list-item">
-                      <span className="ai-popover__list-marker">–</span>
+                      <span className="ai-popover__list-marker" aria-hidden="true">–</span>
                       <span className="ai-popover__list-text">
                         <strong>{item.name}</strong> {item.description}
                       </span>
@@ -107,6 +120,7 @@ export function AiExplainabilityPopover({
                   rel="noopener noreferrer"
                 >
                   {aiModel.name}
+                  <span className="ai-popover__sr-only">(opens in a new tab)</span>
                 </Link>
               </div>
 
@@ -128,6 +142,7 @@ export function AiExplainabilityPopover({
                   rel="noopener noreferrer"
                 >
                   {trainingDataSet.name}
+                  <span className="ai-popover__sr-only">(opens in a new tab)</span>
                 </Link>
               </div>
             </section>
@@ -143,6 +158,7 @@ export function AiExplainabilityPopover({
               kind="primary"
               className="ai-popover__view-btn"
               onClick={onViewDetails}
+              aria-label={`View details about ${title}`}
             >
               View details
             </Button>
@@ -166,7 +182,7 @@ export function AiCallout({
   message = 'AI was used to generate this response',
 }) {
   return (
-    <div className="ai-callout">
+    <div className="ai-callout" role="status">
       <div className="ai-callout__aura" aria-hidden="true" />
       <p className="ai-callout__message">{message}</p>
     </div>
