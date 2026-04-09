@@ -1,0 +1,404 @@
+@use '../styles/tokens' as *;
+
+// ============================================================
+// AIExplainer — IBM Carbon for AI explainability popover
+//
+// Layering stack (per css-masks-gradients-zindex rule):
+//   z-0  : solid background
+//   z-1  : AI aura gradient (pointer-events: none)
+//   z-2  : scrollable content
+//   z-3  : gradient feather overlay (pointer-events: none)
+//   z-4  : actions footer
+//   z-5  : gradient border via CSS mask (pointer-events: none)
+//   z-10 : caret (outside overflow shell)
+// ============================================================
+
+// AI-specific IBM color tokens (not theme-dependent — part of AI visual language)
+$ai-border-color: #78a9ff;
+$ai-border-gradient-top: rgba(166, 200, 255, 0.64);
+$ai-link-color: #0f62fe;
+$ai-link-hover: #0043ce;
+$ai-button-bg: #0f62fe;
+$ai-button-hover: #0043ce;
+$ai-aura-color: rgba(69, 137, 255, 0.1);
+$ai-aura-shadow: rgba(15, 98, 254, 0.1);
+
+$popover-width: 320px;
+$popover-max-height: 740px;
+$footer-height: 48px;
+$caret-height: 8px;
+$border-radius: 8px;
+
+.ai-explainer {
+  position: relative;
+  width: $popover-width;
+  font-family: 'IBM Plex Sans', -apple-system, Roboto, Helvetica, sans-serif;
+
+  // ============================================================
+  // Primary variant
+  // ============================================================
+  &--primary {
+    padding-top: $caret-height; // Reserve space above shell for the caret
+  }
+
+  // ============================================================
+  // Caret — lives outside .ai-explainer__shell (which has overflow:hidden)
+  // following the "Elements Breaking Out of Containers" pattern
+  // ============================================================
+  &__caret {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: $caret-height;
+    z-index: 10;
+  }
+
+  &__caret-fill {
+    position: absolute;
+    top: 1px; // Overlaps the border stroke to hide the gap at the joint
+    left: 50%;
+    transform: translateX(-50%);
+
+    path {
+      fill: var(--background-primary);
+    }
+  }
+
+  &__caret-stroke {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  // ============================================================
+  // Shell — contains all layers; overflow hidden keeps backgrounds contained
+  // ============================================================
+  &__shell {
+    position: relative;
+    border-radius: $border-radius;
+    overflow: hidden;
+    max-height: $popover-max-height;
+    display: flex;
+    flex-direction: column;
+  }
+
+  // ============================================================
+  // Background layers
+  // ============================================================
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--background-primary);
+    border-radius: $border-radius;
+    pointer-events: none;
+  }
+
+  &__aura {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, $ai-aura-color 100%);
+    box-shadow: 0 -80px 70px -65px $ai-aura-shadow inset;
+  }
+
+  // ============================================================
+  // Scrollable content area
+  // ============================================================
+  &__scroll-area {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 24px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-subtle) transparent;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: 2px;
+    }
+  }
+
+  &__scroll-spacer {
+    height: 24px;
+  }
+
+  // ============================================================
+  // Content sections
+  // ============================================================
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 24px;
+
+    &--header {
+      gap: 8px;
+    }
+
+    &--divided {
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+    }
+  }
+
+  &__subsection {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  // ============================================================
+  // Typography
+  // ============================================================
+  &__eyebrow {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 36px;
+  }
+
+  &__description {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+  }
+
+  &__section-label {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+  }
+
+  &__body-text {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+  }
+
+  // ============================================================
+  // Lists
+  // ============================================================
+  &__ordered-list,
+  &__dash-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  &__list-marker {
+    flex-shrink: 0;
+    min-width: 13px;
+    color: var(--text-primary);
+  }
+
+  // ============================================================
+  // Links
+  // ============================================================
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $ai-link-color;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+    text-decoration: none;
+
+    svg {
+      flex-shrink: 0;
+      color: $ai-link-color;
+    }
+
+    &:hover {
+      color: $ai-link-hover;
+      text-decoration: underline;
+
+      svg {
+        color: $ai-link-hover;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid $ai-link-color;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  // ============================================================
+  // Gradient feather — softens content before the footer
+  // ============================================================
+  &__feather {
+    position: absolute;
+    bottom: $footer-height;
+    left: 0;
+    right: 0;
+    height: 32px;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, var(--background-primary) 100%);
+    border-radius: $border-radius $border-radius 0 0;
+  }
+
+  // ============================================================
+  // Actions footer
+  // ============================================================
+  &__footer {
+    position: relative;
+    z-index: 4;
+    height: $footer-height;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    background: var(--background-primary);
+  }
+
+  &__view-btn {
+    height: $footer-height;
+    padding: 0 64px 0 16px;
+    background: $ai-button-bg;
+    color: #fff;
+    border: none;
+    border-radius: 0 0 $border-radius 0;
+    font-family: 'IBM Plex Sans', -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.16px;
+    cursor: pointer;
+    transition: background 70ms ease;
+
+    &:hover {
+      background: $ai-button-hover;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $ai-button-bg;
+      outline-offset: -2px;
+    }
+  }
+
+  // ============================================================
+  // Gradient border — uses CSS mask to show only the border area.
+  // Technique: two mask layers subtracted via XOR/exclude so only
+  // the 1px padding (the border) remains visible.
+  // ============================================================
+  &__gradient-border {
+    position: absolute;
+    inset: 0;
+    border-radius: $border-radius;
+    padding: 1px;
+    background: linear-gradient(0deg, $ai-border-color 0%, $ai-border-gradient-top 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  // ============================================================
+  // Secondary variant — compact callout banner
+  // ============================================================
+  &--secondary {
+    position: relative;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    .ai-explainer__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: var(--background-primary);
+      pointer-events: none;
+    }
+
+    .ai-explainer__aura {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent 0%, $ai-aura-color 100%);
+    }
+  }
+
+  &__callout-content {
+    position: relative;
+    z-index: 2;
+    padding: 32px 24px;
+  }
+
+  &__callout-message {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.16px;
+  }
+
+  // Solid border for the secondary variant
+  &__simple-border {
+    position: absolute;
+    inset: 0;
+    border-radius: $border-radius;
+    border: 1px solid $ai-border-color;
+    pointer-events: none;
+    z-index: 3;
+  }
+}
