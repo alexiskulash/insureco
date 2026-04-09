@@ -1,0 +1,171 @@
+---
+description: CSS Masks, Gradients & Z-Index Handling
+globs: *.{scss,css,jsx,tsx}
+alwaysApply: false
+---
+
+# CSS Masks, Gradients & Z-Index Handling
+
+## Overview
+
+When building complex UI components that require gradient borders, overlapping backgrounds (e.g., auras or glows), or elements that break out of containers (e.g., popover carets), it is very easy to accidentally hide content due to improper `z-index` stacking, `overflow` clipping, or solid backgrounds masking child elements.
+
+This document establishes the patterns for correctly implementing these advanced CSS styling techniques.
+
+## 1. Gradient Borders
+
+**Problem:** Using a `padding-box` / `border-box` gradient trick with a transparent border can accidentally result in a solid background fill that covers the component's actual content if not set up correctly. This happens because the `border-box` gradient often paints underneath the entire element, and if the `padding-box` background isn't fully opaque or the element isn't layered properly, it masks the content.
+
+**Solution:** Use the `mask` (and `-webkit-mask`) property to create a transparent cutout for the content area, leaving only the border visible.
+
+### ✅ DO: Use CSS Masks for Gradient Borders
+
+
+.my-component__gradient-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  padding: 1px; // This determines the border thickness
+  
+  // The actual gradient you want for the border
+  background: linear-gradient(0deg, var(--border-light) 0%, var(--border-dark) 100%);
+  
+  // The mask creates a cutout. It draws two layers:
+  // 1. The content-box (the inside area)
+  // 2. The whole element
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  
+  // 'xor' (exclusive OR) subtracts the content-box from the whole element,
+  // leaving only the padding area visible (which becomes our border)
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  
+  // Ensure the border doesn't block clicks
+  pointer-events: none;
+  z-index: 10;
+}
+```
+
+### ❌ DON'T: Use solid backgrounds to fake gradient borders when overlaying
+
+```scss
+// WRONG: This pattern often breaks when layered as an absolute overlay
+// because the var(--background-primary) fill can cover underlying content
+// depending on stacking context.
+.my-component__gradient-border {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--background-primary), var(--background-primary)) padding-box,
+              linear-gradient(0deg, blue, red) border-box;
+}
+```
+
+## 2. Z-Index and Layering
+
+**Problem:** Absolute positioning is often used for background layers (auras, glows, borders). If these layers are given a `z-index` higher than the content, the content becomes unclickable or invisible.
+
+**Solution:** Always establish a clear, intentional `z-index` stack within a `position: relative` container.
+
+### Stacking Convention
+
+When building a component with multiple background layers, use the following `z-index` structure:
+
+1. **Container:** `position: relative; z-index: 0;` (establishes stacking context)
+2. **Solid Background:** `position: absolute; z-index: 0;`
+3. **Glows/Auras:** `position: absolute; z-index: 1; pointer-events: none;`
+4. **Content Area:** `position: relative; z-index: 2;` (must be relative to sit above absolute backgrounds)
+5. **Foreground Overlays (Gradients/Feathers):** `position: absolute; z-index: 3; pointer-events: none;`
+6. **Borders:** `position: absolute; z-index: 4; pointer-events: none;`
+7. **Breakout Elements (Carets, Tooltips):** `position: absolute; z-index: 5;`
+
+### Example
+
+```scss
+.complex-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden; // Keeps backgrounds contained
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--background-primary);
+  }
+
+  &__aura {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none; // CRITICAL: don't block clicks
+    background: radial-gradient(circle at top right, rgba(0,0,255,0.1), transparent);
+  }
+
+  &__content {
+    // CRITICAL: Must have position relative to sit above absolute siblings
+    position: relative; 
+    z-index: 2;
+    padding: 24px;
+  }
+}
+```
+
+## 3. Elements Breaking Out of Containers (Carets)
+
+**Problem:** A component has `overflow: hidden` to contain background layers or scrollable content, but it also has a decorative element (like a popover caret/arrow) that needs to sit *outside* the boundary. The caret gets clipped.
+
+**Solution:** Separate the caret from the `overflow: hidden` shell. Put them both in a parent wrapper.
+
+### ✅ DO: Wrap the shell and caret separately
+
+```jsx
+// Correct Component Structure
+<div className="popover-wrapper">
+  {/* Caret sits outside the overflow shell */}
+  <div className="popover-caret">
+    <svg>...</svg>
+  </div>
+  
+  {/* Shell contains backgrounds and overflow */}
+  <div className="popover-shell" style={{ overflow: 'hidden' }}>
+    <div className="backgrounds" />
+    <div className="content" />
+  </div>
+</div>
+```
+
+```scss
+.popover-wrapper {
+  position: relative;
+}
+
+.popover-caret {
+  position: absolute;
+  top: -8px; // Moves outside the wrapper
+  z-index: 5;
+}
+
+.popover-shell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+```
+
+### ❌ DON'T: Put the caret inside the overflow container
+
+```jsx
+// WRONG: The caret will be clipped by overflow: hidden
+<div className="popover-shell" style={{ overflow: 'hidden' }}>
+  <div className="popover-caret" style={{ top: '-8px' }}>
+    <svg>...</svg>
+  </div>
+  <div className="content" />
+</div>
+```
+
+## Summary Checklist
+
+1. **Gradient Borders:** Use `-webkit-mask` to cut out the inside, rather than relying on background fills.
+2. **Pointer Events:** Ensure all decorative background and foreground overlays have `pointer-events: none`.
+3. **Content Z-Index:** Always give your main content wrapper `position: relative` and a higher `z-index` than your background layers.
+4. **Overflow Clipping:** Never put elements that need to break out of a container (like carets or badges) inside a container with `overflow: hidden` or `overflow-y: auto`. Create a parent wrapper instead.
