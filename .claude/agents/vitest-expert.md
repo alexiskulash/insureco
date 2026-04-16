@@ -23,23 +23,28 @@ You are a Vitest and React Testing Library expert specializing in unit testing f
 6. Each test should be independent and deterministic
 
 ## Test File Locations
-Place test files next to the file they test:
-- `src/utils/businessHelpers.test.js`
-- `src/contexts/ThemeContext.test.jsx`
-- `src/pages/SignUpPage.test.jsx`
-- `src/components/MyComponent.test.jsx`
+All tests live under `src/__tests__/`, mirroring the source structure:
+- `src/__tests__/setup.js` — global test setup (imports jest-dom matchers)
+- `src/__tests__/utils/businessHelpers.test.js`
+- `src/__tests__/contexts/ThemeContext.test.jsx`
+- `src/__tests__/components/ThemeToggle.test.jsx`
+- `src/__tests__/components/StepBreadcrumb.test.jsx`
+- `src/__tests__/pages/SignUpPage.test.jsx`
+
+Do NOT place test files co-located next to source files. Always use `src/__tests__/`.
 
 ## Running Tests
 - `npm test` — run all tests in watch mode
+- `npm run test:run` — single run (no watch)
 - `npm run test:ui` — visual Vitest UI in browser
-- `npm run test:coverage` — coverage report
+- `npm run test:coverage` — coverage report with v8 provider
 
 ## Common Patterns
 
 ### Utility function test
 ```js
 import { describe, it, expect } from 'vitest';
-import { formatCurrency } from './businessHelpers';
+import { formatCurrency } from '../../utils/businessHelpers';
 
 describe('formatCurrency', () => {
   it('formats positive numbers correctly', () => {
@@ -58,7 +63,7 @@ describe('formatCurrency', () => {
 ```jsx
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
+import { ThemeProvider, useTheme } from '../../contexts/ThemeContext';
 
 function TestComponent() {
   const { theme, toggleTheme } = useTheme();
@@ -93,7 +98,7 @@ vi.mock('../someModule', () => ({
 ## ThemeContext Wrapping
 When testing any component that uses `useTheme`, wrap it in `ThemeProvider`:
 ```jsx
-import { ThemeProvider } from '../contexts/ThemeContext';
+import { ThemeProvider } from '../../contexts/ThemeContext';
 
 render(
   <ThemeProvider>
