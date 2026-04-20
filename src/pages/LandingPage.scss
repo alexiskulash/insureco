@@ -676,53 +676,53 @@
 
 /* ── Footer ──────────────────────────────────────────────────── */
 .ln-footer {
-  padding: 64px 64px 32px;
-  background: var(--color-grey-100);
-  color: var(--color-grey-30);
+  padding: 48px 64px 24px;
+  background: #161616;
+  color: #8d8d8d;
 
   &__grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: 48px;
-    padding-bottom: 48px;
-    border-bottom: 1px solid var(--color-grey-80);
+    gap: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #393939;
   }
 
   &__brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     color: #fff;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 
     svg { color: var(--interactive-primary); }
   }
 
   &__tag {
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--color-grey-40);
-    max-width: 36ch;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #6f6f6f;
+    max-width: 32ch;
     margin: 0;
   }
 
   &__col {
     h5 {
       color: #fff;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
 
     a {
       display: block;
-      color: var(--color-grey-30);
-      font-size: 14px;
-      padding: 6px 0;
+      color: #8d8d8d;
+      font-size: 13px;
+      padding: 3px 0;
       cursor: pointer;
       text-decoration: none;
       transition: color var(--motion-hover);
@@ -732,11 +732,11 @@
   }
 
   &__bottom {
-    padding-top: 24px;
+    padding-top: 16px;
     display: flex;
     justify-content: space-between;
-    font-size: 13px;
-    color: var(--color-grey-50);
+    font-size: 12px;
+    color: #525252;
     flex-wrap: wrap;
     gap: 8px;
   }
