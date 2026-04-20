@@ -89,12 +89,12 @@ function Hero({ onNav }) {
           <button className="ln-btn ln-btn--tertiary">Talk to sales</button>
         </div>
         <div className="ln-trust">
-          <span>Trusted by 3,400+ companies</span>
+          <div className="ln-trust__label">Trusted by 3,400+</div>
           <div className="ln-trust__logos">
-            <span>Northbound</span>
-            <span>Arcadia</span>
-            <span>Veridian</span>
-            <span>Helm &amp; Co.</span>
+            <span className="ln-trust__logo">Northbound</span>
+            <span className="ln-trust__logo">Arcadia</span>
+            <span className="ln-trust__logo">Veridian</span>
+            <span className="ln-trust__logo">Helm &amp; Co.</span>
           </div>
         </div>
       </div>
