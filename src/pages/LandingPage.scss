@@ -295,7 +295,7 @@
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 28px 64px;
+  padding: 48px 64px;
   border-bottom: 1px solid var(--border-subtle);
   background: var(--background-secondary);
 
@@ -342,34 +342,34 @@
     /* Typographic wordmark variants */
     &--caps-serif {
       font-family: var(--font-family-serif);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
     &--title-sans {
       font-family: var(--font-family-sans);
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       letter-spacing: -0.01em;
     }
     &--caps-sans {
       font-family: var(--font-family-sans);
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
     &--light-serif {
       font-family: var(--font-family-serif);
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 400;
       font-style: italic;
       letter-spacing: 0.01em;
     }
     &--bold-sans {
       font-family: var(--font-family-sans);
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
