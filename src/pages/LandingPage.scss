@@ -783,13 +783,7 @@
   .ln-section, .ln-quote, .ln-cta-band { padding-left: 32px; padding-right: 32px; }
 
   .ln-coverage-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ln-coverage {
-    border-right: 0;
-    border-bottom: 1px solid var(--border-subtle);
-    &:last-child { border-bottom: 0; }
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .ln-how { grid-template-columns: repeat(2, 1fr); }
@@ -826,6 +820,13 @@
   .ln-how { grid-template-columns: 1fr; }
   .ln-footer__grid { grid-template-columns: 1fr; }
   .ln-hero h1 { font-size: clamp(32px, 8vw, 48px); }
+
+  .ln-coverage-grid { grid-template-columns: 1fr; }
+  .ln-coverage {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-subtle);
+    &:last-child { border-bottom: 0; }
+  }
 
   .ln-trust-band {
     flex-wrap: wrap;
