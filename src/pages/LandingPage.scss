@@ -698,12 +698,21 @@
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
-@media (max-width: 1100px) {
+
+/* Hero collapses to single-column only on mobile */
+@media (max-width: 768px) {
   .ln-hero {
     grid-template-columns: 1fr;
     padding: 64px 32px;
 
     &__visual { max-width: 480px; }
+  }
+}
+
+@media (max-width: 1100px) {
+  .ln-hero {
+    gap: 32px;
+    padding: 72px 40px 96px;
   }
 
   .ln-statband { grid-template-columns: repeat(2, 1fr); }
