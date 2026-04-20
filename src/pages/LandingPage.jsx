@@ -88,15 +88,6 @@ function Hero({ onNav }) {
           </button>
           <button className="ln-btn ln-btn--tertiary">Talk to sales</button>
         </div>
-        <div className="ln-trust">
-          <div className="ln-trust__label">Trusted by 3,400+</div>
-          <div className="ln-trust__logos">
-            <span className="ln-trust__logo">Northbound</span>
-            <span className="ln-trust__logo">Arcadia</span>
-            <span className="ln-trust__logo">Veridian</span>
-            <span className="ln-trust__logo">Helm &amp; Co.</span>
-          </div>
-        </div>
       </div>
 
       <div className="ln-hero__visual" aria-hidden="true">
@@ -127,6 +118,31 @@ function Hero({ onNav }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ── Trust Band ─────────────────────────────────────────────── */
+function TrustBand() {
+  const logos = [
+    { name: 'MERIDIAN',    style: 'caps-serif' },
+    { name: 'NorthBridge', style: 'title-sans' },
+    { name: 'AXLE CO',     style: 'caps-sans'  },
+    { name: 'Halcyon',     style: 'light-serif'},
+    { name: 'CargoWright', style: 'bold-sans'  },
+    { name: 'Brick&Mortar',style: 'title-sans' },
+  ];
+  return (
+    <div className="ln-trust-band">
+      <div className="ln-trust-band__label">Trusted by 3,200+<br />operators</div>
+      <div className="ln-trust-band__divider" />
+      <div className="ln-trust-band__logos">
+        {logos.map(l => (
+          <span key={l.name} className={`ln-trust-band__logo ln-trust-band__logo--${l.style}`}>
+            {l.name}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -326,6 +342,7 @@ export default function LandingPage() {
     <div className="ln-page">
       <TopNav onNav={onNav} />
       <Hero onNav={onNav} />
+      <TrustBand />
       <StatBand />
       <CoverageSection onNav={onNav} />
       <HowSection />
