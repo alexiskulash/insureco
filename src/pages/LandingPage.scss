@@ -126,17 +126,20 @@
     display: flex;
     height: 64px;
     margin-left: 48px;
+    align-items: center;
 
     a {
       display: flex;
       align-items: center;
       padding: 0 18px;
+      height: 64px;
       font-size: 14px;
       color: var(--text-primary);
       border-bottom: 3px solid transparent;
       cursor: pointer;
       transition: color var(--motion-hover);
       text-decoration: none;
+      white-space: nowrap;
 
       &:hover { color: var(--interactive-primary); }
       &.on {
@@ -146,6 +149,80 @@
       }
     }
   }
+}
+
+/* ── Nav dropdown items ──────────────────────────────────────── */
+.ln-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &:hover .ln-nav-trigger {
+    color: var(--interactive-primary);
+
+    .ln-nav-trigger__chevron { transform: rotate(180deg); }
+  }
+
+  &:hover .ln-nav-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+.ln-nav-trigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 18px;
+  height: 64px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--motion-hover);
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  user-select: none;
+
+  &__chevron { transition: transform 0.2s ease; }
+}
+
+.ln-nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 190px;
+  background: var(--background-primary);
+  border: 1px solid var(--border-subtle);
+  border-top: 2px solid var(--interactive-primary);
+  box-shadow: var(--shadow-03);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+
+  a {
+    display: block;
+    padding: 11px 20px;
+    height: auto;
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: none;
+    transition: background var(--motion-hover), color var(--motion-hover);
+
+    &:hover {
+      background: var(--background-hover);
+      color: var(--interactive-primary);
+    }
+  }
+}
+
+/* re-open the .ln-topnav block for responsive rules */
+.ln-topnav {
 
   &__right {
     margin-left: auto;

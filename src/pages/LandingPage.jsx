@@ -5,6 +5,7 @@ import {
   Checkmark,
   CheckmarkFilled,
   Building,
+  ChevronDown,
 } from '@carbon/icons-react';
 import { useTheme } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
@@ -38,8 +39,41 @@ function BriefcaseIcon({ size = 48, className = '' }) {
 }
 
 /* ── TopNav ─────────────────────────────────────────────────── */
+const NAV_ITEMS = [
+  { label: 'Overview', action: '/' },
+  {
+    label: 'Coverage',
+    links: [
+      { label: 'Fleet Insurance',     action: '/signup' },
+      { label: 'Property Insurance',  action: '/signup' },
+      { label: 'General Liability',   action: '/signup' },
+      { label: 'Workers Comp',        action: '/signup' },
+    ],
+  },
+  { label: 'Claims' },
+  { label: 'Pricing' },
+  {
+    label: 'Company',
+    links: [
+      { label: 'About',    action: null },
+      { label: 'Careers',  action: null },
+      { label: 'Press',    action: null },
+      { label: 'Contact',  action: null },
+    ],
+  },
+  {
+    label: 'Resources',
+    links: [
+      { label: 'Documentation', action: null },
+      { label: 'API',           action: null },
+      { label: 'Broker portal', action: null },
+      { label: 'Help center',   action: null },
+    ],
+  },
+];
+
 function TopNav({ onNav }) {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
   return (
     <header className="ln-topnav">
       <div className="ln-topnav__brand" onClick={() => onNav('/')}>
@@ -49,11 +83,39 @@ function TopNav({ onNav }) {
       </div>
 
       <nav className="ln-topnav__links" aria-label="Main navigation">
-        <a className="on" onClick={() => onNav('/')}>Overview</a>
-        <a onClick={() => onNav('/signup')}>Coverage</a>
-        <a>Claims</a>
-        <a>Pricing</a>
-        <a>Resources</a>
+        {NAV_ITEMS.map(item =>
+          item.links ? (
+            <div
+              key={item.label}
+              className="ln-nav-item"
+              onMouseEnter={() => setOpenMenu(item.label)}
+              onMouseLeave={() => setOpenMenu(null)}
+            >
+              <a className="ln-nav-trigger">
+                {item.label}
+                <ChevronDown size={12} className="ln-nav-trigger__chevron" />
+              </a>
+              <div className={`ln-nav-dropdown${openMenu === item.label ? ' open' : ''}`}>
+                {item.links.map(sub => (
+                  <a
+                    key={sub.label}
+                    onClick={() => sub.action && onNav(sub.action)}
+                  >
+                    {sub.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a
+              key={item.label}
+              className={item.label === 'Overview' ? 'on' : undefined}
+              onClick={() => item.action && onNav(item.action)}
+            >
+              {item.label}
+            </a>
+          )
+        )}
       </nav>
 
       <div className="ln-topnav__right">
