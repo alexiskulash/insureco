@@ -44,30 +44,30 @@ const NAV_ITEMS = [
   {
     label: 'Coverage',
     links: [
-      { label: 'Fleet Insurance',     action: '/signup' },
-      { label: 'Property Insurance',  action: '/signup' },
-      { label: 'General Liability',   action: '/signup' },
-      { label: 'Workers Comp',        action: '/signup' },
+      { label: 'Fleet Insurance',    action: '/business/fleet' },
+      { label: 'Property Insurance', action: '/business/properties' },
+      { label: 'General Liability',  action: '/signup' },
+      { label: 'Workers Comp',       action: '/signup' },
     ],
   },
-  { label: 'Claims' },
-  { label: 'Pricing' },
+  { label: 'Claims',  action: '/business/claims' },
+  { label: 'Pricing', action: '/signup' },
   {
     label: 'Company',
     links: [
-      { label: 'About',    action: null },
-      { label: 'Careers',  action: null },
-      { label: 'Press',    action: null },
-      { label: 'Contact',  action: null },
+      { label: 'About',   action: '/about' },
+      { label: 'Careers', action: null },
+      { label: 'Press',   action: null },
+      { label: 'Contact', action: null },
     ],
   },
   {
     label: 'Resources',
     links: [
-      { label: 'Documentation', action: null },
-      { label: 'API',           action: null },
-      { label: 'Broker portal', action: null },
-      { label: 'Help center',   action: null },
+      { label: 'Dashboard',            action: '/dashboard' },
+      { label: 'Business dashboard',   action: '/business/dashboard' },
+      { label: 'Financial dashboards', action: '/financial-dashboards' },
+      { label: 'Map view',             action: '/business/map' },
     ],
   },
 ];
@@ -363,10 +363,42 @@ function CTABand({ onNav }) {
 /* ── Footer ─────────────────────────────────────────────────── */
 function Footer({ onNav }) {
   const cols = [
-    { h: 'Coverage',  links: ['Fleet', 'Property', 'Liability', 'Workers Comp'] },
-    { h: 'Company',   links: ['About', 'Careers', 'Press', 'Contact'] },
-    { h: 'Resources', links: ['Documentation', 'API', 'Broker portal', 'Help center'] },
-    { h: 'Legal',     links: ['Privacy', 'Terms', 'Licenses', 'Security'] },
+    {
+      h: 'Coverage',
+      links: [
+        { label: 'Fleet Insurance',    action: '/business/fleet' },
+        { label: 'Property Insurance', action: '/business/properties' },
+        { label: 'General Liability',  action: '/signup' },
+        { label: 'Workers Comp',       action: '/signup' },
+      ],
+    },
+    {
+      h: 'Company',
+      links: [
+        { label: 'About',    action: '/about' },
+        { label: 'Careers',  action: null },
+        { label: 'Press',    action: null },
+        { label: 'Contact',  action: null },
+      ],
+    },
+    {
+      h: 'Resources',
+      links: [
+        { label: 'Dashboard',            action: '/dashboard' },
+        { label: 'Business dashboard',   action: '/business/dashboard' },
+        { label: 'Financial dashboards', action: '/financial-dashboards' },
+        { label: 'Map view',             action: '/business/map' },
+      ],
+    },
+    {
+      h: 'Legal',
+      links: [
+        { label: 'Privacy',   action: null },
+        { label: 'Terms',     action: null },
+        { label: 'Licenses',  action: null },
+        { label: 'Security',  action: null },
+      ],
+    },
   ];
   return (
     <footer className="ln-footer">
@@ -384,7 +416,15 @@ function Footer({ onNav }) {
           {cols.map(col => (
             <div key={col.h} className="ln-footer__col">
               <h5>{col.h}</h5>
-              {col.links.map(l => <a key={l}>{l}</a>)}
+              {col.links.map(l => (
+                <a
+                  key={l.label}
+                  onClick={() => l.action && onNav(l.action)}
+                  className={l.action ? '' : 'ln-footer__link--placeholder'}
+                >
+                  {l.label}
+                </a>
+              ))}
             </div>
           ))}
         </div>

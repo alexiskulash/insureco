@@ -817,6 +817,12 @@
       transition: color var(--motion-hover);
 
       &:hover { color: #fff; }
+
+      &.ln-footer__link--placeholder {
+        cursor: default;
+        opacity: 0.45;
+        &:hover { color: #8d8d8d; }
+      }
     }
   }
 
