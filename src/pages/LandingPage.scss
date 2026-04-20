@@ -293,38 +293,34 @@
 /* ── Trust Band (full-width) ─────────────────────────────────── */
 .ln-trust-band {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0;
-  padding: 48px 64px;
+  gap: 32px;
+  padding: 56px 64px;
   border-bottom: 1px solid var(--border-subtle);
   background: var(--background-secondary);
 
   &__label {
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     line-height: 1.5;
-    white-space: nowrap;
-    flex-shrink: 0;
-    min-width: 120px;
+    text-align: center;
   }
 
   &__divider {
-    width: 1px;
-    height: 36px;
-    background: var(--border-subtle);
-    margin: 0 40px;
-    flex-shrink: 0;
+    display: none;
   }
 
   &__logos {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0;
-    flex: 1;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   &__logo {

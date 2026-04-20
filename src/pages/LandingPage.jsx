@@ -133,7 +133,7 @@ function TrustBand() {
   ];
   return (
     <div className="ln-trust-band">
-      <div className="ln-trust-band__label">Trusted by 3,200+<br />operators</div>
+      <div className="ln-trust-band__label">Trusted by 3,200+ operators</div>
       <div className="ln-trust-band__divider" />
       <div className="ln-trust-band__logos">
         {logos.map(l => (
