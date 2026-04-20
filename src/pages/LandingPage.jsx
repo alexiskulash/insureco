@@ -309,7 +309,7 @@ function Footer({ onNav }) {
   return (
     <footer className="ln-footer">
       <div className="ln-footer__grid">
-        <div>
+        <div className="ln-footer__left">
           <div className="ln-footer__brand">
             <ShieldIcon size={22} /> InsureCo
           </div>
@@ -318,12 +318,14 @@ function Footer({ onNav }) {
             Business &amp; Specialty Lines.
           </p>
         </div>
-        {cols.map(col => (
-          <div key={col.h} className="ln-footer__col">
-            <h5>{col.h}</h5>
-            {col.links.map(l => <a key={l}>{l}</a>)}
-          </div>
-        ))}
+        <div className="ln-footer__cols">
+          {cols.map(col => (
+            <div key={col.h} className="ln-footer__col">
+              <h5>{col.h}</h5>
+              {col.links.map(l => <a key={l}>{l}</a>)}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="ln-footer__bottom">
         <span>© 2026 InsureCo, Inc. NAIC 00421. All rights reserved.</span>

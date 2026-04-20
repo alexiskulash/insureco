@@ -681,11 +681,23 @@
   color: #8d8d8d;
 
   &__grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: 32px;
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
     padding-bottom: 32px;
     border-bottom: 1px solid #393939;
+  }
+
+  &__left {
+    flex-shrink: 0;
+    width: 240px;
+  }
+
+  &__cols {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
   }
 
   &__brand {
@@ -780,7 +792,9 @@
     padding-left: 32px;
     padding-right: 32px;
 
-    &__grid { grid-template-columns: 1fr 1fr; }
+    &__grid { flex-direction: column; gap: 32px; }
+    &__left { width: 100%; }
+    &__cols { grid-template-columns: repeat(4, 1fr); }
   }
 
   .ln-cta-band {
@@ -806,7 +820,7 @@
 @media (max-width: 600px) {
   .ln-statband { grid-template-columns: 1fr 1fr; }
   .ln-how { grid-template-columns: 1fr; }
-  .ln-footer__grid { grid-template-columns: 1fr; }
+  .ln-footer__cols { grid-template-columns: 1fr 1fr; }
   .ln-hero h1 { font-size: clamp(32px, 8vw, 48px); }
 
   .ln-coverage-grid { grid-template-columns: 1fr; }
