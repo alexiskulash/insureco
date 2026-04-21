@@ -106,7 +106,7 @@ export default function FleetPage() {
         </div>
         <div className="fleet-filters-grid">
           <Search
-            size="lg"
+            size="md"
             placeholder="Search by make, model, VIN, plate, or driver…"
             labelText="Search vehicles"
             value={searchTerm}

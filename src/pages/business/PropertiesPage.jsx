@@ -103,7 +103,7 @@ export default function PropertiesPage() {
         </div>
         <div className="prop-filters-grid">
           <Search
-            size="lg"
+            size="md"
             placeholder="Search by name, address, or city…"
             labelText="Search properties"
             value={searchTerm}
