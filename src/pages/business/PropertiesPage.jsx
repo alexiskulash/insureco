@@ -1,242 +1,159 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Grid,
-  Column,
-  Tile,
-  Button,
-  Heading,
-  Search,
-  Dropdown,
-  Tag,
-} from '@carbon/react';
+import { Button, Search, Dropdown, Tag } from '@carbon/react';
 import { Add, Building } from '@carbon/icons-react';
 import PropertyTable from '../../components/business/PropertyTable';
 import { mockProperties } from '../../data/businessMockData';
 import { formatCurrency } from '../../utils/businessHelpers';
 import './PropertiesPage.scss';
 
-/**
- * PropertiesPage - Full properties list with search and filter
- * Displays all commercial properties with filtering capabilities
- */
 export default function PropertiesPage() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
-  const [cityFilter, setCityFilter] = useState('all');
+  const [searchTerm, setSearchTerm]               = useState('');
+  const [statusFilter, setStatusFilter]           = useState('all');
+  const [cityFilter, setCityFilter]               = useState('all');
   const [propertyTypeFilter, setPropertyTypeFilter] = useState('all');
 
-  // Extract unique values for filters
-  const uniqueCities = useMemo(() => {
-    const cities = [...new Set(mockProperties.map(p => p.city))];
-    return cities.sort();
-  }, []);
+  const uniqueCities         = useMemo(() => [...new Set(mockProperties.map(p => p.city))].sort(), []);
+  const uniquePropertyTypes  = useMemo(() => [...new Set(mockProperties.map(p => p.propertyType))].sort(), []);
+  const uniqueStatuses       = useMemo(() => [...new Set(mockProperties.map(p => p.status))].sort(), []);
 
-  const uniquePropertyTypes = useMemo(() => {
-    const types = [...new Set(mockProperties.map(p => p.propertyType))];
-    return types.sort();
-  }, []);
+  const filteredProperties = useMemo(() => mockProperties.filter(p => {
+    const search = searchTerm.toLowerCase();
+    return (
+      (searchTerm === '' ||
+        p.name.toLowerCase().includes(search) ||
+        p.address.toLowerCase().includes(search) ||
+        p.city.toLowerCase().includes(search)) &&
+      (statusFilter       === 'all' || p.status       === statusFilter) &&
+      (cityFilter         === 'all' || p.city         === cityFilter) &&
+      (propertyTypeFilter === 'all' || p.propertyType === propertyTypeFilter)
+    );
+  }), [searchTerm, statusFilter, cityFilter, propertyTypeFilter]);
 
-  const uniqueStatuses = useMemo(() => {
-    const statuses = [...new Set(mockProperties.map(p => p.status))];
-    return statuses.sort();
-  }, []);
+  const totalProperties     = filteredProperties.length;
+  const activeCount         = filteredProperties.filter(p => p.status === 'Active').length;
+  const totalMonthlyPremium = filteredProperties.reduce((s, p) => s + p.monthlyPremium, 0);
+  const totalYearlyPremium  = filteredProperties.reduce((s, p) => s + p.yearlyPremium, 0);
+  const totalClaims         = filteredProperties.reduce((s, p) => s + p.claimsCount, 0);
+  const openClaims          = filteredProperties.reduce((s, p) => s + p.openClaims, 0);
+  const totalCoverage       = filteredProperties.reduce((s, p) => s + p.coverageLimit, 0);
 
-  // Filter properties based on search and filters
-  const filteredProperties = useMemo(() => {
-    return mockProperties.filter(property => {
-      // Search filter
-      const searchMatch = searchTerm === '' || 
-        property.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        property.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        property.city.toLowerCase().includes(searchTerm.toLowerCase());
-
-      // Status filter
-      const statusMatch = statusFilter === 'all' || property.status === statusFilter;
-
-      // City filter
-      const cityMatch = cityFilter === 'all' || property.city === cityFilter;
-
-      // Property type filter
-      const propertyTypeMatch = propertyTypeFilter === 'all' || property.propertyType === propertyTypeFilter;
-
-      return searchMatch && statusMatch && cityMatch && propertyTypeMatch;
-    });
-  }, [searchTerm, statusFilter, cityFilter, propertyTypeFilter]);
-
-  // Calculate summary stats for filtered results
-  const totalProperties = filteredProperties.length;
-  const totalMonthlyPremium = filteredProperties.reduce((sum, p) => sum + p.monthlyPremium, 0);
-  const totalYearlyPremium = filteredProperties.reduce((sum, p) => sum + p.yearlyPremium, 0);
-  const activeCount = filteredProperties.filter(p => p.status === 'Active').length;
-  const totalClaims = filteredProperties.reduce((sum, p) => sum + p.claimsCount, 0);
-  const openClaims = filteredProperties.reduce((sum, p) => sum + p.openClaims, 0);
-
-  // Prepare dropdown items
-  const statusItems = [
-    { id: 'all', text: 'All Statuses' },
-    ...uniqueStatuses.map(status => ({ id: status, text: status }))
-  ];
-
-  const cityItems = [
-    { id: 'all', text: 'All Cities' },
-    ...uniqueCities.map(city => ({ id: city, text: city }))
-  ];
-
-  const propertyTypeItems = [
-    { id: 'all', text: 'All Property Types' },
-    ...uniquePropertyTypes.map(type => ({ id: type, text: type }))
-  ];
-
-  const handleClearFilters = () => {
-    setSearchTerm('');
-    setStatusFilter('all');
-    setCityFilter('all');
-    setPropertyTypeFilter('all');
-  };
+  const statusItems       = [{ id: 'all', text: 'All Statuses' },       ...uniqueStatuses.map(s => ({ id: s, text: s }))];
+  const cityItems         = [{ id: 'all', text: 'All Cities' },         ...uniqueCities.map(c => ({ id: c, text: c }))];
+  const propertyTypeItems = [{ id: 'all', text: 'All Property Types' }, ...uniquePropertyTypes.map(t => ({ id: t, text: t }))];
 
   const activeFiltersCount = [statusFilter, cityFilter, propertyTypeFilter].filter(f => f !== 'all').length + (searchTerm ? 1 : 0);
+  const clearFilters = () => { setSearchTerm(''); setStatusFilter('all'); setCityFilter('all'); setPropertyTypeFilter('all'); };
 
   return (
-    <Grid fullWidth className="properties-page">
-      {/* Header Section */}
-      <Column lg={16} md={8} sm={4} className="page-header">
-        <div className="header-content">
-          <div className="header-text">
-            <Building size={32} className="page-icon" />
-            <div>
-              <Heading className="page-title">Commercial Properties</Heading>
-              <p className="page-subtitle">
-                Manage and monitor all commercial property insurance policies
-              </p>
-            </div>
+    <div className="properties-page">
+      {/* Hero */}
+      <div className="sp-page-hero">
+        <div className="sp-eyebrow">Property Insurance</div>
+        <div className="sp-page-hero__row">
+          <div>
+            <h1>Your property <strong>portfolio.</strong></h1>
+            <p className="sp-page-hero__lead">
+              {mockProperties.length} properties insured · {formatCurrency(mockProperties.reduce((s, p) => s + p.monthlyPremium, 0), false)}/mo
+            </p>
           </div>
-          <Button
-            kind="primary"
-            renderIcon={Add}
-            onClick={() => navigate('/business/properties/add')}
-          >
-            Add Property
-          </Button>
+          <div className="sp-page-hero__actions">
+            <button className="ln-btn ln-btn--primary" onClick={() => navigate('/business/properties/add')}>
+              Add Property <Add size={14} />
+            </button>
+          </div>
         </div>
-      </Column>
+      </div>
 
-      {/* Summary Stats */}
-      <Column lg={4} md={2} sm={2}>
-        <Tile className="summary-stat">
-          <p className="summary-label">Total Properties</p>
-          <h3 className="summary-value">{totalProperties}</h3>
-          <p className="summary-detail">{activeCount} active</p>
-        </Tile>
-      </Column>
+      {/* KPI strip */}
+      <div className="sp-statband">
+        <div>
+          <div className="sp-statband__k">Total Properties</div>
+          <div className="sp-statband__v">{totalProperties}</div>
+          <div className="sp-statband__d">{activeCount} active</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Monthly Premium</div>
+          <div className="sp-statband__v">{formatCurrency(totalMonthlyPremium, false)}</div>
+          <div className="sp-statband__d">{formatCurrency(totalYearlyPremium, false)}/year</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Total Claims</div>
+          <div className="sp-statband__v">{totalClaims}</div>
+          <div className="sp-statband__d">{openClaims} currently open</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Coverage Limit</div>
+          <div className="sp-statband__v">{formatCurrency(totalCoverage, false)}</div>
+          <div className="sp-statband__d">total across portfolio</div>
+        </div>
+      </div>
 
-      <Column lg={4} md={2} sm={2}>
-        <Tile className="summary-stat">
-          <p className="summary-label">Monthly Premium</p>
-          <h3 className="summary-value">{formatCurrency(totalMonthlyPremium, false)}</h3>
-          <p className="summary-detail">{formatCurrency(totalYearlyPremium, false)}/year</p>
-        </Tile>
-      </Column>
-
-      <Column lg={4} md={2} sm={2}>
-        <Tile className="summary-stat">
-          <p className="summary-label">Total Claims</p>
-          <h3 className="summary-value">{totalClaims}</h3>
-          <p className="summary-detail">{openClaims} currently open</p>
-        </Tile>
-      </Column>
-
-      <Column lg={4} md={2} sm={2}>
-        <Tile className="summary-stat">
-          <p className="summary-label">Coverage</p>
-          <h3 className="summary-value">
-            {formatCurrency(filteredProperties.reduce((sum, p) => sum + p.coverageLimit, 0), false)}
-          </h3>
-          <p className="summary-detail">Total coverage limit</p>
-        </Tile>
-      </Column>
-
-      {/* Search and Filters */}
-      <Column lg={16} md={8} sm={4}>
-        <Tile className="filters-tile">
-          <div className="filters-header">
-            <Heading className="filters-title">Filter Properties</Heading>
-            {activeFiltersCount > 0 && (
-              <div className="filter-actions">
-                <Tag type="blue" size="sm">{activeFiltersCount} active filter{activeFiltersCount > 1 ? 's' : ''}</Tag>
-                <Button kind="ghost" size="sm" onClick={handleClearFilters}>
-                  Clear all
-                </Button>
-              </div>
-            )}
-          </div>
-
-          <div className="filters-grid">
-            <Search
-              size="lg"
-              placeholder="Search by name, address, or city..."
-              labelText="Search properties"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onClear={() => setSearchTerm('')}
-            />
-
-            <Dropdown
-              id="status-filter"
-              titleText="Status"
-              label="Select status"
-              items={statusItems}
-              itemToString={(item) => item ? item.text : ''}
-              selectedItem={statusItems.find(item => item.id === statusFilter)}
-              onChange={({ selectedItem }) => setStatusFilter(selectedItem.id)}
-            />
-
-            <Dropdown
-              id="city-filter"
-              titleText="City"
-              label="Select city"
-              items={cityItems}
-              itemToString={(item) => item ? item.text : ''}
-              selectedItem={cityItems.find(item => item.id === cityFilter)}
-              onChange={({ selectedItem }) => setCityFilter(selectedItem.id)}
-            />
-
-            <Dropdown
-              id="property-type-filter"
-              titleText="Property Type"
-              label="Select property type"
-              items={propertyTypeItems}
-              itemToString={(item) => item ? item.text : ''}
-              selectedItem={propertyTypeItems.find(item => item.id === propertyTypeFilter)}
-              onChange={({ selectedItem }) => setPropertyTypeFilter(selectedItem.id)}
-            />
-          </div>
-        </Tile>
-      </Column>
-
-      {/* Properties Table */}
-      <Column lg={16} md={8} sm={4}>
-        <Tile className="data-tile">
-          <div className="tile-header">
-            <Heading className="tile-title">
-              Properties ({filteredProperties.length})
-            </Heading>
-          </div>
-          {filteredProperties.length > 0 ? (
-            <PropertyTable properties={filteredProperties} />
-          ) : (
-            <div className="empty-state">
-              <Building size={48} />
-              <h4>No properties found</h4>
-              <p>Try adjusting your filters or search term</p>
-              <Button kind="tertiary" onClick={handleClearFilters}>
-                Clear filters
-              </Button>
+      {/* Filters */}
+      <div className="sp-section sp-section--alt">
+        <div className="sp-section__header">
+          <div className="sp-kicker">Filter</div>
+          {activeFiltersCount > 0 && (
+            <div className="prop-filter-actions">
+              <Tag type="blue" size="sm">{activeFiltersCount} active filter{activeFiltersCount > 1 ? 's' : ''}</Tag>
+              <Button kind="ghost" size="sm" onClick={clearFilters}>Clear all</Button>
             </div>
           )}
-        </Tile>
-      </Column>
-    </Grid>
+        </div>
+        <div className="prop-filters-grid">
+          <Search
+            size="lg"
+            placeholder="Search by name, address, or city…"
+            labelText="Search properties"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            onClear={() => setSearchTerm('')}
+          />
+          <Dropdown
+            id="status-filter"
+            titleText="Status"
+            label="Select status"
+            items={statusItems}
+            itemToString={i => i ? i.text : ''}
+            selectedItem={statusItems.find(i => i.id === statusFilter)}
+            onChange={({ selectedItem }) => setStatusFilter(selectedItem.id)}
+          />
+          <Dropdown
+            id="city-filter"
+            titleText="City"
+            label="Select city"
+            items={cityItems}
+            itemToString={i => i ? i.text : ''}
+            selectedItem={cityItems.find(i => i.id === cityFilter)}
+            onChange={({ selectedItem }) => setCityFilter(selectedItem.id)}
+          />
+          <Dropdown
+            id="property-type-filter"
+            titleText="Property Type"
+            label="Select property type"
+            items={propertyTypeItems}
+            itemToString={i => i ? i.text : ''}
+            selectedItem={propertyTypeItems.find(i => i.id === propertyTypeFilter)}
+            onChange={({ selectedItem }) => setPropertyTypeFilter(selectedItem.id)}
+          />
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="sp-section sp-section--no-bottom">
+        <div className="sp-kicker">Properties ({filteredProperties.length})</div>
+        {filteredProperties.length > 0 ? (
+          <PropertyTable properties={filteredProperties} />
+        ) : (
+          <div className="prop-empty-state">
+            <Building size={48} />
+            <h4>No properties found</h4>
+            <p>Try adjusting your filters or search term</p>
+            <Button kind="tertiary" onClick={clearFilters}>Clear filters</Button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

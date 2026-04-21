@@ -1,81 +1,97 @@
-import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  Grid,
-  Column,
-  Tile,
-  Button,
-  Heading,
-} from '@carbon/react';
-import { ArrowLeft, Development } from '@carbon/icons-react';
+import { ArrowRight, Time, DocumentBlank, CheckmarkFilled, Money } from '@carbon/icons-react';
 import './BusinessComingSoon.scss';
 
-/**
- * BusinessComingSoon - Placeholder page for business routes
- * Shown while business features are under development
- */
 export default function BusinessComingSoon() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Get page title from route
-  const getPageTitle = () => {
-    const path = location.pathname;
-    if (path.includes('/properties')) return 'Properties';
-    if (path.includes('/fleet')) return 'Fleet';
-    if (path.includes('/map')) return 'Map View';
-    if (path.includes('/file-claim')) return 'File a Claim';
-    if (path.includes('/make-payment')) return 'Make a Payment';
-    if (path.includes('/claims')) return 'Claims';
-    if (path.includes('/payments')) return 'Payments';
-    return 'Business Insurance';
-  };
+  const path = location.pathname;
+  const isPayments = path.includes('/payments');
+
+  const config = isPayments
+    ? {
+        eyebrow: 'Payments',
+        h1: <>Premiums and deductibles, <strong>paid in one place.</strong></>,
+        lead: 'Consolidated billing across all your policies. Schedule payments, view history, and manage autopay — coming soon.',
+        features: [
+          { icon: <Money size={24} />, title: 'Autopay scheduling',   body: 'Set it once and never miss a due date.' },
+          { icon: <DocumentBlank size={24} />, title: 'Unified billing', body: 'One invoice across fleet, property, and liability lines.' },
+          { icon: <CheckmarkFilled size={24} />, title: 'Payment history', body: 'Full audit trail of every transaction and adjustment.' },
+          { icon: <Time size={24} />, title: 'Renewal quotes',    body: 'Auto-quoted 60 days before renewal, pre-filled for your review.' },
+        ],
+      }
+    : {
+        eyebrow: 'Claims',
+        h1: <>Claims that close in <strong>days, not months.</strong></>,
+        lead: 'Submit, track, and resolve commercial claims across all your policy lines from a single dashboard. Launching soon.',
+        features: [
+          { icon: <DocumentBlank size={24} />, title: 'Digital FNOL',         body: 'File first notice of loss in under 5 minutes, any device.' },
+          { icon: <Time size={24} />,          title: '72-hour target close',  body: 'Our average claim-to-decision time in 2025 Q1.' },
+          { icon: <CheckmarkFilled size={24} />, title: 'Real-time status',   body: 'Track every step — adjuster assigned, inspection, decision.' },
+          { icon: <Money size={24} />,          title: 'Direct deposit payout', body: 'Same-day ACH once the claim is approved.' },
+        ],
+      };
 
   return (
-    <Grid fullWidth className="business-coming-soon">
-      <Column lg={16} md={8} sm={4}>
-        <div className="coming-soon-container">
-          <Tile className="coming-soon-tile">
-            <div className="coming-soon-icon">
-              <Development size={64} />
-            </div>
-            
-            <Heading className="coming-soon-title">
-              {getPageTitle()}
-            </Heading>
-            
-            <p className="coming-soon-subtitle">
-              This feature is currently under development
-            </p>
-            
-            <p className="coming-soon-description">
-              We're working hard to bring you comprehensive business insurance management tools. 
-              Check back soon for updates!
-            </p>
-
-            <div className="coming-soon-features">
-              <h4>Coming Soon:</h4>
-              <ul>
-                <li>Business Dashboard with portfolio overview</li>
-                <li>Property and Fleet management</li>
-                <li>Interactive Map View</li>
-                <li>File claims and make payments</li>
-                <li>Detailed asset reports</li>
-              </ul>
-            </div>
-
-            <div className="coming-soon-actions">
-              <Button
-                kind="primary"
-                renderIcon={ArrowLeft}
-                onClick={() => navigate('/business/dashboard')}
-              >
-                Back to Business Dashboard
-              </Button>
-            </div>
-          </Tile>
+    <div className="coming-soon-page">
+      {/* Hero */}
+      <div className="sp-page-hero sp-page-hero--dark">
+        <div className="sp-eyebrow">{config.eyebrow}</div>
+        <h1>{config.h1}</h1>
+        <p className="sp-page-hero__lead">{config.lead}</p>
+        <div className="sp-page-hero__actions" style={{ marginTop: '32px' }}>
+          <button className="ln-btn ln-btn--primary" onClick={() => navigate('/signup')}>
+            Get early access <ArrowRight size={14} />
+          </button>
+          <button className="ln-btn ln-btn--outline-white" onClick={() => navigate('/business/dashboard')}>
+            Back to dashboard
+          </button>
         </div>
-      </Column>
-    </Grid>
+      </div>
+
+      {/* Feature preview */}
+      <div className="sp-section">
+        <div className="sp-kicker">Coming soon</div>
+        <h2>Full {isPayments ? 'payment management' : 'claims management'}, launching soon.</h2>
+        <p className="sp-section__lead">
+          We're building the fastest commercial claims experience in the industry.
+          Join the waitlist and be the first to know when it's live.
+        </p>
+        <div className="cs-features-grid">
+          {config.features.map(f => (
+            <div key={f.title} className="cs-feature-card">
+              <div className="cs-feature-card__icon">{f.icon}</div>
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats band */}
+      <div className="sp-statband">
+        <div>
+          <div className="sp-statband__k">Avg. close time</div>
+          <div className="sp-statband__v">72 hrs</div>
+          <div className="sp-statband__d">2025 Q1 average</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Claims paid</div>
+          <div className="sp-statband__v">$840K</div>
+          <div className="sp-statband__d">YTD 2025</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Customer satisfaction</div>
+          <div className="sp-statband__v">94%</div>
+          <div className="sp-statband__d">post-claim survey</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">First contact resolution</div>
+          <div className="sp-statband__v">88%</div>
+          <div className="sp-statband__d">no follow-up required</div>
+        </div>
+      </div>
+    </div>
   );
 }

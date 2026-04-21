@@ -1,134 +1,105 @@
 import { useNavigate } from 'react-router-dom';
-import { Grid, Column, Tile } from '@carbon/react';
+import { ArrowRight } from '@carbon/icons-react';
 import { ChartLineData, Analytics, Dashboard } from '@carbon/icons-react';
 import './FinancialDashboardOptions.scss';
+
+const OPTIONS = [
+  {
+    id: 'conservative',
+    icon: <Dashboard size={40} />,
+    title: 'Conservative',
+    description: 'Traditional Carbon Design System implementation with familiar layouts and standard components.',
+    features: ['Standard Carbon Tiles and DataTable', 'Traditional financial color scheme', 'Professional, corporate aesthetic', 'Proven UI patterns for financial data'],
+    tags: ['Traditional', 'Professional', 'Carbon DS'],
+    route: '/financial-dashboard-1',
+  },
+  {
+    id: 'modern',
+    icon: <ChartLineData size={40} />,
+    title: 'Modern Sleek',
+    description: 'Contemporary design using Carbon components with enhanced visuals and modern aesthetics.',
+    features: ['Enhanced Carbon components', 'Modern card designs with shadows', 'Improved visual hierarchy', 'Area charts with gradients'],
+    tags: ['Modern', 'Sleek', 'Carbon DS'],
+    route: '/financial-dashboard-2',
+  },
+  {
+    id: 'wild',
+    icon: <Analytics size={40} />,
+    title: 'Wild Creative',
+    description: 'Bold, creative design with custom components, InsureCo red branding, and glassmorphism.',
+    features: ['Custom components (no Carbon constraints)', 'Dark theme with glassmorphism', 'Bold InsureCo red branding', 'Unique card grid layout'],
+    tags: ['Creative', 'Bold', 'Custom'],
+    route: '/financial-dashboard-3',
+  },
+];
+
+const COMMON = [
+  'KPI summary cards with YTD metrics',
+  'Interactive charts (line/bar toggle)',
+  'Asset performance table with filtering',
+  'Drill-down to property/vehicle details',
+  'Traditional financial colors (green = premiums, red = claims)',
+  'Fully responsive design',
+];
 
 export default function FinancialDashboardOptions() {
   const navigate = useNavigate();
 
   return (
-    <div className="dashboard-options-page">
-      <Grid fullWidth>
-        <Column lg={16} md={8} sm={4}>
-          <div className="options-header">
-            <h1>Financial Dashboard Options</h1>
-            <p className="options-subtitle">
-              Choose from three distinct design approaches for the Insurance Financial Analytics Dashboard
-            </p>
-          </div>
-        </Column>
+    <div className="fd-options-page">
+      {/* Hero */}
+      <div className="sp-page-hero">
+        <div className="sp-eyebrow">Resources</div>
+        <h1>Financial dashboard <strong>views.</strong></h1>
+        <p className="sp-page-hero__lead">
+          Three distinct design approaches for the Insurance Financial Analytics Dashboard.
+          Pick the layout that fits your workflow.
+        </p>
+      </div>
 
-        <Column lg={16} md={8} sm={4}>
-          <div className="options-grid">
-            {/* Option 1: Conservative */}
-            <Tile 
-              className="option-card option-card--conservative"
-              onClick={() => navigate('/financial-dashboard-1')}
+      {/* Option cards */}
+      <div className="sp-section">
+        <div className="sp-kicker">Choose a style</div>
+        <div className="fd-options-grid">
+          {OPTIONS.map(opt => (
+            <div
+              key={opt.id}
+              className={`fd-option-card fd-option-card--${opt.id}`}
+              onClick={() => navigate(opt.route)}
             >
-              <div className="option-icon">
-                <Dashboard size={48} />
-              </div>
-              <h2>Option 1: Conservative</h2>
-              <p className="option-description">
-                Traditional Carbon Design System implementation with familiar layouts and standard components.
-              </p>
-              <ul className="option-features">
-                <li>Standard Carbon Tiles and DataTable</li>
-                <li>Traditional financial color scheme</li>
-                <li>Professional, corporate aesthetic</li>
-                <li>Proven UI patterns for financial data</li>
+              <div className="fd-option-card__icon">{opt.icon}</div>
+              <h2>{opt.title}</h2>
+              <p className="fd-option-card__desc">{opt.description}</p>
+              <ul className="fd-option-card__features">
+                {opt.features.map(f => (
+                  <li key={f}>{f}</li>
+                ))}
               </ul>
-              <div className="option-tags">
-                <span className="tag">Traditional</span>
-                <span className="tag">Professional</span>
-                <span className="tag">Carbon DS</span>
-              </div>
-            </Tile>
-
-            {/* Option 2: Modern Sleek */}
-            <Tile 
-              className="option-card option-card--modern"
-              onClick={() => navigate('/financial-dashboard-2')}
-            >
-              <div className="option-icon">
-                <ChartLineData size={48} />
-              </div>
-              <h2>Option 2: Modern Sleek</h2>
-              <p className="option-description">
-                Contemporary design using Carbon components with enhanced visuals and modern aesthetics.
-              </p>
-              <ul className="option-features">
-                <li>Enhanced Carbon components</li>
-                <li>Modern card designs with shadows</li>
-                <li>Improved visual hierarchy</li>
-                <li>Area charts with gradients</li>
-              </ul>
-              <div className="option-tags">
-                <span className="tag">Modern</span>
-                <span className="tag">Sleek</span>
-                <span className="tag">Carbon DS</span>
-              </div>
-            </Tile>
-
-            {/* Option 3: Wild Creative */}
-            <Tile 
-              className="option-card option-card--wild"
-              onClick={() => navigate('/financial-dashboard-3')}
-            >
-              <div className="option-icon">
-                <Analytics size={48} />
-              </div>
-              <h2>Option 3: Wild Creative</h2>
-              <p className="option-description">
-                Bold, creative design breaking from traditional patterns with custom components and InsureCo branding.
-              </p>
-              <ul className="option-features">
-                <li>Custom components (no Carbon constraints)</li>
-                <li>Dark theme with glassmorphism</li>
-                <li>Bold InsureCo red branding</li>
-                <li>Unique card grid layout</li>
-              </ul>
-              <div className="option-tags">
-                <span className="tag">Creative</span>
-                <span className="tag">Bold</span>
-                <span className="tag">Custom</span>
-              </div>
-            </Tile>
-          </div>
-        </Column>
-
-        <Column lg={16} md={8} sm={4}>
-          <div className="options-footer">
-            <h3>All Options Include:</h3>
-            <div className="common-features">
-              <div className="feature-item">
-                <span>✅</span>
-                <span>KPI summary cards with YTD metrics</span>
-              </div>
-              <div className="feature-item">
-                <span>✅</span>
-                <span>Interactive charts (line/bar toggle)</span>
-              </div>
-              <div className="feature-item">
-                <span>✅</span>
-                <span>Asset performance table with filtering</span>
-              </div>
-              <div className="feature-item">
-                <span>✅</span>
-                <span>Drill-down to property/vehicle details</span>
-              </div>
-              <div className="feature-item">
-                <span>✅</span>
-                <span>Traditional financial colors (green=premiums, red=claims)</span>
-              </div>
-              <div className="feature-item">
-                <span>✅</span>
-                <span>Fully responsive design</span>
+              <div className="fd-option-card__footer">
+                <div className="fd-option-card__tags">
+                  {opt.tags.map(t => <span key={t}>{t}</span>)}
+                </div>
+                <span className="fd-option-card__cta">
+                  View <ArrowRight size={14} />
+                </span>
               </div>
             </div>
-          </div>
-        </Column>
-      </Grid>
+          ))}
+        </div>
+      </div>
+
+      {/* Common features band */}
+      <div className="sp-section sp-section--alt sp-section--no-bottom">
+        <div className="sp-kicker">All options include</div>
+        <div className="fd-common-grid">
+          {COMMON.map(f => (
+            <div key={f} className="fd-common-item">
+              <span className="fd-common-item__check">✓</span>
+              <span>{f}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
