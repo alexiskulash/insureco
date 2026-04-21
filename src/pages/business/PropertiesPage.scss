@@ -10,6 +10,7 @@
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 16px;
   margin-top: 8px;
+  align-items: end;
 
   @media (max-width: 1056px) { grid-template-columns: 1fr 1fr; }
   @media (max-width: 672px)  { grid-template-columns: 1fr; }
