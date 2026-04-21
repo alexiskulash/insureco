@@ -10,6 +10,7 @@
   color: var(--text-primary);
   font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ── Shared buttons ──────────────────────────────────────────── */
@@ -125,13 +126,13 @@
   &__links {
     display: flex;
     height: 64px;
-    margin-left: 48px;
+    margin-left: 24px;
     align-items: center;
 
     a {
       display: flex;
       align-items: center;
-      padding: 0 18px;
+      padding: 0 12px;
       height: 64px;
       font-size: 14px;
       color: var(--text-primary);
@@ -174,7 +175,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 0 18px;
+  padding: 0 12px;
   height: 64px;
   font-size: 14px;
   color: var(--text-primary);
