@@ -1,401 +1,183 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Grid,
-  Column,
-  Tile,
-  Button,
-  Heading,
-  RadioButtonGroup,
-  RadioButton,
-} from '@carbon/react';
-import { Building, CarFront, Close } from '@carbon/icons-react';
+import { Button, RadioButtonGroup, RadioButton } from '@carbon/react';
+import { Close } from '@carbon/icons-react';
 import MapView from '../../components/business/MapView';
 import FacetedFilterButton from '../../components/business/FacetedFilterButton';
 import { mockProperties, mockVehicles } from '../../data/businessMockData';
 import { formatCurrency } from '../../utils/businessHelpers';
 import './MapPage.scss';
 
-/**
- * MapPage - Interactive map showing properties and fleet vehicles
- * Features: cascading filters, asset type switching, summary stats, clickable markers
- */
 export default function MapPage() {
-  const navigate = useNavigate();
-
-  // State
   const [selectedAssetType, setSelectedAssetType] = useState('all');
-  const [selectedFilters, setSelectedFilters] = useState({
-    status: [],
-    type: [],
-    location: [],
-    propertyType: [],
-    vehicleType: [],
-    city: []
-  });
+  const [selectedFilters, setSelectedFilters]     = useState({ status: [], type: [], location: [], propertyType: [], vehicleType: [], city: [] });
 
-  // Prepare facets with counts based on selected asset type
   const facets = useMemo(() => {
-    const data = selectedAssetType === 'properties' ? mockProperties :
-                  selectedAssetType === 'vehicles' ? mockVehicles :
-                  [...mockProperties, ...mockVehicles];
-
     if (selectedAssetType === 'properties') {
-      // Property facets
-      const statuses = {};
-      const types = {};
-      const cities = {};
-
+      const statuses = {}, types = {}, cities = {};
       mockProperties.forEach(p => {
-        statuses[p.status] = (statuses[p.status] || 0) + 1;
-        types[p.propertyType] = (types[p.propertyType] || 0) + 1;
-        cities[p.city] = (cities[p.city] || 0) + 1;
+        statuses[p.status]      = (statuses[p.status] || 0) + 1;
+        types[p.propertyType]   = (types[p.propertyType] || 0) + 1;
+        cities[p.city]          = (cities[p.city] || 0) + 1;
       });
-
       return [
-        {
-          key: 'status',
-          label: 'Status',
-          options: Object.entries(statuses).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'type',
-          label: 'Property Type',
-          options: Object.entries(types).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'location',
-          label: 'City',
-          options: Object.entries(cities).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        }
-      ];
-    } else if (selectedAssetType === 'vehicles') {
-      // Vehicle facets
-      const statuses = {};
-      const types = {};
-      const departments = {};
-
-      mockVehicles.forEach(v => {
-        statuses[v.status] = (statuses[v.status] || 0) + 1;
-        types[v.vehicleType] = (types[v.vehicleType] || 0) + 1;
-        departments[v.department] = (departments[v.department] || 0) + 1;
-      });
-
-      return [
-        {
-          key: 'status',
-          label: 'Status',
-          options: Object.entries(statuses).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'type',
-          label: 'Vehicle Type',
-          options: Object.entries(types).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'location',
-          label: 'Department',
-          options: Object.entries(departments).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        }
-      ];
-    } else {
-      // Combined facets (all assets)
-      const statuses = {};
-      const propertyTypes = {};
-      const vehicleTypes = {};
-      const cities = {};
-      const departments = {};
-
-      // Collect all property data
-      mockProperties.forEach(p => {
-        statuses[p.status] = (statuses[p.status] || 0) + 1;
-        propertyTypes[p.propertyType] = (propertyTypes[p.propertyType] || 0) + 1;
-        cities[p.city] = (cities[p.city] || 0) + 1;
-      });
-
-      // Collect all vehicle data
-      mockVehicles.forEach(v => {
-        statuses[v.status] = (statuses[v.status] || 0) + 1;
-        vehicleTypes[v.vehicleType] = (vehicleTypes[v.vehicleType] || 0) + 1;
-        departments[v.department] = (departments[v.department] || 0) + 1;
-      });
-
-      return [
-        {
-          key: 'status',
-          label: 'Status',
-          options: Object.entries(statuses).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'propertyType',
-          label: 'Property Type',
-          options: Object.entries(propertyTypes).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'vehicleType',
-          label: 'Vehicle Type',
-          options: Object.entries(vehicleTypes).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'city',
-          label: 'City',
-          options: Object.entries(cities).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        },
-        {
-          key: 'location',
-          label: 'Department',
-          options: Object.entries(departments).map(([value, count]) => ({
-            value,
-            label: value,
-            count
-          })).sort((a, b) => a.label.localeCompare(b.label))
-        }
+        { key: 'status',   label: 'Status',        options: Object.entries(statuses).map(([v, c]) => ({ value: v, label: v, count: c })).sort((a,b)=>a.label.localeCompare(b.label)) },
+        { key: 'type',     label: 'Property Type', options: Object.entries(types).map(([v, c]) => ({ value: v, label: v, count: c })).sort((a,b)=>a.label.localeCompare(b.label)) },
+        { key: 'location', label: 'City',          options: Object.entries(cities).map(([v, c]) => ({ value: v, label: v, count: c })).sort((a,b)=>a.label.localeCompare(b.label)) },
       ];
     }
+    if (selectedAssetType === 'vehicles') {
+      const statuses = {}, types = {}, departments = {};
+      mockVehicles.forEach(v => {
+        statuses[v.status]       = (statuses[v.status] || 0) + 1;
+        types[v.vehicleType]     = (types[v.vehicleType] || 0) + 1;
+        departments[v.department]= (departments[v.department] || 0) + 1;
+      });
+      return [
+        { key: 'status',   label: 'Status',       options: Object.entries(statuses).map(([v, c]) => ({ value: v, label: v, count: c })).sort((a,b)=>a.label.localeCompare(b.label)) },
+        { key: 'type',     label: 'Vehicle Type', options: Object.entries(types).map(([v, c]) => ({ value: v, label: v, count: c })).sort((a,b)=>a.label.localeCompare(b.label)) },
+        { key: 'location', label: 'Department',   options: Object.entries(departments).map(([v, c]) => ({ value: v, label: v, count: c })).sort((a,b)=>a.label.localeCompare(b.label)) },
+      ];
+    }
+    // all
+    const statuses = {}, propTypes = {}, vehicleTypes = {}, cities = {}, departments = {};
+    mockProperties.forEach(p => { statuses[p.status]=(statuses[p.status]||0)+1; propTypes[p.propertyType]=(propTypes[p.propertyType]||0)+1; cities[p.city]=(cities[p.city]||0)+1; });
+    mockVehicles.forEach(v => { statuses[v.status]=(statuses[v.status]||0)+1; vehicleTypes[v.vehicleType]=(vehicleTypes[v.vehicleType]||0)+1; departments[v.department]=(departments[v.department]||0)+1; });
+    return [
+      { key: 'status',      label: 'Status',        options: Object.entries(statuses).map(([v,c])=>({value:v,label:v,count:c})).sort((a,b)=>a.label.localeCompare(b.label)) },
+      { key: 'propertyType',label: 'Property Type', options: Object.entries(propTypes).map(([v,c])=>({value:v,label:v,count:c})).sort((a,b)=>a.label.localeCompare(b.label)) },
+      { key: 'vehicleType', label: 'Vehicle Type',  options: Object.entries(vehicleTypes).map(([v,c])=>({value:v,label:v,count:c})).sort((a,b)=>a.label.localeCompare(b.label)) },
+      { key: 'city',        label: 'City',          options: Object.entries(cities).map(([v,c])=>({value:v,label:v,count:c})).sort((a,b)=>a.label.localeCompare(b.label)) },
+      { key: 'location',    label: 'Department',    options: Object.entries(departments).map(([v,c])=>({value:v,label:v,count:c})).sort((a,b)=>a.label.localeCompare(b.label)) },
+    ];
   }, [selectedAssetType]);
 
-  // Filter properties
-  const filteredProperties = useMemo(() => {
-    return mockProperties.filter(property => {
-      const statusMatch = selectedFilters.status.length === 0 ||
-        selectedFilters.status.includes(property.status);
-      const typeMatch = selectedFilters.type.length === 0 ||
-        selectedFilters.type.includes(property.propertyType);
-      const locationMatch = selectedFilters.location.length === 0 ||
-        selectedFilters.location.includes(property.city);
+  const filteredProperties = useMemo(() => mockProperties.filter(p =>
+    (selectedFilters.status.length   === 0 || selectedFilters.status.includes(p.status)) &&
+    (selectedFilters.type.length     === 0 || selectedFilters.type.includes(p.propertyType)) &&
+    (selectedFilters.location.length === 0 || selectedFilters.location.includes(p.city)) &&
+    (selectedFilters.propertyType.length === 0 || selectedFilters.propertyType.includes(p.propertyType)) &&
+    (selectedFilters.city.length     === 0 || selectedFilters.city.includes(p.city))
+  ), [selectedFilters]);
 
-      // Additional filters for "all assets" mode
-      const propertyTypeMatch = selectedFilters.propertyType.length === 0 ||
-        selectedFilters.propertyType.includes(property.propertyType);
-      const cityMatch = selectedFilters.city.length === 0 ||
-        selectedFilters.city.includes(property.city);
+  const filteredVehicles = useMemo(() => mockVehicles.filter(v =>
+    (selectedFilters.status.length      === 0 || selectedFilters.status.includes(v.status)) &&
+    (selectedFilters.type.length        === 0 || selectedFilters.type.includes(v.vehicleType)) &&
+    (selectedFilters.location.length    === 0 || selectedFilters.location.includes(v.department)) &&
+    (selectedFilters.vehicleType.length === 0 || selectedFilters.vehicleType.includes(v.vehicleType))
+  ), [selectedFilters]);
 
-      return statusMatch && typeMatch && locationMatch && propertyTypeMatch && cityMatch;
-    });
-  }, [selectedFilters]);
-
-  // Filter vehicles
-  const filteredVehicles = useMemo(() => {
-    return mockVehicles.filter(vehicle => {
-      const statusMatch = selectedFilters.status.length === 0 ||
-        selectedFilters.status.includes(vehicle.status);
-      const typeMatch = selectedFilters.type.length === 0 ||
-        selectedFilters.type.includes(vehicle.vehicleType);
-      const locationMatch = selectedFilters.location.length === 0 ||
-        selectedFilters.location.includes(vehicle.department);
-
-      // Additional filters for "all assets" mode
-      const vehicleTypeMatch = selectedFilters.vehicleType.length === 0 ||
-        selectedFilters.vehicleType.includes(vehicle.vehicleType);
-
-      return statusMatch && typeMatch && locationMatch && vehicleTypeMatch;
-    });
-  }, [selectedFilters]);
-
-  // Calculate summary stats
   const stats = useMemo(() => {
-    if (selectedAssetType === 'properties') {
-      return {
-        total: filteredProperties.length,
-        active: filteredProperties.filter(p => p.status === 'Active').length,
-        monthlyPremium: filteredProperties.reduce((sum, p) => sum + p.monthlyPremium, 0),
-        openClaims: filteredProperties.reduce((sum, p) => sum + p.openClaims, 0),
-      };
-    } else if (selectedAssetType === 'vehicles') {
-      return {
-        total: filteredVehicles.length,
-        active: filteredVehicles.filter(v => v.status === 'Active').length,
-        monthlyPremium: filteredVehicles.reduce((sum, v) => sum + v.monthlyPremium, 0),
-        openClaims: filteredVehicles.reduce((sum, v) => sum + v.openClaims, 0),
-      };
-    } else {
-      return {
-        total: filteredProperties.length + filteredVehicles.length,
-        active: filteredProperties.filter(p => p.status === 'Active').length + 
-                filteredVehicles.filter(v => v.status === 'Active').length,
-        monthlyPremium: filteredProperties.reduce((sum, p) => sum + p.monthlyPremium, 0) +
-                        filteredVehicles.reduce((sum, v) => sum + v.monthlyPremium, 0),
-        openClaims: filteredProperties.reduce((sum, p) => sum + p.openClaims, 0) +
-                    filteredVehicles.reduce((sum, v) => sum + v.openClaims, 0),
-      };
-    }
+    const props = selectedAssetType === 'vehicles' ? [] : filteredProperties;
+    const vehs  = selectedAssetType === 'properties' ? [] : filteredVehicles;
+    return {
+      total:         props.length + vehs.length,
+      active:        props.filter(p=>p.status==='Active').length + vehs.filter(v=>v.status==='Active').length,
+      monthlyPremium:props.reduce((s,p)=>s+p.monthlyPremium,0) + vehs.reduce((s,v)=>s+v.monthlyPremium,0),
+      openClaims:    props.reduce((s,p)=>s+p.openClaims,0) + vehs.reduce((s,v)=>s+v.openClaims,0),
+    };
   }, [selectedAssetType, filteredProperties, filteredVehicles]);
 
-  // Handle clear filters
-  const handleClearFilters = () => {
-    setSelectedFilters({
-      status: [],
-      type: [],
-      location: [],
-      propertyType: [],
-      vehicleType: [],
-      city: []
-    });
-  };
-
-
-  // Count active filters
-  const activeFiltersCount = Object.values(selectedFilters).reduce(
-    (sum, values) => sum + values.length,
-    0
-  );
-
-  // Get filter label based on asset type
-  const filterLabel = selectedAssetType === 'properties' 
-    ? 'Filter Properties' 
-    : selectedAssetType === 'vehicles' 
-    ? 'Filter Vehicles' 
-    : 'Filter Assets';
+  const clearFilters = () => setSelectedFilters({ status:[], type:[], location:[], propertyType:[], vehicleType:[], city:[] });
+  const activeFiltersCount = Object.values(selectedFilters).reduce((s, v) => s + v.length, 0);
 
   return (
-    <Grid fullWidth className="map-page">
-      {/* Page Header */}
-      <Column lg={16} md={8} sm={4}>
-        <div className="page-header">
-          <div className="header-content">
-            <Heading className="page-title">Map View</Heading>
-            <p className="page-description">
-              Interactive map showing your properties and fleet vehicles
-            </p>
-          </div>
-        </div>
-      </Column>
+    <div className="map-page">
+      {/* Hero */}
+      <div className="sp-page-hero">
+        <div className="sp-eyebrow">Asset Map</div>
+        <h1>Geospatial coverage <strong>overview.</strong></h1>
+        <p className="sp-page-hero__lead">
+          Interactive map of all insured properties and fleet vehicles across your portfolio.
+        </p>
+      </div>
 
-      {/* Map and Sidebar */}
-      <Column lg={11} md={8} sm={4} className="map-column">
-        <Tile className="map-tile">
+      {/* Map + sidebar layout */}
+      <div className="map-layout">
+        {/* Map */}
+        <div className="map-layout__map">
           <MapView
-            properties={selectedAssetType === 'vehicles' ? [] : filteredProperties}
-            vehicles={selectedAssetType === 'properties' ? [] : filteredVehicles}
+            properties={selectedAssetType === 'vehicles'   ? [] : filteredProperties}
+            vehicles={selectedAssetType   === 'properties' ? [] : filteredVehicles}
             selectedAssetType={selectedAssetType}
           />
-        </Tile>
-      </Column>
-
-      <Column lg={5} md={8} sm={4} className="sidebar-column">
-        {/* Asset Type Selection */}
-        <div className="asset-type-selection">
-          <RadioButtonGroup
-            name="asset-type"
-            valueSelected={selectedAssetType}
-            onChange={(value) => {
-              setSelectedAssetType(value);
-              handleClearFilters();
-            }}
-            orientation="vertical"
-            legendText="Asset Type"
-          >
-            <RadioButton id="asset-all" labelText="All Assets" value="all" />
-            <RadioButton id="asset-properties" labelText="Properties" value="properties" />
-            <RadioButton id="asset-vehicles" labelText="Vehicles" value="vehicles" />
-          </RadioButtonGroup>
         </div>
 
-        {/* Summary Stats */}
-        <Tile className="stats-tile">
-          <Heading className="tile-heading">Summary</Heading>
-          <div className="stats-grid">
-            <div className="stat-item">
-              <span className="stat-label">Total Assets</span>
-              <span className="stat-value">{stats.total}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Active</span>
-              <span className="stat-value stat-active">{stats.active}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Monthly Premium</span>
-              <span className="stat-value stat-premium">{formatCurrency(stats.monthlyPremium)}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-label">Open Claims</span>
-              <span className="stat-value stat-claims">{stats.openClaims}</span>
-            </div>
-          </div>
-        </Tile>
-
-        {/* Cascading Filter */}
-        <Tile className="filters-tile">
-          <div className="filters-header">
-            <Heading className="tile-heading">Filters</Heading>
-            {activeFiltersCount > 0 && (
-              <Button
-                kind="ghost"
-                size="sm"
-                renderIcon={Close}
-                onClick={handleClearFilters}
-                className="clear-filters-btn"
-              >
-                Clear ({activeFiltersCount})
-              </Button>
-            )}
+        {/* Sidebar */}
+        <aside className="map-layout__sidebar">
+          {/* Asset type selector */}
+          <div className="map-sidebar-block">
+            <div className="map-sidebar-block__label">Asset Type</div>
+            <RadioButtonGroup
+              name="asset-type"
+              valueSelected={selectedAssetType}
+              onChange={val => { setSelectedAssetType(val); clearFilters(); }}
+              orientation="vertical"
+              legendText=""
+            >
+              <RadioButton id="asset-all"        labelText="All Assets"   value="all"        />
+              <RadioButton id="asset-properties" labelText="Properties"   value="properties" />
+              <RadioButton id="asset-vehicles"   labelText="Vehicles"     value="vehicles"   />
+            </RadioButtonGroup>
           </div>
 
-          <div className="filters-content">
+          {/* Stats */}
+          <div className="map-sidebar-block">
+            <div className="map-sidebar-block__label">Summary</div>
+            <div className="map-stats-grid">
+              <div className="map-stat">
+                <span className="map-stat__label">Total Assets</span>
+                <span className="map-stat__value">{stats.total}</span>
+              </div>
+              <div className="map-stat">
+                <span className="map-stat__label">Active</span>
+                <span className="map-stat__value map-stat__value--green">{stats.active}</span>
+              </div>
+              <div className="map-stat">
+                <span className="map-stat__label">Monthly Premium</span>
+                <span className="map-stat__value map-stat__value--red">{formatCurrency(stats.monthlyPremium)}</span>
+              </div>
+              <div className="map-stat">
+                <span className="map-stat__label">Open Claims</span>
+                <span className="map-stat__value">{stats.openClaims}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Filters */}
+          <div className="map-sidebar-block">
+            <div className="map-sidebar-block__header">
+              <div className="map-sidebar-block__label">Filters</div>
+              {activeFiltersCount > 0 && (
+                <Button kind="ghost" size="sm" renderIcon={Close} onClick={clearFilters}>
+                  Clear ({activeFiltersCount})
+                </Button>
+              )}
+            </div>
             <FacetedFilterButton
-              label={filterLabel}
+              label={selectedAssetType === 'properties' ? 'Filter Properties' : selectedAssetType === 'vehicles' ? 'Filter Vehicles' : 'Filter Assets'}
               facets={facets}
               selectedFilters={selectedFilters}
               onFiltersChange={setSelectedFilters}
             />
           </div>
-        </Tile>
 
-        {/* Legend */}
-        <Tile className="legend-tile">
-          <Heading className="tile-heading">Legend</Heading>
-          <div className="legend-items">
-            <div className="legend-item">
-              <div className="legend-marker property-legend"></div>
-              <span className="legend-label">Properties</span>
-            </div>
-            <div className="legend-item">
-              <div className="legend-marker vehicle-legend"></div>
-              <span className="legend-label">Vehicles</span>
+          {/* Legend */}
+          <div className="map-sidebar-block">
+            <div className="map-sidebar-block__label">Legend</div>
+            <div className="map-legend">
+              <div className="map-legend__item">
+                <div className="map-legend__marker map-legend__marker--property" />
+                <span>Properties</span>
+              </div>
+              <div className="map-legend__item">
+                <div className="map-legend__marker map-legend__marker--vehicle" />
+                <span>Vehicles</span>
+              </div>
             </div>
           </div>
-        </Tile>
-      </Column>
-    </Grid>
+        </aside>
+      </div>
+    </div>
   );
 }

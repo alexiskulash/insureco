@@ -1,0 +1,98 @@
+@use '../styles/tokens' as *;
+
+.about-page {
+  background: var(--background-primary);
+}
+
+/* ── Mission grid ──────────────────────────────────────────── */
+.about-mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--border-subtle);
+  margin-top: 8px;
+}
+
+.about-mission-card {
+  padding: 40px 32px;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--background-primary);
+  transition: background var(--motion-hover);
+
+  &:last-child { border-right: none; }
+  &:hover { background: var(--background-secondary); }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    color: var(--text-primary);
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+/* ── Team placeholder grid ─────────────────────────────────── */
+.about-team-placeholder {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.about-team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  &__avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--background-selected);
+    border: 2px dashed var(--border-subtle);
+  }
+
+  &__role {
+    font-family: var(--font-family-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--interactive-primary);
+  }
+
+  &__name {
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .about-mission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-mission-card {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    &:last-child { border-bottom: none; }
+  }
+
+  .about-team-placeholder {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-team-placeholder {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

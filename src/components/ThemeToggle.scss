@@ -1,0 +1,26 @@
+@use '../styles/tokens' as *;
+
+/* Standalone theme toggle — used outside Carbon header context */
+.theme-toggle-standalone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--motion-hover), color var(--motion-hover);
+
+  &:hover {
+    background: var(--background-hover);
+    color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--interactive-primary);
+    outline-offset: -2px;
+  }
+}

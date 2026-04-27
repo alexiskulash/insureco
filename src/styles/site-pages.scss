@@ -1,0 +1,198 @@
+@use './tokens' as *;
+
+/* ============================================================
+   Site Pages — shared design patterns for all interior pages
+   (anything wrapped in SiteLayout). Prefixed .sp- to avoid
+   conflicts with .ln- landing-page classes.
+   ============================================================ */
+
+/* ── Page shell ──────────────────────────────────────────────── */
+.site-page {
+  background: var(--background-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.site-main {
+  min-height: calc(100vh - 64px - 260px);
+}
+
+/* ── Kicker / eyebrow labels ─────────────────────────────────── */
+.sp-eyebrow,
+.sp-kicker {
+  font-family: var(--font-family-mono);
+  font-size: 12px;
+  color: var(--interactive-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--interactive-primary);
+    flex-shrink: 0;
+  }
+}
+
+/* ── Page hero — interior pages ──────────────────────────────── */
+.sp-page-hero {
+  padding: 64px 64px 56px;
+  background: var(--background-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+
+  h1, h2 {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+    line-height: 1.1;
+    color: var(--text-primary);
+
+    strong { font-weight: 500; color: var(--interactive-primary); }
+  }
+
+  &__lead {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 56ch;
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  /* Row layout — title left, actions right */
+  &__row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  /* Dark variant — for hero-emphasis pages (About, Claims) */
+  &--dark {
+    background: #161616;
+    border-bottom-color: #393939;
+
+    h1, h2 { color: #fff; }
+    .sp-eyebrow { color: var(--interactive-primary); }
+    .sp-page-hero__lead { color: #a8a8a8; }
+  }
+}
+
+/* ── Stat band ───────────────────────────────────────────────── */
+.sp-statband {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--background-primary);
+
+  > div {
+    padding: 36px 32px;
+    border-right: 1px solid var(--border-subtle);
+
+    &:last-child { border-right: 0; }
+  }
+
+  &__k {
+    font-family: var(--font-family-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  &__v {
+    font-size: 44px;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+
+  &__d {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+}
+
+/* ── Section ─────────────────────────────────────────────────── */
+.sp-section {
+  padding: 64px 64px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--background-primary);
+
+  &--alt { background: var(--background-secondary); }
+
+  &--no-bottom { border-bottom: none; }
+
+  h2 {
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin: 0 0 16px;
+    max-width: 28ch;
+    line-height: 1.15;
+    color: var(--text-primary);
+
+    strong { font-weight: 500; color: var(--interactive-primary); }
+  }
+
+  &__lead {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 62ch;
+    margin: 0 0 48px;
+    line-height: 1.55;
+  }
+
+  /* Row of kicker + action button */
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+
+    .sp-kicker { margin-bottom: 0; }
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sp-page-hero {
+    padding: 48px 32px 40px;
+
+    &__row { flex-direction: column; align-items: flex-start; }
+  }
+
+  .sp-statband {
+    grid-template-columns: repeat(2, 1fr);
+
+    > div:nth-child(2) { border-right: 0; }
+  }
+
+  .sp-section {
+    padding: 48px 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sp-statband { grid-template-columns: 1fr 1fr; }
+  .sp-page-hero { padding: 40px 24px 32px; }
+  .sp-section { padding: 40px 24px; }
+}

@@ -1,13 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Grid,
-  Column,
-  Tile,
-  ClickableTile,
-  Button,
-  Heading,
-} from '@carbon/react';
+import { Button } from '@carbon/react';
 import {
   Building,
   CarFront,
@@ -28,192 +21,98 @@ import {
 import { formatCurrency } from '../../utils/businessHelpers';
 import './BusinessDashboard.scss';
 
-/**
- * BusinessDashboard - Main business insurance dashboard
- * Shows portfolio overview with statistics, quick actions, and data tables
- */
 export default function BusinessDashboard() {
   const navigate = useNavigate();
 
-  // Calculate statistics from mock data
-  const totalProperties = mockProperties.length;
+  const totalProperties     = mockProperties.length;
   const activePropertiesCount = getActiveProperties().length;
-  const totalVehicles = mockVehicles.length;
+  const totalVehicles       = mockVehicles.length;
   const activeVehiclesCount = getActiveVehicles().length;
   const totalMonthlyPremium = getTotalBusinessPremium();
+  const openClaims          = mockProperties.reduce((s, p) => s + p.openClaims, 0)
+                            + mockVehicles.reduce((s, v) => s + v.openClaims, 0);
+
+  const quickActions = [
+    { icon: <Building size={28} />,     label: 'Properties',     sub: 'Manage commercial properties',   route: '/business/properties' },
+    { icon: <CarFront size={28} />,     label: 'Fleet',          sub: 'Monitor business vehicles',      route: '/business/fleet'      },
+    { icon: <Map size={28} />,          label: 'Map View',       sub: 'See all assets on a map',        route: '/business/map'        },
+    { icon: <DocumentAdd size={28} />,  label: 'File a Claim',   sub: 'Submit an insurance claim',      route: '/business/file-claim' },
+    { icon: <Wallet size={28} />,       label: 'Make a Payment', sub: 'Pay premiums or deductibles',    route: '/business/make-payment' },
+  ];
 
   return (
-    <Grid fullWidth className="business-dashboard">
-      {/* Header Section */}
-      <Column lg={16} md={8} sm={4} className="dashboard-header">
-        <Heading className="dashboard-title">Business Insurance Dashboard</Heading>
-        <p className="dashboard-subtitle">
-          Manage your business insurance portfolio and view your coverage at a glance
+    <div className="biz-dashboard">
+      {/* Hero */}
+      <div className="sp-page-hero">
+        <div className="sp-eyebrow">Business</div>
+        <h1>Your commercial <strong>portfolio.</strong></h1>
+        <p className="sp-page-hero__lead">
+          {totalProperties} properties · {totalVehicles} vehicles · {formatCurrency(totalMonthlyPremium, false)}/mo total premium
         </p>
-      </Column>
+      </div>
 
-      {/* Quick Actions */}
-      <Column lg={16} md={8} sm={4}>
-        <div className="quick-actions">
-          <ClickableTile
-            className="action-tile"
-            onClick={() => navigate('/business/properties')}
-          >
-            <div className="action-icon">
-              <Building size={24} />
-            </div>
-            <div className="action-content">
-              <h4>View All Properties</h4>
-              <p>Manage commercial properties</p>
-            </div>
-            <ArrowRight size={20} className="action-arrow" />
-          </ClickableTile>
-
-          <ClickableTile
-            className="action-tile"
-            onClick={() => navigate('/business/fleet')}
-          >
-            <div className="action-icon">
-              <CarFront size={24} />
-            </div>
-            <div className="action-content">
-              <h4>View Fleet</h4>
-              <p>Monitor business vehicles</p>
-            </div>
-            <ArrowRight size={20} className="action-arrow" />
-          </ClickableTile>
-
-          <ClickableTile
-            className="action-tile"
-            onClick={() => navigate('/business/map')}
-          >
-            <div className="action-icon">
-              <Map size={24} />
-            </div>
-            <div className="action-content">
-              <h4>Map View</h4>
-              <p>See assets on map</p>
-            </div>
-            <ArrowRight size={20} className="action-arrow" />
-          </ClickableTile>
-
-          <ClickableTile
-            className="action-tile"
-            onClick={() => navigate('/business/file-claim')}
-          >
-            <div className="action-icon">
-              <DocumentAdd size={24} />
-            </div>
-            <div className="action-content">
-              <h4>File a Claim</h4>
-              <p>Submit insurance claim</p>
-            </div>
-            <ArrowRight size={20} className="action-arrow" />
-          </ClickableTile>
-
-          <ClickableTile
-            className="action-tile"
-            onClick={() => navigate('/business/make-payment')}
-          >
-            <div className="action-icon">
-              <Wallet size={24} />
-            </div>
-            <div className="action-content">
-              <h4>Make a Payment</h4>
-              <p>Pay premiums or deductibles</p>
-            </div>
-            <ArrowRight size={20} className="action-arrow" />
-          </ClickableTile>
+      {/* KPI strip */}
+      <div className="sp-statband">
+        <div>
+          <div className="sp-statband__k">Properties</div>
+          <div className="sp-statband__v">{totalProperties}</div>
+          <div className="sp-statband__d">{activePropertiesCount} active</div>
         </div>
-      </Column>
+        <div>
+          <div className="sp-statband__k">Fleet Vehicles</div>
+          <div className="sp-statband__v">{totalVehicles}</div>
+          <div className="sp-statband__d">{activeVehiclesCount} active</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Monthly Premium</div>
+          <div className="sp-statband__v">{formatCurrency(totalMonthlyPremium, false)}</div>
+          <div className="sp-statband__d">{totalProperties + totalVehicles} assets</div>
+        </div>
+        <div>
+          <div className="sp-statband__k">Open Claims</div>
+          <div className="sp-statband__v">{openClaims}</div>
+          <div className="sp-statband__d">across all policies</div>
+        </div>
+      </div>
 
-      {/* Summary Stats */}
-      <Column lg={5} md={4} sm={4}>
-        <Tile className="stat-tile">
-          <div className="stat-content">
-            <div className="stat-icon-wrapper stat-icon-primary">
-              <Building size={20} />
+      {/* Quick actions */}
+      <div className="sp-section sp-section--alt">
+        <div className="sp-kicker">Quick actions</div>
+        <div className="biz-quick-actions">
+          {quickActions.map(a => (
+            <div key={a.label} className="biz-action-tile" onClick={() => navigate(a.route)}>
+              <div className="biz-action-tile__icon">{a.icon}</div>
+              <div className="biz-action-tile__content">
+                <h4>{a.label}</h4>
+                <p>{a.sub}</p>
+              </div>
+              <ArrowRight size={16} className="biz-action-tile__arrow" />
             </div>
-            <div className="stat-details">
-              <p className="stat-label">Total Properties</p>
-              <h3 className="stat-value">{totalProperties}</h3>
-              <p className="stat-change stat-change-positive">
-                {activePropertiesCount} active
-              </p>
-            </div>
-          </div>
-        </Tile>
-      </Column>
+          ))}
+        </div>
+      </div>
 
-      <Column lg={5} md={4} sm={4}>
-        <Tile className="stat-tile">
-          <div className="stat-content">
-            <div className="stat-icon-wrapper stat-icon-secondary">
-              <CarFront size={20} />
-            </div>
-            <div className="stat-details">
-              <p className="stat-label">Fleet Vehicles</p>
-              <h3 className="stat-value">{totalVehicles}</h3>
-              <p className="stat-change stat-change-positive">
-                {activeVehiclesCount} active
-              </p>
-            </div>
-          </div>
-        </Tile>
-      </Column>
+      {/* Properties table */}
+      <div className="sp-section">
+        <div className="sp-section__header">
+          <div className="sp-kicker">Properties</div>
+          <Button kind="ghost" size="sm" renderIcon={ArrowRight} onClick={() => navigate('/business/properties')}>
+            View All
+          </Button>
+        </div>
+        <PropertyTable properties={mockProperties} compact maxRows={5} />
+      </div>
 
-      <Column lg={6} md={8} sm={4}>
-        <Tile className="stat-tile">
-          <div className="stat-content">
-            <div className="stat-icon-wrapper stat-icon-success">
-              <Wallet size={20} />
-            </div>
-            <div className="stat-details">
-              <p className="stat-label">Monthly Premium</p>
-              <h3 className="stat-value">{formatCurrency(totalMonthlyPremium, false)}</h3>
-              <p className="stat-change">
-                {totalProperties + totalVehicles} assets
-              </p>
-            </div>
-          </div>
-        </Tile>
-      </Column>
-
-      {/* Properties Table Section */}
-      <Column lg={16} md={8} sm={4}>
-        <Tile className="data-tile">
-          <div className="tile-header">
-            <Heading className="tile-title">Properties</Heading>
-            <Button 
-              kind="ghost" 
-              size="sm" 
-              renderIcon={ArrowRight}
-              onClick={() => navigate('/business/properties')}
-            >
-              View All
-            </Button>
-          </div>
-          <PropertyTable properties={mockProperties} compact maxRows={5} />
-        </Tile>
-      </Column>
-
-      {/* Fleet Vehicles Table Section */}
-      <Column lg={16} md={8} sm={4}>
-        <Tile className="data-tile">
-          <div className="tile-header">
-            <Heading className="tile-title">Fleet Vehicles</Heading>
-            <Button 
-              kind="ghost" 
-              size="sm" 
-              renderIcon={ArrowRight}
-              onClick={() => navigate('/business/fleet')}
-            >
-              View All
-            </Button>
-          </div>
-          <FleetTable vehicles={mockVehicles} compact maxRows={5} />
-        </Tile>
-      </Column>
-    </Grid>
+      {/* Fleet table */}
+      <div className="sp-section sp-section--alt sp-section--no-bottom">
+        <div className="sp-section__header">
+          <div className="sp-kicker">Fleet Vehicles</div>
+          <Button kind="ghost" size="sm" renderIcon={ArrowRight} onClick={() => navigate('/business/fleet')}>
+            View All
+          </Button>
+        </div>
+        <FleetTable vehicles={mockVehicles} compact maxRows={5} />
+      </div>
+    </div>
   );
 }

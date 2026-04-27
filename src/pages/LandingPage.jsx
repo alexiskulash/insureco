@@ -1,355 +1,277 @@
-import React, { useState } from 'react';
-import {
-  Grid,
-  Column,
-  Button,
-  Tile,
-  Modal,
-  TextInput,
-  TextArea,
-  Heading,
-  Stack,
-} from '@carbon/react';
-import {
-  Security,
-  Car,
-  Home as HomeIcon,
-  CheckmarkFilled,
-  ArrowRight,
-} from '@carbon/icons-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  ArrowRight,
+  Checkmark,
+  CheckmarkFilled,
+  Building,
+} from '@carbon/icons-react';
+import { TopNav, Footer, ShieldIcon } from '../components/SiteShell';
 import './LandingPage.scss';
 
-export default function LandingPage() {
-  const navigate = useNavigate();
-  const [demoModalOpen, setDemoModalOpen] = useState(false);
+function TruckIcon({ size = 48, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8zM5.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
-  const features = [
-    {
-      icon: <Security size={48} />,
-      title: 'Comprehensive Coverage',
-      description: 'Protect what matters most with our comprehensive insurance plans tailored to your needs.',
-    },
-    {
-      icon: <CheckmarkFilled size={48} />,
-      title: 'Fast Claims Processing',
-      description: 'Get your claims processed quickly and efficiently with our streamlined digital process.',
-    },
-    {
-      icon: <Car size={48} />,
-      title: '24/7 Support',
-      description: 'Our dedicated support team is available around the clock to assist you when you need it most.',
-    },
-    {
-      icon: <HomeIcon size={48} />,
-      title: 'Flexible Plans',
-      description: 'Choose from a variety of coverage options that fit your lifestyle and budget.',
-    },
+function BriefcaseIcon({ size = 48, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
+      <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ── Hero ───────────────────────────────────────────────────── */
+function Hero({ onNav }) {
+  return (
+    <section className="ln-hero">
+      <div className="ln-hero__text">
+        <div className="ln-eyebrow">Business Insurance · Built for operators</div>
+        <h1>
+          Insure your <strong>fleet</strong>, <em>properties</em>
+          <br />and everything in between.
+        </h1>
+        <p className="ln-hero__lead">
+          One platform to manage commercial policies across vehicles, real estate, and
+          liability — with instant quotes, geospatial oversight, and claims that close
+          in days, not months.
+        </p>
+        <div className="ln-hero__ctas">
+          <button className="ln-btn ln-btn--primary" onClick={() => onNav('/signup')}>
+            Start a quote <ArrowRight size={14} />
+          </button>
+          <button className="ln-btn ln-btn--tertiary">Talk to sales</button>
+        </div>
+      </div>
+
+      <div className="ln-hero__visual" aria-hidden="true">
+        <div className="ln-hero__grid-bg" />
+        <div className="ln-hero__shield">
+          <ShieldIcon size={180} />
+        </div>
+        <div className="ln-chip ln-chip--a">
+          <div className="ln-chip__icon"><TruckIcon size={16} /></div>
+          <div className="ln-chip__text">
+            <div className="ln-chip__big">42 vehicles</div>
+            <div className="ln-chip__sm">Fleet active</div>
+          </div>
+        </div>
+        <div className="ln-chip ln-chip--b">
+          <div className="ln-chip__icon"><Building size={16} /></div>
+          <div className="ln-chip__text">
+            <div className="ln-chip__big">$2.1M coverage</div>
+            <div className="ln-chip__sm">Property portfolio</div>
+          </div>
+        </div>
+        <div className="ln-chip ln-chip--c">
+          <div className="ln-chip__icon"><CheckmarkFilled size={16} /></div>
+          <div className="ln-chip__text">
+            <div className="ln-chip__big">Claim closed</div>
+            <div className="ln-chip__sm">3 day avg · 2025 Q1</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Trust Band ─────────────────────────────────────────────── */
+function TrustBand() {
+  const logos = [
+    { name: 'MERIDIAN',    style: 'caps-serif' },
+    { name: 'NorthBridge', style: 'title-sans' },
+    { name: 'AXLE CO',     style: 'caps-sans'  },
+    { name: 'Halcyon',     style: 'light-serif'},
+    { name: 'CargoWright', style: 'bold-sans'  },
+    { name: 'Brick&Mortar',style: 'title-sans' },
   ];
+  return (
+    <div className="ln-trust-band">
+      <div className="ln-trust-band__label">Trusted by 3,200+ operators</div>
+      <div className="ln-trust-band__divider" />
+      <div className="ln-trust-band__logos">
+        {logos.map(l => (
+          <span key={l.name} className={`ln-trust-band__logo ln-trust-band__logo--${l.style}`}>
+            {l.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-  const testimonials = [
+/* ── Stat Band ──────────────────────────────────────────────── */
+function StatBand() {
+  const stats = [
+    { k: 'Policies managed',   v: '12.4K', d: 'across 3,400 business accounts' },
+    { k: 'Average claim',      v: '3 days', d: 'from file to decision' },
+    { k: 'Saved vs. legacy',   v: '27%',   d: 'on comparable portfolios' },
+    { k: 'Coverage footprint', v: '48',    d: 'states — lower 48 + AK, HI' },
+  ];
+  return (
+    <section className="ln-statband">
+      {stats.map(s => (
+        <div key={s.k}>
+          <div className="ln-statband__k">{s.k}</div>
+          <div className="ln-statband__v">{s.v}</div>
+          <div className="ln-statband__d">{s.d}</div>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+/* ── Coverage Cards ─────────────────────────────────────────── */
+function CoverageSection({ onNav }) {
+  const cards = [
     {
-      quote: 'InsureCo made switching my insurance so easy. The process was smooth and the savings were immediate.',
-      author: 'Sarah Johnson',
-      role: 'Customer since 2022',
+      icon: <TruckIcon size={48} className="ln-coverage__ico" />,
+      title: 'Commercial Fleet',
+      sub: 'Vehicles, trailers, and specialty equipment — priced by mileage, not guesswork.',
+      items: ['Collision + comprehensive', 'Telematics-based pricing', 'Driver roster management', 'Hired & non-owned coverage'],
+      link: 'Explore fleet',
     },
     {
-      quote: 'When I had a claim, they handled everything professionally and got me back on the road quickly.',
-      author: 'Michael Chen',
-      role: 'Customer since 2021',
+      icon: <Building size={48} className="ln-coverage__ico" />,
+      title: 'Commercial Property',
+      sub: 'Buildings, contents, business interruption, and loss-of-rent — single portfolio view.',
+      items: ['Replacement-cost coverage', 'Business interruption', 'Natural disaster riders', 'Multi-location portfolios'],
+      link: 'Explore property',
+      badge: 'Most common',
     },
     {
-      quote: 'Best insurance experience I\'ve had. The customer service is exceptional and the rates are competitive.',
-      author: 'Emily Rodriguez',
-      role: 'Customer since 2023',
+      icon: <BriefcaseIcon size={48} className="ln-coverage__ico" />,
+      title: 'General Liability',
+      sub: 'Bodily injury, property damage, and professional liability with per-occurrence limits up to $10M.',
+      items: ['Bodily injury & property damage', 'Product & completed operations', 'Personal & advertising injury', 'Umbrella to $10M'],
+      link: 'Explore liability',
     },
   ];
 
   return (
-    <div className="landing-page">
-      {/* Hero Section */}
-      <section className="hero-section">
-        <Grid>
-          <Column lg={16} md={8} sm={4}>
-            <div className="hero-content">
-              <Heading className="hero-heading">
-                Protect Your Future with Confidence
-              </Heading>
-              <p className="hero-tagline">
-                Comprehensive car and home insurance designed for the modern world. 
-                Get covered in minutes with InsureCo.
-              </p>
-              <div className="hero-actions">
-                <Button
-                  kind="primary"
-                  size="lg"
-                  onClick={() => navigate('/signup')}
-                  renderIcon={ArrowRight}
-                >
-                  Sign Up Now
-                </Button>
-                <Button
-                  kind="secondary"
-                  size="lg"
-                  onClick={() => setDemoModalOpen(true)}
-                >
-                  Get a Demo
-                </Button>
-              </div>
-            </div>
-          </Column>
-        </Grid>
-      </section>
+    <section className="ln-section">
+      <div className="ln-kicker">Coverage</div>
+      <h2>Three policy lines. <strong>One unified portfolio.</strong></h2>
+      <p className="ln-section__lead">
+        Traditional carriers force you to silo vehicles, buildings, and liability across different
+        brokers. We don't. Everything rolls up into a single dashboard with one renewal date.
+      </p>
+      <div className="ln-coverage-grid">
+        {cards.map(c => (
+          <div key={c.title} className="ln-coverage" onClick={() => onNav('/signup')}>
+            {c.badge && <span className="ln-coverage__badge">{c.badge}</span>}
+            {c.icon}
+            <h3>{c.title}</h3>
+            <p className="ln-coverage__sub">{c.sub}</p>
+            <ul>
+              {c.items.map(item => (
+                <li key={item}><Checkmark size={16} /> {item}</li>
+              ))}
+            </ul>
+            <span className="ln-coverage__link">{c.link} <ArrowRight size={14} /></span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      {/* Features Section */}
-      <section className="features-section">
-        <Grid>
-          <Column lg={16} md={8} sm={4}>
-            <Heading className="section-heading">
-              Why Choose InsureCo?
-            </Heading>
-          </Column>
-          {features.map((feature, index) => (
-            <Column lg={4} md={4} sm={4} key={index}>
-              <Tile className="feature-tile">
-                <div className="feature-icon">{feature.icon}</div>
-                <h3 className="feature-title">{feature.title}</h3>
-                <p className="feature-description">{feature.description}</p>
-              </Tile>
-            </Column>
-          ))}
-        </Grid>
-      </section>
+/* ── How It Works ───────────────────────────────────────────── */
+function HowSection() {
+  const steps = [
+    { num: '01', h: 'Profile',   p: 'Industry, headcount, and a lightweight assets overview — fleet size, property count, revenue band.' },
+    { num: '02', h: 'Configure', p: 'Pick lines, limits, and deductibles. Our pricing engine returns live quotes, not estimates.' },
+    { num: '03', h: 'Activate',  p: 'E-sign the binder. Certificates of insurance issued instantly — usually within the hour.' },
+    { num: '04', h: 'Operate',   p: 'Add assets, file claims, and pay premiums from the dashboard. Renewals auto-quoted 60 days out.' },
+  ];
+  return (
+    <section className="ln-section ln-section--alt">
+      <div className="ln-kicker">How it works</div>
+      <h2>From quote to coverage in under a week.</h2>
+      <p className="ln-section__lead">
+        A linear onboarding flow — no back-and-forth with adjusters, no surprise underwriting letters.
+      </p>
+      <div className="ln-how">
+        {steps.map((s, i) => (
+          <div key={s.num} className="ln-how-step">
+            <div className="ln-how-step__num">0{i + 1} — Tell us about the business</div>
+            <h4>{s.h}</h4>
+            <p>{s.p}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
-      {/* Car Insurance Section */}
-      <section id="car-insurance" className="product-section car-insurance-section">
-        <Grid>
-          <Column lg={8} md={4} sm={4}>
-            <div className="product-content">
-              <div className="product-icon">
-                <Car size={64} />
-              </div>
-              <Heading className="product-heading">Car Insurance</Heading>
-              <p className="product-description">
-                Drive with confidence knowing you're protected. Our comprehensive auto insurance 
-                covers collision, liability, and more. Get instant quotes and customize your 
-                coverage to match your needs.
-              </p>
-              <ul className="product-features">
-                <li><CheckmarkFilled size={20} /> Collision coverage</li>
-                <li><CheckmarkFilled size={20} /> Liability protection</li>
-                <li><CheckmarkFilled size={20} /> Roadside assistance</li>
-                <li><CheckmarkFilled size={20} /> Rental car coverage</li>
-              </ul>
-              <Button
-                kind="tertiary"
-                onClick={() => navigate('/signup')}
-                renderIcon={ArrowRight}
-              >
-                Learn More
-              </Button>
-            </div>
-          </Column>
-          <Column lg={8} md={4} sm={4}>
-            <div className="product-image">
-              <img
-                src="https://images.pexels.com/photos/220309/pexels-photo-220309.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Modern blue sedan representing everyday auto insurance coverage"
-                loading="lazy"
-              />
-            </div>
-          </Column>
-        </Grid>
-      </section>
+/* ── Quote / Testimonial ────────────────────────────────────── */
+function QuoteSection() {
+  return (
+    <section className="ln-quote">
+      <blockquote>
+        We closed three fleet claims last quarter inside of a week. That used to take us a month.
+      </blockquote>
+      <div className="ln-quote__attr">
+        <div className="ln-quote__avatar">MR</div>
+        <div>
+          <div className="ln-quote__name">Marcelle Rivera</div>
+          <div>Ops Director, Northbound Logistics · 82-vehicle fleet</div>
+        </div>
+      </div>
+      <div className="ln-quote__metrics">
+        <div>
+          <div className="ln-quote__mv">72 hrs</div>
+          <div className="ln-quote__mk">avg close time</div>
+        </div>
+        <div>
+          <div className="ln-quote__mv">$840K</div>
+          <div className="ln-quote__mk">paid out 2025 YTD</div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      {/* Home Insurance Section */}
-      <section id="home-insurance" className="product-section home-insurance-section">
-        <Grid>
-          <Column lg={8} md={4} sm={4}>
-            <div className="product-image">
-              <img
-                src="https://images.pexels.com/photos/7587856/pexels-photo-7587856.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Modern suburban home representing comprehensive home insurance protection"
-                loading="lazy"
-              />
-            </div>
-          </Column>
-          <Column lg={8} md={4} sm={4}>
-            <div className="product-content">
-              <div className="product-icon">
-                <HomeIcon size={64} />
-              </div>
-              <Heading className="product-heading">Home Insurance</Heading>
-              <p className="product-description">
-                Protect your home and belongings with our comprehensive homeowners insurance. 
-                Coverage for property damage, personal liability, and more. Your peace of mind 
-                is our priority.
-              </p>
-              <ul className="product-features">
-                <li><CheckmarkFilled size={20} /> Property damage coverage</li>
-                <li><CheckmarkFilled size={20} /> Personal liability protection</li>
-                <li><CheckmarkFilled size={20} /> Natural disaster coverage</li>
-                <li><CheckmarkFilled size={20} /> Personal property protection</li>
-              </ul>
-              <Button
-                kind="tertiary"
-                onClick={() => navigate('/signup')}
-                renderIcon={ArrowRight}
-              >
-                Learn More
-              </Button>
-            </div>
-          </Column>
-        </Grid>
-      </section>
+/* ── CTA Band ───────────────────────────────────────────────── */
+function CTABand({ onNav }) {
+  return (
+    <section className="ln-cta-band">
+      <div>
+        <h2>Ready to consolidate your policies?</h2>
+        <p>Quotes are free and non-binding. Most businesses finish onboarding in under 20 minutes.</p>
+      </div>
+      <div className="ln-cta-band__actions">
+        <button className="ln-btn ln-btn--white" onClick={() => onNav('/signup')}>
+          Start a quote <ArrowRight size={14} />
+        </button>
+        <button className="ln-btn ln-btn--outline-white" onClick={() => onNav('/login')}>
+          Log in
+        </button>
+      </div>
+    </section>
+  );
+}
 
-      {/* Testimonials Section */}
-      <section className="testimonials-section">
-        <Grid>
-          <Column lg={16} md={8} sm={4}>
-            <Heading className="section-heading">
-              What Our Customers Say
-            </Heading>
-          </Column>
-          {testimonials.map((testimonial, index) => (
-            <Column lg={5} md={4} sm={4} key={index}>
-              <Tile className="testimonial-tile">
-                <p className="testimonial-quote">"{testimonial.quote}"</p>
-                <div className="testimonial-author">
-                  <p className="author-name">{testimonial.author}</p>
-                  <p className="author-role">{testimonial.role}</p>
-                </div>
-              </Tile>
-            </Column>
-          ))}
-        </Grid>
-      </section>
+/* ── Page ───────────────────────────────────────────────────── */
+export default function LandingPage() {
+  const navigate = useNavigate();
+  const onNav = (path) => { navigate(path); window.scrollTo(0, 0); };
 
-      {/* Call to Action Section */}
-      <section className="cta-section">
-        <Grid>
-          <Column lg={16} md={8} sm={4}>
-            <div className="cta-content">
-              <Heading className="cta-heading">
-                Ready to Get Started?
-              </Heading>
-              <p className="cta-text">
-                Join thousands of satisfied customers who trust InsureCo for their insurance needs.
-              </p>
-              <Button
-                kind="primary"
-                size="lg"
-                onClick={() => navigate('/signup')}
-                renderIcon={ArrowRight}
-              >
-                Get Your Free Quote
-              </Button>
-            </div>
-          </Column>
-        </Grid>
-      </section>
-
-      {/* Footer */}
-      <footer className="landing-footer">
-        <Grid>
-          <Column lg={4} md={2} sm={4}>
-            <div className="footer-section">
-              <h4 className="footer-heading">InsureCo</h4>
-              <p className="footer-description">
-                Protecting what matters most since 2020.
-              </p>
-            </div>
-          </Column>
-          <Column lg={3} md={2} sm={4}>
-            <div className="footer-section">
-              <h4 className="footer-heading">Products</h4>
-              <ul className="footer-links">
-                <li><a href="#car-insurance">Car Insurance</a></li>
-                <li><a href="#home-insurance">Home Insurance</a></li>
-                <li><button onClick={() => navigate('/signup')} className="footer-link-button">Bundle & Save</button></li>
-              </ul>
-            </div>
-          </Column>
-          <Column lg={3} md={2} sm={4}>
-            <div className="footer-section">
-              <h4 className="footer-heading">Company</h4>
-              <ul className="footer-links">
-                <li><button onClick={() => navigate('/about')} className="footer-link-button">About Us</button></li>
-                <li><a href="#careers">Careers</a></li>
-                <li><a href="#contact">Contact</a></li>
-              </ul>
-            </div>
-          </Column>
-          <Column lg={3} md={2} sm={4}>
-            <div className="footer-section">
-              <h4 className="footer-heading">Support</h4>
-              <ul className="footer-links">
-                <li><a href="#help">Help Center</a></li>
-                <li><button onClick={() => navigate('/dashboard')} className="footer-link-button">File a Claim</button></li>
-                <li><a href="#faq">FAQ</a></li>
-              </ul>
-            </div>
-          </Column>
-          <Column lg={3} md={2} sm={4}>
-            <div className="footer-section">
-              <h4 className="footer-heading">Legal</h4>
-              <ul className="footer-links">
-                <li><a href="#privacy">Privacy Policy</a></li>
-                <li><a href="#terms">Terms of Service</a></li>
-                <li><a href="#cookies">Cookie Policy</a></li>
-              </ul>
-            </div>
-          </Column>
-        </Grid>
-        <Grid>
-          <Column lg={16} md={8} sm={4}>
-            <div className="footer-bottom">
-              <p>&copy; 2024 InsureCo. All rights reserved.</p>
-            </div>
-          </Column>
-        </Grid>
-      </footer>
-
-      {/* Demo Request Modal */}
-      <Modal
-        open={demoModalOpen}
-        onRequestClose={() => setDemoModalOpen(false)}
-        modalHeading="Request a Demo"
-        primaryButtonText="Submit Request"
-        secondaryButtonText="Cancel"
-        onRequestSubmit={(e) => {
-          e.preventDefault();
-          setDemoModalOpen(false);
-          alert('Thank you for your interest! We will contact you soon.');
-        }}
-        size="sm"
-      >
-        <Stack gap={6}>
-          <TextInput
-            id="demo-name"
-            labelText="Full Name"
-            placeholder="Enter your name"
-          />
-          <TextInput
-            id="demo-email"
-            labelText="Email Address"
-            placeholder="Enter your email"
-            type="email"
-          />
-          <TextInput
-            id="demo-phone"
-            labelText="Phone Number"
-            placeholder="Enter your phone number"
-            type="tel"
-          />
-          <TextArea
-            id="demo-message"
-            labelText="Message (Optional)"
-            placeholder="Tell us about your insurance needs"
-            rows={4}
-          />
-        </Stack>
-      </Modal>
+  return (
+    <div className="ln-page">
+      <TopNav onNav={onNav} />
+      <Hero onNav={onNav} />
+      <TrustBand />
+      <StatBand />
+      <CoverageSection onNav={onNav} />
+      <HowSection />
+      <QuoteSection />
+      <CTABand onNav={onNav} />
+      <Footer onNav={onNav} />
     </div>
   );
 }

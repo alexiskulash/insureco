@@ -1,111 +1,70 @@
 @use '../../styles/tokens' as *;
 
-.business-coming-soon {
-  min-height: calc(100vh - 3rem);
-  padding: var(--spacing-07) 0;
+.coming-soon-page {
   background: var(--background-primary);
+}
 
-  .coming-soon-container {
+/* ── Feature preview grid ──────────────────────────────────── */
+.cs-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--border-subtle);
+}
+
+.cs-feature-card {
+  padding: 40px 32px;
+  border-right: 1px solid var(--border-subtle);
+  transition: background var(--motion-hover);
+
+  &:last-child { border-right: none; }
+  &:hover { background: var(--background-secondary); }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    background: var(--background-selected);
+    color: var(--interactive-primary);
     display: flex;
-    justify-content: center;
     align-items: center;
-    min-height: 70vh;
-  }
-
-  .coming-soon-tile {
-    max-width: 600px;
-    padding: var(--spacing-09);
-    text-align: center;
-    background: var(--background-secondary);
-    box-shadow: var(--card-shadow);
-  }
-
-  .coming-soon-icon {
-    display: flex;
     justify-content: center;
-    margin-bottom: var(--spacing-06);
-
-    svg {
-      color: var(--interactive-primary);
-    }
-  }
-
-  .coming-soon-title {
-    margin-bottom: var(--spacing-05);
-    color: var(--text-primary);
-  }
-
-  .coming-soon-subtitle {
-    font-size: var(--heading-h3-size);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-05);
-  }
-
-  .coming-soon-description {
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-07);
-    line-height: 1.6;
-  }
-
-  .coming-soon-features {
-    text-align: left;
-    background: var(--background-tertiary);
-    padding: var(--spacing-05);
     border-radius: var(--radius-md);
-    margin-bottom: var(--spacing-07);
-
-    h4 {
-      color: var(--text-primary);
-      font-weight: var(--font-weight-semibold);
-      margin-bottom: var(--spacing-04);
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      li {
-        color: var(--text-secondary);
-        padding: var(--spacing-03) 0;
-        position: relative;
-        padding-left: var(--spacing-06);
-
-        &::before {
-          content: '✓';
-          position: absolute;
-          left: 0;
-          color: var(--interactive-primary);
-          font-weight: var(--font-weight-bold);
-        }
-      }
-    }
+    margin-bottom: 20px;
   }
 
-  .coming-soon-actions {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-05);
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
   }
 }
 
-// Responsive adjustments
-@media (max-width: 672px) {
-  .business-coming-soon {
-    padding: var(--spacing-05) 0;
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cs-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .coming-soon-tile {
-      padding: var(--spacing-07);
-    }
+  .cs-feature-card {
+    &:nth-child(2) { border-right: none; }
+    border-bottom: 1px solid var(--border-subtle);
+    &:last-child { border-bottom: none; }
+  }
+}
 
-    .coming-soon-icon svg {
-      width: 48px;
-      height: 48px;
-    }
-
-    .coming-soon-subtitle {
-      font-size: var(--heading-h4-size);
-    }
+@media (max-width: 480px) {
+  .cs-features-grid { grid-template-columns: 1fr; }
+  .cs-feature-card {
+    border-right: none;
+    &:nth-child(2) { border-right: none; }
   }
 }
