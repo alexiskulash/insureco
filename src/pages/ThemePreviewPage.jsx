@@ -22,6 +22,7 @@ import {
 } from '@carbon/react';
 import { ArrowRight, Home as HomeIcon, Car } from '@carbon/icons-react';
 import StepBreadcrumb from '../components/StepBreadcrumb';
+import { AiExplainabilityPopover, AiCallout } from '../components/AiExplainabilityPopover';
 import './ThemePreviewPage.scss';
 
 export default function ThemePreviewPage() {
@@ -469,6 +470,34 @@ export default function ThemePreviewPage() {
                 This is a paragraph with a <Link href="#preview" disabled>disabled link</Link> inside it.
               </p>
             </Stack>
+          </section>
+
+          {/* AI Explainability Popover Section */}
+          <section className="preview-section">
+            <Heading className="section-heading">AI Explainability Popover</Heading>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-05)' }}>
+              Two variants: a detailed primary popover and a compact secondary callout.
+            </p>
+            <div style={{ display: 'flex', gap: 'var(--spacing-07)', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+              <AiExplainabilityPopover
+                title="Name of feature"
+                description="High level 1-2 sentence description of how the AI is being used in the UI."
+                howItWorks={[
+                  { keyword: 'Key word.', description: 'Description of key word.' },
+                  { keyword: 'Key word.', description: 'Description of key word.' },
+                  { keyword: 'Key word.', description: 'Description of key word.' },
+                ]}
+                dataTypes={[
+                  { name: 'Data type 1.', description: "Explain how it's used." },
+                  { name: 'Data type 2.', description: "Explain how it's used." },
+                  { name: 'Data type 3.', description: "Explain how it's used." },
+                ]}
+                aiModel={{ name: 'granite.13b.v2.instruct', url: '#' }}
+                additionalDetails="Additional information about data used to fine tune and/or train the model"
+                trainingDataSet={{ name: 'IBM Security data piles', url: '#' }}
+              />
+              <AiCallout message="AI was used to generate this response" />
+            </div>
           </section>
 
           {/* Contrast Examples Section */}
