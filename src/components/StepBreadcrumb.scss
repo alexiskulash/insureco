@@ -53,32 +53,11 @@
 .step-breadcrumb__item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-03);
+  gap: 0;
   min-width: 0;
 
-  // Mobile: hide label text, show only markers
-  @media (max-width: 671px) {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--spacing-02);
-
-    .step-breadcrumb__content {
-      display: none;
-    }
-
-    // Show current step label only
-    &--current .step-breadcrumb__content {
-      display: flex;
-    }
-  }
-
-  // Tablet: stack vertically, show labels
-  @media (min-width: 672px) and (max-width: 1055px) {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--spacing-02);
+  .step-breadcrumb__content {
+    display: none;
   }
 }
 
